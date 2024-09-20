@@ -4,6 +4,7 @@ import React from 'react';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
+import { signUp } from './login.action';
 // Define the Zod schema
 export const signUpSchema = z
   .object({
@@ -35,9 +36,9 @@ const SignUpForm = () => {
   });
 
   // Handle form submission
-  const onSubmit = (values: z.infer<typeof signUpSchema>) => {
-    console.log(values);
-  };
+  async function onSubmit(values: z.infer<typeof signUpSchema>) {
+    await signUp(values);
+  }
 
   return (
     <div className='flex flex-col'>
