@@ -31,29 +31,42 @@ const LoginForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className='bg-background-darker overflow-hidden rounded-xl'>
-        <input
-          type='text'
-          id='email'
-          {...register('email')}
-          placeholder='Email'
-          className='bg-background-darker px-4 py-2'
-        />
-        {errors.email && <p>{errors.email.message}</p>}
-      </div>
-      <div>
-        <input
-          type='password'
-          id='password'
-          {...register('password')}
-          placeholder='Password'
-        />
-        {errors.password && <p>{errors.password.message}</p>}
-      </div>
+    <div className='flex flex-col'>
+      <h1 className='mb-2 text-secondary-blue'>Sign In Form</h1>
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className='mb-2'>
+          <input
+            type='email'
+            id='email'
+            {...register('email')}
+            placeholder='email'
+            className='overflow-hidden rounded-xl border border-transparent bg-background-darker p-5 py-2 text-sm text-white placeholder-secondary-blue focus:border-white focus:outline-none'
+          />
+          {errors.email && (
+            <p className='text-red-500'>{errors.email.message}</p>
+          )}
+        </div>
+        <div className='mb-2'>
+          <input
+            type='password'
+            id='password'
+            {...register('password')}
+            placeholder='password'
+            className='w-full overflow-hidden rounded-xl border border-transparent bg-background-darker px-5 py-2 text-sm text-white placeholder-secondary-blue focus:border-white focus:outline-none'
+          />
+          {errors.password && (
+            <p className='text-red-500'>{errors.password.message}</p>
+          )}
+        </div>
 
-      <button type='submit'>Login</button>
-    </form>
+        <button
+          type='submit'
+          className='rounded bg-background-darker px-5 py-1 text-sm text-white'
+        >
+          Login
+        </button>
+      </form>
+    </div>
   );
 };
 
