@@ -1,4 +1,4 @@
-import SignOutButton from '@/components/SignOutButton'
+import SignOutButton from '@/components/authentication/SignOutButton'
 import { getUser } from '@/lib/lucia'
 import { redirect } from 'next/navigation'
 import React from 'react'

@@ -8,6 +8,9 @@ import { lucia } from '@/lib/lucia'
 import { cookies } from 'next/headers'
 import { signInSchema } from './LoginForm'
 import { redirect } from 'next/navigation'
+import { generateState } from 'arctic'
+import { generateCodeVerifier } from 'oslo/oauth2'
+import { googleOAuthClient } from '@/lib/googleOauth'
 
 export const signUp = async (values: z.infer<typeof signUpSchema>) => {
   try {
@@ -82,4 +85,31 @@ export const logOut = async () => {
     sessionCookie.attributes
   )
   return redirect('/login')
+}
+
+export const getGoogleOauthConsentUrl = async () => {
+  try {
+    const state = generateState()
+    const codeVerifier = generateCodeVerifier()
+    cookies().set('codeVerifier', codeVerifier, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+    })
+
+    cookies().set('state', codeVerifier, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === 'production',
+    })
+
+    const authUrl = await googleOAuthClient.createAuthorizationURL(
+      state,
+      codeVerifier,
+      {
+        scopes: ['email', 'profile'],
+      }
+    )
+    return { success: true, url: authUrl.toString() }
+  } catch (error) {
+    return { success: false, error: 'Something went wrong' }
+  }
 }

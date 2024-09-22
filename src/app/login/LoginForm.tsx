@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form'
 import { signIn } from './login.action'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
+import { GoogleOAuthButton } from '@/components/authentication/GoogleOAuthButton'
 
 // Define the Zod schema
 export const signInSchema = z.object({
@@ -42,6 +43,7 @@ const LoginForm = () => {
 
   return (
     <div className="flex flex-col">
+      <GoogleOAuthButton />
       <h1 className="mb-2 text-secondary-blue">Sign In Form</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-2">
