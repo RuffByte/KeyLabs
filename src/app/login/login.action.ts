@@ -7,6 +7,7 @@ import { Argon2id } from 'oslo/password'
 import { lucia } from '@/lib/lucia'
 import { cookies } from 'next/headers'
 import { signInSchema } from './LoginForm'
+import { redirect } from 'next/navigation'
 
 export const signUp = async (values: z.infer<typeof signUpSchema>) => {
   try {
@@ -71,4 +72,14 @@ export const signIn = async (values: z.infer<typeof signInSchema>) => {
     sessionCookie.attributes
   )
   return { success: true }
+}
+
+export const logOut = async () => {
+  const sessionCookie = await lucia.createBlankSessionCookie()
+  cookies().set(
+    sessionCookie.name,
+    sessionCookie.value,
+    sessionCookie.attributes
+  )
+  return redirect('/login')
 }

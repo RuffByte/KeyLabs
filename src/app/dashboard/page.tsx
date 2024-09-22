@@ -1,3 +1,4 @@
+import SignOutButton from '@/components/SignOutButton'
 import { getUser } from '@/lib/lucia'
 import { redirect } from 'next/navigation'
 import React from 'react'
@@ -8,7 +9,12 @@ const page = async () => {
     redirect('/login')
   }
 
-  return <div className="text-white">you are logged in as {user.name}</div>
+  return (
+    <div>
+      <div className="text-white">you are logged in as {user.name}</div>
+      <SignOutButton>Sign Out</SignOutButton>
+    </div>
+  )
 }
 
 export default page
