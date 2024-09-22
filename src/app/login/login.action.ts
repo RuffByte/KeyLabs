@@ -96,7 +96,7 @@ export const getGoogleOauthConsentUrl = async () => {
       secure: process.env.NODE_ENV === 'production',
     })
 
-    cookies().set('state', codeVerifier, {
+    cookies().set('state', state, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
     })
