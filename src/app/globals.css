@@ -1,3 +1,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+:root {
+  --background-dark: #282a36;
+  --background-darker: #20222c;
+  --primary-accent: #9d7ccf;
+  --secondary-blue: #6272a4;
+  --highlight-lavender: #9d7ccf;
+}

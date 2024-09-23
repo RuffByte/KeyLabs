@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form'
 import { signUp } from './login.action'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
+import TextInput from '@/components/authentication/TextInput' // Import the TextInput component
 
 // Define the Zod schema
 export const signUpSchema = z
@@ -43,7 +44,7 @@ const SignUpForm = () => {
   async function onSubmit(values: z.infer<typeof signUpSchema>) {
     const res = await signUp(values)
     if (res.success) {
-      toast.success('Accoutn created successfully')
+      toast.success('Account created successfully')
       router.push('/dashboard')
     } else {
       toast.error(res.error)
@@ -54,52 +55,34 @@ const SignUpForm = () => {
     <div className="flex flex-col">
       <h1 className="mb-2 text-secondary-blue">Sign Up Form</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-2">
-          <input
-            type="text"
-            id="name"
-            {...register('name')}
-            placeholder="Name"
-            className="overflow-hidden rounded-xl border border-transparent bg-background-darker p-5 py-2 text-sm text-white placeholder-secondary-blue focus:border-white focus:outline-none"
-          />
-          {errors.name && <p className="text-red-500">{errors.name.message}</p>}
-        </div>
-        <div className="mb-2">
-          <input
-            type="email"
-            id="email"
-            {...register('email')}
-            placeholder="Email"
-            className="overflow-hidden rounded-xl border border-transparent bg-background-darker p-5 py-2 text-sm text-white placeholder-secondary-blue focus:border-white focus:outline-none"
-          />
-          {errors.email && (
-            <p className="text-red-500">{errors.email.message}</p>
-          )}
-        </div>
-        <div className="mb-2">
-          <input
-            type="password"
-            id="password"
-            {...register('password')}
-            placeholder="Password"
-            className="w-full overflow-hidden rounded-xl border border-transparent bg-background-darker px-5 py-2 text-sm text-white placeholder-secondary-blue focus:border-white focus:outline-none"
-          />
-          {errors.password && (
-            <p className="text-red-500">{errors.password.message}</p>
-          )}
-        </div>
-        <div className="mb-2">
-          <input
-            type="password"
-            id="confirmPassword"
-            {...register('confirmPassword')}
-            placeholder="Confirm Password"
-            className="w-full overflow-hidden rounded-xl border border-transparent bg-background-darker px-5 py-2 text-sm text-white placeholder-secondary-blue focus:border-white focus:outline-none"
-          />
-          {errors.confirmPassword && (
-            <p className="text-red-500">{errors.confirmPassword.message}</p>
-          )}
-        </div>
+        <TextInput
+          id="name"
+          type="text"
+          placeholder="Name"
+          register={register}
+          errors={errors.name?.message}
+        />
+        <TextInput
+          id="email"
+          type="email"
+          placeholder="Email"
+          register={register}
+          errors={errors.email?.message}
+        />
+        <TextInput
+          id="password"
+          type="password"
+          placeholder="Password"
+          register={register}
+          errors={errors.password?.message}
+        />
+        <TextInput
+          id="confirmPassword"
+          type="password"
+          placeholder="Confirm Password"
+          register={register}
+          errors={errors.confirmPassword?.message}
+        />
 
         <button
           type="submit"

@@ -8,6 +8,7 @@ import { signIn } from './login.action'
 import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { GoogleOAuthButton } from '@/components/authentication/GoogleOAuthButton'
+import TextInput from '@/components/authentication/TextInput' // Import the TextInput component
 
 // Define the Zod schema
 export const signInSchema = z.object({
@@ -46,30 +47,20 @@ const LoginForm = () => {
       <GoogleOAuthButton />
       <h1 className="mb-2 text-secondary-blue">Sign In Form</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="mb-2">
-          <input
-            type="email"
-            id="email"
-            {...register('email')}
-            placeholder="email"
-            className="overflow-hidden rounded-xl border border-transparent bg-background-darker p-5 py-2 text-sm text-white placeholder-secondary-blue focus:border-white focus:outline-none"
-          />
-          {errors.email && (
-            <p className="text-red-500">{errors.email.message}</p>
-          )}
-        </div>
-        <div className="mb-2">
-          <input
-            type="password"
-            id="password"
-            {...register('password')}
-            placeholder="password"
-            className="w-full overflow-hidden rounded-xl border border-transparent bg-background-darker px-5 py-2 text-sm text-white placeholder-secondary-blue focus:border-white focus:outline-none"
-          />
-          {errors.password && (
-            <p className="text-red-500">{errors.password.message}</p>
-          )}
-        </div>
+        <TextInput
+          id="email"
+          type="email"
+          placeholder="Email"
+          register={register}
+          errors={errors.email?.message}
+        />
+        <TextInput
+          id="password"
+          type="password"
+          placeholder="Password"
+          register={register}
+          errors={errors.password?.message}
+        />
 
         <button
           type="submit"
