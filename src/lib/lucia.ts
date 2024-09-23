@@ -7,7 +7,7 @@ const adapter = new PrismaAdapter(prisma.session, prisma.user)
 
 export const lucia = new Lucia(adapter, {
   sessionCookie: {
-    name: 'elliot-auth-cookie',
+    name: 'antga-auth-cookie',
     expires: false,
     attributes: {
       secure: process.env.NODE_ENV === 'production',
