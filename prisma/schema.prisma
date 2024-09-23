@@ -15,13 +15,14 @@ datasource db {
 }
 
 model User {
-  id             String    @id @default(cuid())
-  email          String    @unique
+  id             String               @id @default(cuid())
+  email          String               @unique
   name           String
   role           String?
   hashedPassword String?
   picture        String?
   session        Session[]
+  resetTokens    PasswordResetToken[]
 }
 
 model Session {
@@ -30,4 +31,12 @@ model Session {
   expiresAt DateTime
 
   user User @relation(fields: [userId], references: [id])
+}
+
+model PasswordResetToken {
+  id        String   @id @default(cuid())
+  userId    String
+  token     String   @unique
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id])
 }

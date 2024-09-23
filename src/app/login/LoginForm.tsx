@@ -9,12 +9,7 @@ import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { GoogleOAuthButton } from '@/components/authentication/GoogleOAuthButton'
 import TextInput from '@/components/authentication/TextInput' // Import the TextInput component
-
-// Define the Zod schema
-export const signInSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8, 'Password must be at least 8 characters long'),
-})
+import { signInSchema } from '@/schemas/zod/schemas'
 
 const LoginForm = () => {
   const router = useRouter()

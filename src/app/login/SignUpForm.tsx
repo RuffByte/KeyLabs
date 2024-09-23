@@ -8,21 +8,7 @@ import { signUp } from './login.action'
 import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 import TextInput from '@/components/authentication/TextInput' // Import the TextInput component
-
-// Define the Zod schema
-export const signUpSchema = z
-  .object({
-    name: z.string().min(5, 'Name must be at least 5 characters long'),
-    email: z.string().email(),
-    password: z.string().min(8, 'Password must be at least 8 characters long'),
-    confirmPassword: z
-      .string()
-      .min(8, 'Password must be at least 8 characters long'),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: 'Passwords do not match',
-    path: ['confirmPassword'],
-  })
+import { signUpSchema } from '@/schemas/zod/schemas'
 
 const SignUpForm = () => {
   const router = useRouter()
