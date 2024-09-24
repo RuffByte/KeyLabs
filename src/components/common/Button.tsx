@@ -1,13 +1,15 @@
 import React, { PropsWithChildren } from 'react'
 import { tv } from 'tailwind-variants'
 
+import { cn } from '@/lib/utils'
+
 interface ButtonProps
   extends PropsWithChildren<React.ButtonHTMLAttributes<HTMLButtonElement>> {
   variants?: 'primary' | 'secondary'
 }
 
 const button = tv({
-  base: 'flex justify-center rounded rounded-full bg-background-darker bg-white px-4 px-5 py-1 py-2 text-sm text-black text-white hover:bg-gray-100',
+  base: 'rounded-input bg-background-darker h-input px-8 p-2 w-full text-sm text-white',
   variants: {
     variant: {
       outline: '',
@@ -17,7 +19,7 @@ const button = tv({
 
 const Button = ({ ...props }: ButtonProps) => {
   return (
-    <button {...props} className={button()}>
+    <button {...props} className={cn(button(), props.className)}>
       {props.children}
     </button>
   )

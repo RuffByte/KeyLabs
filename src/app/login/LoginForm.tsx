@@ -45,32 +45,35 @@ const LoginForm = () => {
   }
 
   return (
-    <div className="flex flex-col">
-      <h1 className="mb-2 text-secondary-blue">Sign In Form</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <TextInput
-          id="email"
-          type="email"
-          placeholder="Email"
-          register={register}
-          errors={errors.email?.message}
-        />
-        <TextInput
-          id="password"
-          type="password"
-          placeholder="Password"
-          register={register}
-          errors={errors.password?.message}
-        />
-
-        <Button
-          type="submit"
-          className="rounded bg-background-darker px-5 py-1 text-sm text-white"
-        >
-          Login
-        </Button>
+    <div>
+      <h1 className="mb-2 text-secondary-blue font-bold">Login</h1>
+      <div className="flex flex-col w-[350px] gap-4">
         <GoogleOAuthButton />
-      </form>
+        <hr />
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-1">
+          <TextInput
+            id="email"
+            type="email"
+            placeholder="Email"
+            {...register('email')}
+            errors={errors.email?.message}
+          />
+          <TextInput
+            id="password"
+            type="password"
+            placeholder="Password"
+            {...register('password')}
+            errors={errors.password?.message}
+          />
+
+          <Button
+            type="submit"
+            className="rounded bg-background-darker px-5 py-1 text-sm mt-2 text-white"
+          >
+            Login
+          </Button>
+        </form>
+      </div>
     </div>
   )
 }
