@@ -7,6 +7,7 @@ import { toast } from 'sonner'
 export const GoogleOAuthButton = () => {
   return (
     <button
+      className="flex items-center justify-center rounded-full bg-white px-4 py-2 text-sm text-black hover:bg-gray-100"
       onClick={async () => {
         const res = await getGoogleOauthConsentUrl()
         if (res.url) {

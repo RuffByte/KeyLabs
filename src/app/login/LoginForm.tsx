@@ -9,6 +9,7 @@ import { toast } from 'sonner'
 import { useRouter } from 'next/navigation'
 import { GoogleOAuthButton } from '@/components/authentication/GoogleOAuthButton'
 import TextInput from '@/components/authentication/TextInput' // Import the TextInput component
+import Button from '@/components/common/Button'
 
 // Define the Zod schema
 export const signInSchema = z.object({
@@ -44,7 +45,6 @@ const LoginForm = () => {
 
   return (
     <div className="flex flex-col">
-      <GoogleOAuthButton />
       <h1 className="mb-2 text-secondary-blue">Sign In Form</h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextInput
@@ -62,12 +62,13 @@ const LoginForm = () => {
           errors={errors.password?.message}
         />
 
-        <button
+        <Button
           type="submit"
           className="rounded bg-background-darker px-5 py-1 text-sm text-white"
         >
           Login
-        </button>
+        </Button>
+        <GoogleOAuthButton />
       </form>
     </div>
   )
