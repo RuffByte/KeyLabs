@@ -1,13 +1,16 @@
 'use client'
 
 import React from 'react'
-import { z } from 'zod'
+import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { signUp } from './login.action'
-import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
+import { z } from 'zod'
+
 import TextInput from '@/components/authentication/TextInput' // Import the TextInput component
+
+import Button from '@/components/common/Button'
+import { signUp } from './login.action'
 import { signUpSchema } from '@/schemas/zod/schemas'
 
 const SignUpForm = () => {
@@ -38,44 +41,40 @@ const SignUpForm = () => {
   }
 
   return (
-    <div className="flex flex-col">
-      <h1 className="mb-2 text-secondary-blue">Sign Up Form</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
+    <div className="flex flex-col gap-2 w-[350px]">
+      <h1 className="mb-2 text-secondary-blue font-bold">Sign Up</h1>
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-1">
         <TextInput
           id="name"
           type="text"
           placeholder="Name"
-          register={register}
+          {...register('name')}
           errors={errors.name?.message}
         />
         <TextInput
           id="email"
           type="email"
           placeholder="Email"
-          register={register}
+          {...register('email')}
           errors={errors.email?.message}
         />
         <TextInput
           id="password"
           type="password"
           placeholder="Password"
-          register={register}
+          {...register('password')}
           errors={errors.password?.message}
         />
         <TextInput
           id="confirmPassword"
           type="password"
           placeholder="Confirm Password"
-          register={register}
+          {...register('confirmPassword')}
           errors={errors.confirmPassword?.message}
         />
-
-        <button
-          type="submit"
-          className="rounded bg-background-darker px-5 py-1 text-sm text-white"
-        >
+        <Button type="submit" className="mt-2">
           Sign Up
-        </button>
+        </Button>
       </form>
     </div>
   )

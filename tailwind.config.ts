@@ -15,6 +15,12 @@ const config: Config = {
         'secondary-blue': 'var(--secondary-blue)',
         'highlight-lavender': 'var(--highlight-lavender)',
       },
+      borderRadius: {
+        input: '8px',
+      },
+      height: {
+        input: '40px',
+      },
     },
   },
   plugins: [],

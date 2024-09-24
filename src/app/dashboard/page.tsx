@@ -1,7 +1,8 @@
+import React from 'react'
+import { redirect } from 'next/navigation'
+
 import SignOutButton from '@/components/authentication/SignOutButton'
 import { getUser } from '@/lib/lucia'
-import { redirect } from 'next/navigation'
-import React from 'react'
 
 const page = async () => {
   const user = await getUser()

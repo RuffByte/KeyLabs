@@ -2,11 +2,14 @@
 
 import React from 'react'
 import { RiGoogleFill } from '@remixicon/react'
-import { getGoogleOauthConsentUrl } from '@/app/login/login.action'
 import { toast } from 'sonner'
+
+import { getGoogleOauthConsentUrl } from '@/app/login/login.action'
+
 export const GoogleOAuthButton = () => {
   return (
     <button
+      className="flex items-center rounded-input justify-center w-full bg-white px-4 py-2 text-sm text-black hover:bg-gray-100"
       onClick={async () => {
         const res = await getGoogleOauthConsentUrl()
         if (res.url) {
