@@ -1,6 +1,7 @@
 'use client'
 
 import React from 'react'
+
 import { logOut } from '@/app/login/login.action'
 
 type Props = {

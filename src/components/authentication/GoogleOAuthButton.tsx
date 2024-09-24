@@ -2,8 +2,10 @@
 
 import React from 'react'
 import { RiGoogleFill } from '@remixicon/react'
-import { getGoogleOauthConsentUrl } from '@/app/login/login.action'
 import { toast } from 'sonner'
+
+import { getGoogleOauthConsentUrl } from '@/app/login/login.action'
+
 export const GoogleOAuthButton = () => {
   return (
     <button

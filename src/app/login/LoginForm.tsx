@@ -1,15 +1,16 @@
 'use client'
 
 import React from 'react'
-import { z } from 'zod'
+import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { signIn } from './login.action'
 import { toast } from 'sonner'
-import { useRouter } from 'next/navigation'
+import { z } from 'zod'
+
 import { GoogleOAuthButton } from '@/components/authentication/GoogleOAuthButton'
 import TextInput from '@/components/authentication/TextInput' // Import the TextInput component
 import Button from '@/components/common/Button'
+import { signIn } from './login.action'
 
 // Define the Zod schema
 export const signInSchema = z.object({
