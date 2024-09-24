@@ -1,9 +1,10 @@
-import { googleOAuthClient } from '@/lib/googleOauth'
-import { lucia } from '@/lib/lucia'
-import { prisma } from '@/lib/prisma'
 import { cookies } from 'next/headers'
 import { redirect } from 'next/navigation'
 import { NextRequest } from 'next/server'
+
+import { googleOAuthClient } from '@/lib/googleOauth'
+import { lucia } from '@/lib/lucia'
+import { prisma } from '@/lib/prisma'
 
 // http://localhost:3000/api/auth/google/callback
 export async function GET(req: NextRequest) {

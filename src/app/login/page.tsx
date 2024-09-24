@@ -1,8 +1,9 @@
 import React from 'react'
+import { redirect } from 'next/navigation'
+
+import { getUser } from '@/lib/lucia'
 import LoginForm from './LoginForm'
 import SignUpForm from './SignUpForm'
-import { getUser } from '@/lib/lucia'
-import { redirect } from 'next/navigation'
 
 const LoginPage = async () => {
   const user = await getUser()

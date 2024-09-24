@@ -1,14 +1,16 @@
 'use client'
 
 import React from 'react'
-import { z } from 'zod'
+import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
-import { signIn } from './login.action'
 import { toast } from 'sonner'
-import { useRouter } from 'next/navigation'
+import { z } from 'zod'
+
 import { GoogleOAuthButton } from '@/components/authentication/GoogleOAuthButton'
 import TextInput from '@/components/authentication/TextInput' // Import the TextInput component
+import Button from '@/components/common/Button'
+import { signIn } from './login.action'
 
 // Define the Zod schema
 export const signInSchema = z.object({
@@ -43,32 +45,35 @@ const LoginForm = () => {
   }
 
   return (
-    <div className="flex flex-col">
-      <GoogleOAuthButton />
-      <h1 className="mb-2 text-secondary-blue">Sign In Form</h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <TextInput
-          id="email"
-          type="email"
-          placeholder="Email"
-          register={register}
-          errors={errors.email?.message}
-        />
-        <TextInput
-          id="password"
-          type="password"
-          placeholder="Password"
-          register={register}
-          errors={errors.password?.message}
-        />
+    <div>
+      <h1 className="mb-2 text-secondary-blue font-bold">Login</h1>
+      <div className="flex flex-col w-[350px] gap-4">
+        <GoogleOAuthButton />
+        <hr />
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-1">
+          <TextInput
+            id="email"
+            type="email"
+            placeholder="Email"
+            {...register('email')}
+            errors={errors.email?.message}
+          />
+          <TextInput
+            id="password"
+            type="password"
+            placeholder="Password"
+            {...register('password')}
+            errors={errors.password?.message}
+          />
 
-        <button
-          type="submit"
-          className="rounded bg-background-darker px-5 py-1 text-sm text-white"
-        >
-          Login
-        </button>
-      </form>
+          <Button
+            type="submit"
+            className="rounded bg-background-darker px-5 py-1 text-sm mt-2 text-white"
+          >
+            Login
+          </Button>
+        </form>
+      </div>
     </div>
   )
 }
