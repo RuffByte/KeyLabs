@@ -32,7 +32,7 @@ export const page = () => {
           id="email"
           type="email"
           placeholder="Email"
-          register={register}
+          {...register('email')}
           errors={errors.email?.message}
         />
         <button

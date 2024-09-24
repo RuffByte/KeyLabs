@@ -10,14 +10,8 @@ import { signUpSchema } from '@/schemas/zod/schemas'
 import { redirect } from 'next/navigation'
 import { generateState } from 'arctic'
 import { generateCodeVerifier } from 'oslo/oauth2'
-import { Argon2id } from 'oslo/password'
-import { z } from 'zod'
 
 import { googleOAuthClient } from '@/lib/googleOauth'
-import { lucia } from '@/lib/lucia'
-import { prisma } from '@/lib/prisma'
-import { signInSchema } from './LoginForm'
-import { signUpSchema } from './SignUpForm'
 
 export const signUp = async (values: z.infer<typeof signUpSchema>) => {
   try {
