@@ -38,7 +38,9 @@ export const page = () => {
         <button
           type="submit"
           className="rounded bg-background-darker px-5 py-1 text-sm text-white"
-        ></button>
+        >
+          Send reset email
+        </button>
       </form>
     </div>
   )
