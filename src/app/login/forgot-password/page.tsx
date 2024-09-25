@@ -5,10 +5,10 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
-import { useRouter } from 'next/navigation';
 import { forgetPasswordSchema } from '@/schemas/zod/schemas';
 import TextInput from '@/components/authentication/TextInput';
 import { resetPasswordAction } from './actions';
+import Button from '@/components/common/Button';
 
 export const page = () => {
   const {
@@ -42,12 +42,12 @@ export const page = () => {
           {...register('email')}
           errors={errors.email?.message}
         />
-        <button
-          type="submit"
-          className="rounded bg-background-darker px-5 py-1 text-sm text-white"
-        >
-          Send reset email
-        </button>
+         <Button
+            type="submit"
+            className="rounded bg-background-darker px-5 py-1 text-sm mt-2 text-white"
+          >
+            Send Reset Password
+          </Button>
       </form>
     </div>
   )

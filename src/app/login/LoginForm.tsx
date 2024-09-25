@@ -12,6 +12,7 @@ import TextInput from '@/components/authentication/TextInput' // Import the Text
 import Button from '@/components/common/Button'
 import { signIn } from './login.action'
 import { signInSchema } from '@/schemas/zod/schemas'
+import Link from 'next/link'
 
 const LoginForm = () => {
   const router = useRouter()
@@ -68,6 +69,12 @@ const LoginForm = () => {
             Login
           </Button>
         </form>
+       
+        <Link href="/login/forgot-password">
+          <Button className="rounded bg-background-darker px-5 py-1 text-sm mt-2 text-white">
+              Forgot Password
+          </Button>
+        </Link>
       </div>
     </div>
   )
