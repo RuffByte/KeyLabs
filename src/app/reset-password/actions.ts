@@ -43,6 +43,7 @@ export const resetPasswordAction = async ({
       data: { hashedPassword: hashedPassword },
     });
 
+
     await prisma.passwordResetToken.delete({
       where: { id: resetToken.id },
     });
