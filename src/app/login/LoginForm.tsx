@@ -11,12 +11,8 @@ import { GoogleOAuthButton } from '@/components/authentication/GoogleOAuthButton
 import TextInput from '@/components/authentication/TextInput' // Import the TextInput component
 import Button from '@/components/common/Button'
 import { signIn } from './login.action'
-
-// Define the Zod schema
-export const signInSchema = z.object({
-  email: z.string().email(),
-  password: z.string().min(8, 'Password must be at least 8 characters long'),
-})
+import { signInSchema } from '@/schemas/zod/schemas'
+import Link from 'next/link'
 
 const LoginForm = () => {
   const router = useRouter()
@@ -52,14 +48,14 @@ const LoginForm = () => {
         <hr />
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-1">
           <TextInput
-            id="email"
+            id="login-email"
             type="email"
             placeholder="Email"
             {...register('email')}
             errors={errors.email?.message}
           />
           <TextInput
-            id="password"
+            id="login-password"
             type="password"
             placeholder="Password"
             {...register('password')}
@@ -73,6 +69,12 @@ const LoginForm = () => {
             Login
           </Button>
         </form>
+       
+        <Link href="/login/forgot-password">
+          <Button className="rounded bg-background-darker px-5 py-1 text-sm mt-2 text-white">
+              Forgot Password
+          </Button>
+        </Link>
       </div>
     </div>
   )

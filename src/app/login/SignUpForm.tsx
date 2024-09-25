@@ -1,34 +1,18 @@
 'use client'
 
-import React from 'react'
-import { useRouter } from 'next/navigation'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
-import { z } from 'zod'
+import React from 'react';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { signUp } from './login.action';
+import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
+import TextInput from '@/components/authentication/TextInput'; // Import the TextInput component
+import { signUpSchema } from '@/schemas/zod/schemas';
 
-import TextInput from '@/components/authentication/TextInput' // Import the TextInput component
-
-import Button from '@/components/common/Button'
-import { signUp } from './login.action'
-
-// Define the Zod schema
-export const signUpSchema = z
-  .object({
-    name: z.string().min(5, 'Name must be at least 5 characters long'),
-    email: z.string().email(),
-    password: z.string().min(8, 'Password must be at least 8 characters long'),
-    confirmPassword: z
-      .string()
-      .min(8, 'Password must be at least 8 characters long'),
-  })
-  .refine((data) => data.password === data.confirmPassword, {
-    message: 'Passwords do not match',
-    path: ['confirmPassword'],
-  })
 
 const SignUpForm = () => {
-  const router = useRouter()
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -41,57 +25,61 @@ const SignUpForm = () => {
       password: '',
       confirmPassword: '',
     },
-  })
+  });
 
   // Handle form submission
   async function onSubmit(values: z.infer<typeof signUpSchema>) {
-    const res = await signUp(values)
+    const res = await signUp(values);
     if (res.success) {
-      toast.success('Account created successfully')
-      router.push('/dashboard')
+      toast.success('Account created successfully');
+      router.push('/dashboard');
     } else {
-      toast.error(res.error)
+      toast.error(res.error);
     }
   }
 
   return (
-    <div className="flex flex-col gap-2 w-[350px]">
-      <h1 className="mb-2 text-secondary-blue font-bold">Sign Up</h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-1">
+    <div className="flex flex-col">
+      <h1 className="mb-2 text-secondary-blue">Sign Up Form</h1>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <TextInput
-          id="name"
           type="text"
-          placeholder="Name"
+          id="name"
           {...register('name')}
+          placeholder="Name"
           errors={errors.name?.message}
         />
         <TextInput
-          id="email"
           type="email"
-          placeholder="Email"
+          id="signup-email"
           {...register('email')}
+          placeholder="Email"
           errors={errors.email?.message}
         />
         <TextInput
-          id="password"
           type="password"
-          placeholder="Password"
+          id="signup-password"
           {...register('password')}
+          placeholder="Password"
           errors={errors.password?.message}
         />
         <TextInput
-          id="confirmPassword"
           type="password"
-          placeholder="Confirm Password"
+          id="confirmPassword"
           {...register('confirmPassword')}
+          placeholder="Confirm Password"
           errors={errors.confirmPassword?.message}
         />
-        <Button type="submit" className="mt-2">
+
+        <button
+          type="submit"
+          className="rounded bg-background-darker px-5 py-1 text-sm text-white"
+        >
           Sign Up
-        </Button>
+        </button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default SignUpForm
+export default SignUpForm;
