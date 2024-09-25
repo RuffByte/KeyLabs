@@ -2,7 +2,7 @@
 
 import { sendResetEmail } from "@/services/email/sendResetEmail";
 import { z } from "zod"; 
-import { rateLimitByKey } from "@/lib/limiter"; 
+import { rateLimitByIp } from "@/lib/limiter"; 
 
 const resetPasswordInputSchema = z.object({
   email: z.string().email(),
@@ -11,8 +11,8 @@ const resetPasswordInputSchema = z.object({
 export const resetPasswordAction = async (input: { email: string }) => {
   const validatedInput = resetPasswordInputSchema.parse(input);
 
-  // Rate limiting
-  await rateLimitByKey({ key: validatedInput.email, limit: 1, window: 30000 });
+
+  //await rateLimitByIp({ key: validatedInput.email, limit: 1, window: 30000 });
 
   try {
     await sendResetEmail(validatedInput.email);
@@ -23,8 +23,10 @@ export const resetPasswordAction = async (input: { email: string }) => {
       if (error.message === 'No user found with that email') {
         return { success: false, message: "No user found with that email." };
       }
+      console.log(error.message)
       return { success: false, message: "Email has failed to send." };
     }
+ 
     return { success: false, message: "An unknown error occurred." };
   }
 };

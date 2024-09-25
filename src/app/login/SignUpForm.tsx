@@ -51,14 +51,14 @@ const SignUpForm = () => {
         />
         <TextInput
           type="email"
-          id="email"
+          id="signup-email"
           {...register('email')}
           placeholder="Email"
           errors={errors.email?.message}
         />
         <TextInput
           type="password"
-          id="password"
+          id="signup-password"
           {...register('password')}
           placeholder="Password"
           errors={errors.password?.message}

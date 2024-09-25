@@ -48,14 +48,14 @@ const LoginForm = () => {
         <hr />
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-1">
           <TextInput
-            id="email"
+            id="login-email"
             type="email"
             placeholder="Email"
             {...register('email')}
             errors={errors.email?.message}
           />
           <TextInput
-            id="password"
+            id="login-password"
             type="password"
             placeholder="Password"
             {...register('password')}

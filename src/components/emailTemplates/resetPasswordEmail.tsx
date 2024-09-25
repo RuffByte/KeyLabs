@@ -26,13 +26,13 @@ export function ResetPasswordEmail({ token }: { token: string }) {
           <Body className="mx-auto my-auto bg-white font-sans">
             <Container className="mx-auto my-[40px] w-[465px] rounded border border-solid border-[#eaeaea] p-[20px]">
               <Section className="mt-[32px]">
-                <Img
-                  src={`${BASE_URL}/group.jpeg`}
+                {/*<Img
+                  src="/assets/RuffByte.jpg"
                   width="160"
                   height="48"
                   alt="StarterKit"
                   className="mx-auto my-0"
-                />
+                />*/}
               </Section>
 
               <Section className="mb-[32px] mt-[32px] text-center">
