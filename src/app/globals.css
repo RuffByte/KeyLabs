@@ -4,8 +4,9 @@
 
 :root {
   --background-dark: #282a36;
-  --background-darker: #20222c;
+  --background: hsl(230, 16%, 15%);
   --primary-accent: #9d7ccf;
-  --secondary-blue: #6272a4;
-  --highlight-lavender: #9d7ccf;
+  --secondary-blue: hsl(225, 27%, 51%);
+  --highlight-lavender: hsl(264, 46%, 65%);
+  --foreground: hsl(40, 8%, 7%);
 }

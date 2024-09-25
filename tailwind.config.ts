@@ -12,8 +12,15 @@ const config: Config = {
         'background-dark': 'var(--background-dark)',
         'background-darker': 'var(--background-darker)',
         'primary-accent': 'var(--primary-accent)',
-        'secondary-blue': 'var(--secondary-blue)',
-        'highlight-lavender': 'var(--highlight-lavender)',
+        secondary: 'var(--secondary-blue)',
+        highlight: 'var(--highlight-lavender)',
+        foreground: 'var(--foreground)',
+      },
+      fontFamily: {
+        kollektif: ['var(--font-kollektic)'],
+      },
+      screens: {
+        desktop: '1440px',
       },
       borderRadius: {
         input: '8px',

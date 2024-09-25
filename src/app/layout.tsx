@@ -5,6 +5,8 @@ import './globals.css'
 
 import { Toaster } from 'sonner'
 
+import { NavBar } from '@/components/common/navigation/navbar'
+
 const geistSans = localFont({
   src: '../fonts/GeistVF.woff',
   variable: '--font-geist-sans',
@@ -14,6 +16,32 @@ const geistMono = localFont({
   src: '../fonts/GeistMonoVF.woff',
   variable: '--font-geist-mono',
   weight: '100 900',
+})
+
+const kollektif = localFont({
+  src: [
+    {
+      path: '../fonts/Kollektif/Kollektif.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../fonts/Kollektif/Kollektif-Bold.ttf',
+      weight: '700',
+      style: 'normal',
+    },
+    {
+      path: '../fonts/Kollektif/Kollektif-BoldItalic.ttf',
+      weight: '700',
+      style: 'italic',
+    },
+    {
+      path: '../fonts/Kollektif/Kollektif-Italic.ttf',
+      weight: '400',
+      style: 'italic',
+    },
+  ],
+  variable: '--font-kollektic',
 })
 
 export const metadata: Metadata = {
@@ -29,8 +57,9 @@ export default function RootLayout({
   return (
     <html lang="en" className="bg-background-dark">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${kollektif.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <NavBar />
         {children}
         <Toaster richColors />
       </body>
