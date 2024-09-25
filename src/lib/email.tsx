@@ -1,4 +1,3 @@
-import { Resend } from "resend";
 import { ReactNode } from "react";
 import { fromEmail, resend } from "./resend";
 
