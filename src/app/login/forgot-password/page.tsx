@@ -1,18 +1,16 @@
 'use client'
 
-import React from 'react'
-
-import { z } from 'zod'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
-import { useRouter } from 'next/navigation'
-import { forgetPasswordSchema } from '@/schemas/zod/schemas'
-import TextInput from '@/components/authentication/TextInput'
+import React from 'react';
+import { z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { useRouter } from 'next/navigation';
+import { forgetPasswordSchema } from '@/schemas/zod/schemas';
+import TextInput from '@/components/authentication/TextInput';
+import { resetPasswordAction } from './actions';
 
 export const page = () => {
-  async function onSubmit(values: z.infer<typeof forgetPasswordSchema>) {}
-
   const {
     register,
     handleSubmit,
@@ -22,7 +20,16 @@ export const page = () => {
     defaultValues: {
       email: '',
     },
-  })
+  });
+
+  async function onSubmit(values: z.infer<typeof forgetPasswordSchema>) {
+    const result = await resetPasswordAction(values);
+    if (result.success) {
+      toast.success(result.message);
+    } else {
+      toast.error(result.message);
+    }
+  }
 
   return (
     <div className="flex h-dvh w-dvw flex-col items-center justify-center">
@@ -46,4 +53,4 @@ export const page = () => {
   )
 }
 
-export default page
+export default page;
