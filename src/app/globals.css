@@ -3,11 +3,11 @@
 @tailwind utilities;
 
 :root {
-  --background: hsl(52, 45%, 94%);
-  --background-muted: hsl(230, 16%, 15%);
-  --accent: #ebdbc1;
-  --secondary: hsl(225, 27%, 51%);
-  --highlight: hsl(264, 46%, 65%);
-  --foreground: hsl(40, 8%, 7%);
-  --input: #ffffff;
+  --background: 52, 45%, 94%;
+  --background-muted: 230, 16%, 15%;
+  --accent: 37, 51%, 84%;
+  --secondary: 225, 27%, 51%;
+  --highlight: 264, 46%, 65%;
+  --foreground: 40, 8%, 7%;
+  --input: 0, 0%, 100%;
 }

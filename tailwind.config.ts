@@ -9,13 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: 'var(--background)',
-        accent: 'var(--accent)',
-        'primary-accent': 'var(--primary-accent)',
-        secondary: 'var(--secondary)',
-        highlight: 'var(--highlight)',
-        foreground: 'var(--foreground)',
-        input: 'var(--input)',
+        background: 'hsl(var(--background))',
+        accent: 'hsl(var(--accent))',
+        'primary-accent': 'hsl(var(--primary-accent))',
+        secondary: 'hsl(var(--secondary))',
+        highlight: 'hsl(var(--highlight))',
+        foreground: 'hsl(var(--foreground))',
+        input: 'hsl(var(--input))',
       },
       fontFamily: {
         kollektif: ['var(--font-kollektic)'],
