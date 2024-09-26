@@ -9,11 +9,19 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'background-dark': 'var(--background-dark)',
-        'background-darker': 'var(--background-darker)',
-        'primary-accent': 'var(--primary-accent)',
-        'secondary-blue': 'var(--secondary-blue)',
-        'highlight-lavender': 'var(--highlight-lavender)',
+        background: 'hsl(var(--background))',
+        accent: 'hsl(var(--accent))',
+        'primary-accent': 'hsl(var(--primary-accent))',
+        secondary: 'hsl(var(--secondary))',
+        highlight: 'hsl(var(--highlight))',
+        foreground: 'hsl(var(--foreground))',
+        input: 'hsl(var(--input))',
+      },
+      fontFamily: {
+        kollektif: ['var(--font-kollektic)'],
+      },
+      screens: {
+        desktop: '1440px',
       },
       borderRadius: {
         input: '8px',

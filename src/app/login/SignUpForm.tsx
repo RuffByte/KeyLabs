@@ -1,18 +1,20 @@
 'use client'
 
-import React from 'react';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { signUp } from './login.action';
-import { useRouter } from 'next/navigation';
-import { toast } from 'sonner';
-import TextInput from '@/components/authentication/TextInput'; // Import the TextInput component
-import { signUpSchema } from '@/schemas/zod/schemas';
+import React from 'react'
+import { useRouter } from 'next/navigation'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import { z } from 'zod'
 
+import TextInput from '@/components/authentication/TextInput' // Import the TextInput component
+
+import Button from '@/components/common/Button'
+import { signUpSchema } from '@/schemas/zod/schemas'
+import { signUp } from './login.action'
 
 const SignUpForm = () => {
-  const router = useRouter();
+  const router = useRouter()
   const {
     register,
     handleSubmit,
@@ -25,22 +27,24 @@ const SignUpForm = () => {
       password: '',
       confirmPassword: '',
     },
-  });
+  })
 
   // Handle form submission
   async function onSubmit(values: z.infer<typeof signUpSchema>) {
-    const res = await signUp(values);
+    const res = await signUp(values)
     if (res.success) {
-      toast.success('Account created successfully');
-      router.push('/dashboard');
+      toast.success('Account created successfully')
+      router.push('/dashboard')
     } else {
-      toast.error(res.error);
+      toast.error(res.error)
     }
   }
 
   return (
-    <div className="flex flex-col">
-      <h1 className="mb-2 text-secondary-blue">Sign Up Form</h1>
+    <div className="flex flex-col w-[350px]">
+      <h1 className="mb-2 text-foreground text-xl font-bold font-kollektif">
+        Sign up
+      </h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextInput
           type="text"
@@ -71,15 +75,10 @@ const SignUpForm = () => {
           errors={errors.confirmPassword?.message}
         />
 
-        <button
-          type="submit"
-          className="rounded bg-background-darker px-5 py-1 text-sm text-white"
-        >
-          Sign Up
-        </button>
+        <Button>Sign Up</Button>
       </form>
     </div>
-  );
-};
+  )
+}
 
-export default SignUpForm;
+export default SignUpForm

@@ -3,7 +3,10 @@ import localFont from 'next/font/local'
 
 import './globals.css'
 
+import Head from 'next/head'
 import { Toaster } from 'sonner'
+
+import { NavBar } from '@/components/common/navigation/navbar'
 
 const geistSans = localFont({
   src: '../fonts/GeistVF.woff',
@@ -14,6 +17,32 @@ const geistMono = localFont({
   src: '../fonts/GeistMonoVF.woff',
   variable: '--font-geist-mono',
   weight: '100 900',
+})
+
+const kollektif = localFont({
+  src: [
+    {
+      path: '../fonts/Kollektif/Kollektif.ttf',
+      weight: '400',
+      style: 'normal',
+    },
+    {
+      path: '../fonts/Kollektif/Kollektif-Bold.ttf',
+      weight: '700',
+      style: 'normal',
+    },
+    {
+      path: '../fonts/Kollektif/Kollektif-BoldItalic.ttf',
+      weight: '700',
+      style: 'italic',
+    },
+    {
+      path: '../fonts/Kollektif/Kollektif-Italic.ttf',
+      weight: '400',
+      style: 'italic',
+    },
+  ],
+  variable: '--font-kollektic',
 })
 
 export const metadata: Metadata = {
@@ -27,12 +56,25 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className="bg-background-dark">
+    <html lang="en" className="bg-background">
+      <Head>
+        <meta property="og:site_name" content="KeyLabs" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="KeyLabs" />
+        <meta
+          property="og:description"
+          content="A website where you click and aim letters"
+        />
+        <meta property="og:image" content="/og-image.png" />
+      </Head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${kollektif.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
-        <Toaster richColors />
+        <div className="min-h-dvh flex flex-col">
+          <NavBar />
+          {children}
+          <Toaster richColors />
+        </div>
       </body>
     </html>
   )

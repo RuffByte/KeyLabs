@@ -1,5 +1,4 @@
-import * as React from "react";
-
+import * as React from 'react'
 import {
   Body,
   Container,
@@ -12,9 +11,9 @@ import {
   Section,
   Tailwind,
   Text,
-} from "@react-email/components";
+} from '@react-email/components'
 
-export const BASE_URL = process.env.NEXT_PUBLIC_URL;
+export const BASE_URL = process.env.NEXT_PUBLIC_URL
 
 export function ResetPasswordEmail({ token }: { token: string }) {
   return (
@@ -61,5 +60,5 @@ export function ResetPasswordEmail({ token }: { token: string }) {
         </React.Fragment>
       </Tailwind>
     </Html>
-  );
+  )
 }

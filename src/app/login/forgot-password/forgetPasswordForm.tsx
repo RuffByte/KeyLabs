@@ -1,15 +1,15 @@
-'use client';
+'use client'
 
-import React from 'react';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { toast } from 'sonner';
+import React from 'react'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
+import { z } from 'zod'
 
-import { forgetPasswordSchema } from '@/schemas/zod/schemas';
-import TextInput from '@/components/authentication/TextInput';
-import { resetPasswordAction } from './actions';
-import Button from '@/components/common/Button';
+import TextInput from '@/components/authentication/TextInput'
+import Button from '@/components/common/Button'
+import { forgetPasswordSchema } from '@/schemas/zod/schemas'
+import { resetPasswordAction } from './actions'
 
 const ForgetPasswordForm: React.FC = () => {
   const {
@@ -21,19 +21,22 @@ const ForgetPasswordForm: React.FC = () => {
     defaultValues: {
       email: '',
     },
-  });
+  })
 
   const onSubmit = async (values: z.infer<typeof forgetPasswordSchema>) => {
-    const result = await resetPasswordAction(values);
+    const result = await resetPasswordAction(values)
     if (result.success) {
-      toast.success(result.message);
+      toast.success(result.message)
     } else {
-      toast.error(result.message);
+      toast.error(result.message)
     }
-  };
+  }
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 w-[350px]">
+    <form
+      onSubmit={handleSubmit(onSubmit)}
+      className="flex flex-col gap-4 w-[350px]"
+    >
       <TextInput
         id="email"
         type="email"
@@ -41,11 +44,14 @@ const ForgetPasswordForm: React.FC = () => {
         {...register('email')}
         errors={errors.email?.message}
       />
-      <Button type="submit" className="rounded bg-background-darker px-5 py-1 text-sm mt-2 text-white">
+      <Button
+        type="submit"
+        className="rounded bg-input px-5 py-1 text-sm mt-2 text-foreground"
+      >
         Send Reset Password
       </Button>
     </form>
-  );
-};
+  )
+}
 
-export default ForgetPasswordForm;
+export default ForgetPasswordForm

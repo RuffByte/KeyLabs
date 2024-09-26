@@ -1,19 +1,20 @@
-  import { ReactNode } from "react";
-  import { fromEmail, resend } from "./resend";
+import { ReactNode } from 'react'
 
-  export async function sendEmail(
-    email: string,
-    subject: string,
-    body: ReactNode,
-  ) {
-    const { error } = await resend.emails.send({
-      from: fromEmail,
-      to: email,
-      subject,
-      react: <>{body}</>,
-    });
+import { fromEmail, resend } from './resend'
 
-    if (error) {
-      throw error;
-    }
+export async function sendEmail(
+  email: string,
+  subject: string,
+  body: ReactNode
+) {
+  const { error } = await resend.emails.send({
+    from: fromEmail,
+    to: email,
+    subject,
+    react: <>{body}</>,
+  })
+
+  if (error) {
+    throw error
   }
+}

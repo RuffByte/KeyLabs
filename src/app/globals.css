@@ -2,10 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+.root {
+  height: 100vh;
+}
+
 :root {
-  --background-dark: #282a36;
-  --background-darker: #20222c;
-  --primary-accent: #9d7ccf;
-  --secondary-blue: #6272a4;
-  --highlight-lavender: #9d7ccf;
+  --background: 52, 45%, 94%;
+  --background-muted: 230, 16%, 15%;
+  --accent: 37, 51%, 84%;
+  --secondary: 225, 27%, 51%;
+  --highlight: 264, 46%, 65%;
+  --foreground: 40, 8%, 7%;
+  --input: 0, 0%, 100%;
 }
