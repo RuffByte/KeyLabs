@@ -70,9 +70,11 @@ export default function RootLayout({
       <body
         className={`${kollektif.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <NavBar />
-        {children}
-        <Toaster richColors />
+        <div className="min-h-dvh flex flex-col">
+          <NavBar />
+          {children}
+          <Toaster richColors />
+        </div>
       </body>
     </html>
   )

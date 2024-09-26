@@ -9,7 +9,7 @@ interface ButtonProps
 }
 
 const button = tv({
-  base: 'rounded-input bg-input h-input px-8 p-2 w-full text-sm text-white',
+  base: 'rounded-input bg-input h-input px-8 p-2 w-full text-sm text-foregound',
   variants: {
     variant: {
       outline: '',

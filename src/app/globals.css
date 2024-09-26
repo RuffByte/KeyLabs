@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.root {
+  height: 100vh;
+}
+
 :root {
   --background: 52, 45%, 94%;
   --background-muted: 230, 16%, 15%;

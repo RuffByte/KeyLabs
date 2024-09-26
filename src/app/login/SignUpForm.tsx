@@ -8,6 +8,8 @@ import { toast } from 'sonner'
 import { z } from 'zod'
 
 import TextInput from '@/components/authentication/TextInput' // Import the TextInput component
+
+import Button from '@/components/common/Button'
 import { signUpSchema } from '@/schemas/zod/schemas'
 import { signUp } from './login.action'
 
@@ -39,8 +41,10 @@ const SignUpForm = () => {
   }
 
   return (
-    <div className="flex flex-col">
-      <h1 className="mb-2 text-secondary">Sign Up Form</h1>
+    <div className="flex flex-col w-[350px]">
+      <h1 className="mb-2 text-foreground text-xl font-bold font-kollektif">
+        Sign up
+      </h1>
       <form onSubmit={handleSubmit(onSubmit)}>
         <TextInput
           type="text"
@@ -71,12 +75,7 @@ const SignUpForm = () => {
           errors={errors.confirmPassword?.message}
         />
 
-        <button
-          type="submit"
-          className="rounded bg-input px-5 py-1 text-sm text-foreground w-full"
-        >
-          Sign Up
-        </button>
+        <Button>Sign Up</Button>
       </form>
     </div>
   )

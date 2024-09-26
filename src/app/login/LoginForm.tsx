@@ -42,7 +42,9 @@ const LoginForm = () => {
 
   return (
     <div>
-      <h1 className="mb-2 text-secondary font-bold">Login</h1>
+      <h1 className="mb-2 text-foreground text-xl font-bold font-kollektif">
+        Login
+      </h1>
       <div className="flex flex-col w-[350px] gap-4">
         <GoogleOAuthButton />
         <hr />
