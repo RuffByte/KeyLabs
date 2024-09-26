@@ -1,5 +1,3 @@
-'use server'
-
 import { cookies } from 'next/headers'
 import { PrismaAdapter } from '@lucia-auth/adapter-prisma'
 import { Lucia } from 'lucia'
