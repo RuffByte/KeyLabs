@@ -3,6 +3,7 @@ import localFont from 'next/font/local'
 
 import './globals.css'
 
+import Head from 'next/head'
 import { Toaster } from 'sonner'
 
 import { NavBar } from '@/components/common/navigation/navbar'
@@ -56,6 +57,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="bg-background">
+      <Head>
+        <meta property="og:site_name" content="KeyLabs" />
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="KeyLabs" />
+        <meta
+          property="og:description"
+          content="A website where you click and aim letters"
+        />
+        <meta property="og:image" content="/og-image.png" />
+      </Head>
       <body
         className={`${kollektif.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
