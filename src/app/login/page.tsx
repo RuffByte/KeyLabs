@@ -9,7 +9,7 @@ const LoginPage = async () => {
   const user = await getUser()
   if (user) return redirect('/dashboard')
   return (
-    <div className="flex h-dvh w-dvw items-center justify-around">
+    <div className="flex h-dvh w-full items-center justify-around">
       <SignUpForm />
       <LoginForm />
     </div>

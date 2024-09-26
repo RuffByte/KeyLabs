@@ -9,12 +9,13 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'background-dark': 'var(--background-dark)',
-        'background-darker': 'var(--background-darker)',
+        background: 'var(--background)',
+        accent: 'var(--accent)',
         'primary-accent': 'var(--primary-accent)',
-        secondary: 'var(--secondary-blue)',
-        highlight: 'var(--highlight-lavender)',
+        secondary: 'var(--secondary)',
+        highlight: 'var(--highlight)',
         foreground: 'var(--foreground)',
+        input: 'var(--input)',
       },
       fontFamily: {
         kollektif: ['var(--font-kollektic)'],
