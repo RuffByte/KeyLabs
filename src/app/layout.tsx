@@ -4,9 +4,9 @@ import localFont from 'next/font/local'
 import './globals.css'
 
 import Head from 'next/head'
-import { Toaster } from 'sonner'
 
-import { NavBar } from '@/components/common/navigation/navbar'
+import { NavigationBar } from '@/components/common/ui/navigation/navbar'
+import Transition from '@/components/common/ui/transition/Transition'
 
 const geistSans = localFont({
   src: '../fonts/GeistVF.woff',
@@ -70,11 +70,14 @@ export default function RootLayout({
       <body
         className={`${kollektif.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <div className="min-h-dvh flex flex-col">
-          <NavBar />
-          {children}
-          <Toaster richColors />
-        </div>
+        <Transition>
+          <div className="h-dvh w-dvw grid place-items-center">
+            <div className="max-w-screen-desktop w-full h-full relative flex flex-col box-border">
+              <NavigationBar />
+              {children}
+            </div>
+          </div>
+        </Transition>
       </body>
     </html>
   )

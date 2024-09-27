@@ -9,7 +9,7 @@ import { z } from 'zod'
 
 import TextInput from '@/components/authentication/TextInput' // Import the TextInput component
 
-import Button from '@/components/common/Button'
+import Button from '@/components/common/button'
 import { signUpSchema } from '@/schemas/zod/schemas'
 import { signUp } from './login.action'
 
@@ -42,13 +42,11 @@ const SignUpForm = () => {
 
   return (
     <div className="flex flex-col w-[350px]">
-      <h1 className="mb-2 text-foreground text-xl font-bold font-kollektif">
-        Sign up
-      </h1>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <h1 className="mb-2 text-foreground text-xl font-bold">Sign up</h1>
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
         <TextInput
           type="text"
-          id="name"
+          id="signup-name"
           {...register('name')}
           placeholder="Name"
           errors={errors.name?.message}
@@ -69,13 +67,12 @@ const SignUpForm = () => {
         />
         <TextInput
           type="password"
-          id="confirmPassword"
+          id="confirm-password"
           {...register('confirmPassword')}
           placeholder="Confirm Password"
           errors={errors.confirmPassword?.message}
         />
-
-        <Button>Sign Up</Button>
+        <Button className="">Sign Up</Button>
       </form>
     </div>
   )

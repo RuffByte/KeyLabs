@@ -1,4 +1,4 @@
-import { ResetPasswordEmail } from '@/components/emailTemplates/resetPasswordEmail'
+import { ResetPasswordEmail } from '@/components/common/ui/emailTemplates/resetPasswordEmail'
 import { sendEmail } from '@/lib/email'
 import { prisma } from '@/lib/prisma'
 import { createPasswordResetToken } from '../auth/tokens/createPasswordResetToken'
