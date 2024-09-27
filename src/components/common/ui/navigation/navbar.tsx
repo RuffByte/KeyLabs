@@ -2,7 +2,7 @@ import React from 'react'
 import { Info, Keyboard, Settings, User } from 'lucide-react'
 
 import { TLink } from '../transition/TLink'
-import { Dropdown } from '../wrapper/dropdown'
+import { Dropdown, DropdownLinkItem } from '../wrapper/dropdown'
 
 export const NavigationBar = () => {
   return (
@@ -19,9 +19,15 @@ export const NavigationBar = () => {
         </TLink>
         <Info size={28} />
         <Settings size={28} />
-        <Dropdown>
-          <User size={28} />
-        </Dropdown>
+        <Dropdown
+          dropdownDisplay={<User size={28} />}
+          dropdownItems={
+            <DropdownLinkItem
+              href="/login"
+              dropdownItem={['User profile', 'Log out']}
+            />
+          }
+        ></Dropdown>
       </div>
     </div>
   )

@@ -12,6 +12,7 @@ const config: Config = {
         background: 'hsl(var(--background))',
         secondary: 'hsl(var(--secondary))',
         foreground: 'hsl(var(--foreground))',
+        tertiary: 'hsl(var(--tertiary))',
         input: 'hsl(var(--tertiary))',
       },
       fontFamily: {

@@ -45,9 +45,9 @@ const LoginForm = () => {
       <h1 className="mb-2 text-foreground text-xl font-bold font-kollektif">
         Login
       </h1>
-      <div className="flex flex-col w-[350px] gap-4">
+      <div className="flex flex-col w-[350px] gap-2">
         <GoogleOAuthButton />
-        <hr className="border-t-2 border-secondary" />
+        <hr className="border-t-2 border-tertiary" />
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
           <TextInput
             id="login-email"
