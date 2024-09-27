@@ -23,6 +23,7 @@ model User {
   picture        String?
   session        Session[]
   resetTokens    PasswordResetToken[]
+  GameEntry      GameEntry[]
 }
 
 model Session {
@@ -39,4 +40,21 @@ model PasswordResetToken {
   token     String   @unique
   expiresAt DateTime
   user      User     @relation(fields: [userId], references: [id])
+}
+
+model GameEntry {
+  id           String   @id @default(cuid())
+  userId       String
+  mode         String
+  language     String
+  wpm          Int
+  charsTyped   Int
+  clicks       Int
+  accuracy     Float
+  gameDuration Int
+  wordGoal     Int?
+  timeGoal     Int?
+  createdAt    DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id])
 }
