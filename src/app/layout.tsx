@@ -72,7 +72,7 @@ export default function RootLayout({
       >
         <Transition>
           <div className="h-dvh w-dvw grid place-items-center">
-            <div className="max-w-screen-desktop w-full h-full flex flex-col">
+            <div className="max-w-screen-desktop w-full h-full relative flex flex-col box-border">
               <NavigationBar />
               {children}
             </div>

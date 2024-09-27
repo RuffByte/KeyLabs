@@ -5,11 +5,12 @@ import { RiGoogleFill } from '@remixicon/react'
 import { toast } from 'sonner'
 
 import { getGoogleOauthConsentUrl } from '@/app/login/login.action'
+import Button from '../common/Button'
 
 export const GoogleOAuthButton = () => {
   return (
-    <button
-      className="flex items-center rounded-input justify-center w-full bg-white px-4 py-2 text-sm text-black hover:bg-gray-100"
+    <Button
+      className="flex items-center rounded-input justify-center w-full bg-white px-4 py-2 text-sm text-black hover:bg-gray-100 hover:border"
       onClick={async () => {
         const res = await getGoogleOauthConsentUrl()
         if (res.url) {
@@ -21,6 +22,6 @@ export const GoogleOAuthButton = () => {
     >
       <RiGoogleFill className="mr-2 h-4 w-4" />
       Continue with Google!
-    </button>
+    </Button>
   )
 }

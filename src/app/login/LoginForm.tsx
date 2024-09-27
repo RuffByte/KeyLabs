@@ -1,7 +1,6 @@
 'use client'
 
 import React from 'react'
-import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
@@ -11,6 +10,7 @@ import { z } from 'zod'
 import { GoogleOAuthButton } from '@/components/authentication/GoogleOAuthButton'
 import TextInput from '@/components/authentication/TextInput' // Import the TextInput component
 import Button from '@/components/common/Button'
+import TLink from '@/components/common/transition/TLink'
 import { signInSchema } from '@/schemas/zod/schemas'
 import { signIn } from './login.action'
 
@@ -47,8 +47,8 @@ const LoginForm = () => {
       </h1>
       <div className="flex flex-col w-[350px] gap-4">
         <GoogleOAuthButton />
-        <hr />
-        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-1">
+        <hr className="border-t-2 border-secondary" />
+        <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
           <TextInput
             id="login-email"
             type="email"
@@ -64,19 +64,11 @@ const LoginForm = () => {
             errors={errors.password?.message}
           />
 
-          <Button
-            type="submit"
-            className="rounded bg-input px-5 py-1 text-sm mt-2 text-foreground"
-          >
-            Login
-          </Button>
+          <Button type="submit">Login</Button>
         </form>
-
-        <Link href="/login/forgot-password">
-          <Button className="rounded bg-input px-5 py-1 text-sm mt-2 text-foreground">
-            Forgot Password
-          </Button>
-        </Link>
+        <TLink href="/login/forgot-password">
+          <Button>Forgot Password</Button>
+        </TLink>
       </div>
     </div>
   )

@@ -3,7 +3,8 @@
 @tailwind utilities;
 
 * {
-  @apply border border-black;
+  /* @apply border border-black; */
+  font-family: var(--font-kollektic);
 }
 
 html {
@@ -11,11 +12,17 @@ html {
 }
 
 :root {
-  --background: 52, 45%, 94%; /*hsl(52, 45%, 94%)*/
-  --background-muted: 230, 16%, 15%; /*hsl(230, 16%, 15%)*/
-  --accent: 37, 51%, 84%; /*hsl(37, 51%, 84%)*/
-  --secondary: 225, 27%, 51%; /*hsl(225, 27%, 51%)*/
-  --highlight: 264, 46%, 65%; /*hsl(264, 46%, 65%)*/
-  --foreground: 40, 8%, 7%; /*hsl(40, 8%, 7%)*/
-  --input: 41, 11%, 57%; /*hsl(41, 11%, 57%)*/
+  --background: 0, 0%, 96%;
+  --secondary: 0, 0%, 31%;
+  --foreground: 0, 0%, 12%;
+  --tertiary: 0, 0%, 88%;
+  /* --main-color: #363636;
+  --caret-color: #0d0d0d;
+  --error-color: #ff0008;
+  --colorful-error-color: #ff0008; */
+}
+
+.grid-80 {
+  mask-image: url('../../public/assets/images/grid80.png');
+  mask-size: 80px;
 }

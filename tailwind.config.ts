@@ -10,17 +10,17 @@ const config: Config = {
     extend: {
       colors: {
         background: 'hsl(var(--background))',
-        accent: 'hsl(var(--accent))',
-        'primary-accent': 'hsl(var(--primary-accent))',
         secondary: 'hsl(var(--secondary))',
-        highlight: 'hsl(var(--highlight))',
         foreground: 'hsl(var(--foreground))',
-        input: 'hsl(var(--input))',
+        input: 'hsl(var(--tertiary))',
       },
       fontFamily: {
         kollektif: ['var(--font-kollektic)'],
       },
       screens: {
+        desktop: '1440px',
+      },
+      width: {
         desktop: '1440px',
       },
       minWidth: {
