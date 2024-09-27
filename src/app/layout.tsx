@@ -5,8 +5,8 @@ import './globals.css'
 
 import Head from 'next/head'
 
-import { NavigationBar } from '@/components/common/navigation/navbar'
-import Transition from '@/components/common/transition/Transition'
+import { NavigationBar } from '@/components/common/ui/navigation/navbar'
+import Transition from '@/components/common/ui/transition/Transition'
 
 const geistSans = localFont({
   src: '../fonts/GeistVF.woff',

@@ -1,4 +1,4 @@
-import TLink from '@/components/common/transition/TLink'
+import TLink from '@/components/common/ui/transition/TLink'
 
 export default function Home() {
   const screen = { width: 1280, height: 720 }

@@ -7,7 +7,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
 import TextInput from '@/components/authentication/TextInput'
-import Button from '@/components/common/Button'
+import Button from '@/components/common/button'
 import { resetPasswordSchema } from '@/schemas/zod/schemas'
 import { resetPasswordAction } from './actions'
 
