@@ -8,10 +8,13 @@ import SignUpForm from './SignUpForm'
 const LoginPage = async () => {
   const user = await getUser()
   if (user) return redirect('/dashboard')
+
   return (
-    <div className="flex h-[] items-center justify-around">
-      <SignUpForm />
-      <LoginForm />
+    <div className="flex h-full items-center justify-around">
+      <div className="flex w-full justify-between px-4">
+        <SignUpForm />
+        <LoginForm />
+      </div>
     </div>
   )
 }
