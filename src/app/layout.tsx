@@ -5,6 +5,7 @@ import './globals.css'
 
 import Head from 'next/head'
 
+import { NavigationBar } from '@/components/common/navigation/navbar'
 import Transition from '@/components/common/transition/Transition'
 
 const geistSans = localFont({
@@ -70,7 +71,12 @@ export default function RootLayout({
         className={`${kollektif.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Transition>
-          <div className="h-dvh w-dvw flex flex-col">{children}</div>
+          <div className="h-dvh w-dvw grid place-items-center">
+            <div className="max-w-screen-desktop w-full h-full flex flex-col">
+              <NavigationBar />
+              {children}
+            </div>
+          </div>
         </Transition>
       </body>
     </html>

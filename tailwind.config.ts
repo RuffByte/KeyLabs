@@ -23,6 +23,9 @@ const config: Config = {
       screens: {
         desktop: '1440px',
       },
+      minWidth: {
+        desktop: '1440px',
+      },
       borderRadius: {
         input: '8px',
       },

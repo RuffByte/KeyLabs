@@ -1,14 +1,11 @@
-import Image from 'next/image'
-import Link from 'next/link'
-
-import RouteButton from '@/components/common/transition/RouteButton'
+import TLink from '@/components/common/transition/TLink'
 
 export default function Home() {
   return (
-    <div className="">
-      <div>
-        <RouteButton href="/login">login wow</RouteButton>
-      </div>
+    <div className="grid place-items-center">
+      <TLink href="/login" className="p-2 border rounded-md bg-white">
+        login wow
+      </TLink>
     </div>
   )
 }

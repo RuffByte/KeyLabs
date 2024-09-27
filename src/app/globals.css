@@ -2,16 +2,20 @@
 @tailwind components;
 @tailwind utilities;
 
-.root {
-  height: 100vh;
+* {
+  @apply border border-black;
+}
+
+html {
+  overflow: hidden;
 }
 
 :root {
-  --background: 52, 45%, 94%;
-  --background-muted: 230, 16%, 15%;
-  --accent: 37, 51%, 84%;
-  --secondary: 225, 27%, 51%;
-  --highlight: 264, 46%, 65%;
-  --foreground: 40, 8%, 7%;
-  --input: 0, 0%, 100%;
+  --background: 52, 45%, 94%; /*hsl(52, 45%, 94%)*/
+  --background-muted: 230, 16%, 15%; /*hsl(230, 16%, 15%)*/
+  --accent: 37, 51%, 84%; /*hsl(37, 51%, 84%)*/
+  --secondary: 225, 27%, 51%; /*hsl(225, 27%, 51%)*/
+  --highlight: 264, 46%, 65%; /*hsl(264, 46%, 65%)*/
+  --foreground: 40, 8%, 7%; /*hsl(40, 8%, 7%)*/
+  --input: 41, 11%, 57%; /*hsl(41, 11%, 57%)*/
 }
