@@ -50,7 +50,7 @@ const Leaderboard = () => {
                 Accuracy
               </th>
               <th className="px-6 py-3 text-left text-sm font-medium text-gray-700">
-                Words Typed
+                LettersTyped
               </th>
             </tr>
           </thead>

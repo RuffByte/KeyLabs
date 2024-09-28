@@ -56,7 +56,9 @@ export const getUser = async () => {
         sessionCookie.attributes
       )
     }
-  } catch (error) {}
+  } catch (error) {
+    return null
+  }
   const dbuser = await prisma.user.findUnique({
     where: {
       id: user?.id,
