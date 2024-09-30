@@ -15,6 +15,8 @@ const GameBoard = () => {
     const { clientX, clientY } = e;
     const { left, top } = containerRef.current.getBoundingClientRect();
     const [clickX, clickY] = [clientX - left, clientY - top];
+
+    console.log(clickX, clickY);
   };
 
   const { screen } = useScreen();

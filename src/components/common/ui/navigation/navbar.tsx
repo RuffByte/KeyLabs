@@ -1,15 +1,20 @@
+'use client';
+
 import React from 'react';
-import { Info, Keyboard, Settings, User } from 'lucide-react';
+import { HTMLMotionProps, motion } from 'framer-motion';
+import { Info, Settings, User } from 'lucide-react';
 
 import { cn } from '@/lib/utils';
 import { Dropdown, DropdownLinkItem } from '../wrapper/dropdown';
 import { Keylabslogo } from './keylabslogo';
 
-interface NavigationBarProp extends React.HTMLAttributes<HTMLDivElement> {}
+interface NavigationBarProp extends HTMLMotionProps<'div'> {
+  enabled?: boolean;
+}
 
 export const NavigationBar = ({ ...props }: NavigationBarProp) => {
   return (
-    <div
+    <motion.div
       {...props}
       className={cn(
         'flex absolute w-full items-center justify-between top-4',
@@ -30,6 +35,6 @@ export const NavigationBar = ({ ...props }: NavigationBarProp) => {
           }
         ></Dropdown>
       </div>
-    </div>
+    </motion.div>
   );
 };

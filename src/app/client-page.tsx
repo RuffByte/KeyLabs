@@ -7,6 +7,7 @@ import GameBoard from '@/components/common/ui/game/GameBoard';
 import { OptionsBar } from '@/components/common/ui/game/OptionsBar';
 import { WordsBar } from '@/components/common/ui/game/WordsBar';
 import { NavigationBar } from '@/components/common/ui/navigation/navbar';
+import { useGenerateWords } from './hooks/query/useWords';
 
 export type Screen = {
   screen: { width: number; height: number };
@@ -19,6 +20,8 @@ export const useScreen = create<Screen>()((set) => ({
 }));
 
 const ClientGamePage = () => {
+  const { data, isLoading } = useGenerateWords('english_5k');
+
   return (
     <>
       <NavigationBar />

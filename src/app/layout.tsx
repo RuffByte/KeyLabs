@@ -6,6 +6,7 @@ import './globals.css';
 import Head from 'next/head';
 
 import Transition from '@/components/common/ui/transition/Transition';
+import QueryClientProvider from '@/components/providers/QueryClientProvider';
 
 const geistSans = localFont({
   src: '../fonts/GeistVF.woff',
@@ -66,17 +67,19 @@ export default function RootLayout({
         />
         <meta property="og:image" content="/og-image.png" />
       </Head>
-      <body
-        className={`${kollektif.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <Transition>
-          <div className="h-dvh w-dvw grid place-items-center">
-            <div className="max-w-screen-desktop w-full h-full relative flex flex-col box-border">
-              {children}
+      <QueryClientProvider>
+        <body
+          className={`${kollektif.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
+        >
+          <Transition>
+            <div className="h-dvh w-dvw grid place-items-center">
+              <div className="max-w-screen-desktop w-full h-full relative flex flex-col box-border">
+                {children}
+              </div>
             </div>
-          </div>
-        </Transition>
-      </body>
+          </Transition>
+        </body>
+      </QueryClientProvider>
     </html>
   );
 }

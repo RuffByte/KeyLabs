@@ -4,7 +4,12 @@ type wordSet = {
 };
 
 const getWordSet = async (wordSetName: string): Promise<wordSet> => {
-  const fetchPromise = require(`../../app/static/language/${wordSetName}.json`);
+  let fetchPromise;
+  try {
+    fetchPromise = require(`../../app/static/language/${wordSetName}.json`);
+  } catch {
+    fetchPromise = require(`../../app/static/language/english.json`);
+  }
   return await fetchPromise;
 };
 
@@ -12,7 +17,7 @@ type GameOptions = {
   length?: number;
 };
 
-const generateWord = async (
+export const generateWords = async (
   wordSetName: string,
   options: GameOptions = {} as GameOptions
 ): Promise<wordSet> => {
