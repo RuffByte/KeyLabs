@@ -1,6 +1,6 @@
-import { ReactNode } from 'react'
+import { ReactNode } from 'react';
 
-import { fromEmail, resend } from './resend'
+import { fromEmail, resend } from './resend';
 
 export async function sendEmail(
   email: string,
@@ -12,9 +12,9 @@ export async function sendEmail(
     to: email,
     subject,
     react: <>{body}</>,
-  })
+  });
 
   if (error) {
-    throw error
+    throw error;
   }
 }

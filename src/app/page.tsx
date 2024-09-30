@@ -1,7 +1,7 @@
-import React from 'react'
+import React from 'react';
 
-import ClientGamePage from './client-page'
+import ClientGamePage from './client-page';
 
 export default function Home() {
-  return <ClientGamePage />
+  return <ClientGamePage />;
 }

@@ -1,27 +1,27 @@
-'use client'
+'use client';
 
-import React, { useEffect } from 'react'
-import { redirect, useRouter, useSearchParams } from 'next/navigation'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
+import React, { useEffect } from 'react';
+import { redirect, useRouter, useSearchParams } from 'next/navigation';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 
-import TextInput from '@/components/authentication/TextInput'
-import Button from '@/components/common/button'
-import { resetPasswordSchema } from '@/schemas/zod/schemas'
-import { resetPasswordAction } from './actions'
+import TextInput from '@/components/authentication/TextInput';
+import Button from '@/components/common/button';
+import { resetPasswordSchema } from '@/schemas/zod/schemas';
+import { resetPasswordAction } from './actions';
 
 const ResetPasswordForm: React.FC = () => {
-  const router = useRouter()
-  const searchParams = useSearchParams()
-  const token = searchParams.get('token')
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const token = searchParams.get('token');
 
   useEffect(() => {
     if (!token) {
-      toast.error('Invalid or missing reset token.')
-      redirect('/login')
+      toast.error('Invalid or missing reset token.');
+      redirect('/login');
     }
-  }, [token])
+  }, [token]);
 
   const {
     register,
@@ -33,22 +33,22 @@ const ResetPasswordForm: React.FC = () => {
       password: '',
       confirmPassword: '',
     },
-  })
+  });
 
   const onSubmit = async (values: {
-    password: string
-    confirmPassword: string
+    password: string;
+    confirmPassword: string;
   }) => {
-    if (!token) return
+    if (!token) return;
 
-    const result = await resetPasswordAction({ token, ...values })
+    const result = await resetPasswordAction({ token, ...values });
     if (result.success) {
-      toast.success(result.message)
-      router.push('/login')
+      toast.success(result.message);
+      router.push('/login');
     } else {
-      toast.error(result.message)
+      toast.error(result.message);
     }
-  }
+  };
 
   return (
     <form
@@ -73,7 +73,7 @@ const ResetPasswordForm: React.FC = () => {
         Reset Password
       </Button>
     </form>
-  )
-}
+  );
+};
 
-export default ResetPasswordForm
+export default ResetPasswordForm;

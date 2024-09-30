@@ -1,10 +1,10 @@
-import { cookies } from 'next/headers'
-import { PrismaAdapter } from '@lucia-auth/adapter-prisma'
-import { Lucia } from 'lucia'
+import { cookies } from 'next/headers';
+import { PrismaAdapter } from '@lucia-auth/adapter-prisma';
+import { Lucia } from 'lucia';
 
-import { prisma } from './prisma'
+import { prisma } from './prisma';
 
-const adapter = new PrismaAdapter(prisma.session, prisma.user)
+const adapter = new PrismaAdapter(prisma.session, prisma.user);
 
 export const lucia = new Lucia(adapter, {
   sessionCookie: {
@@ -14,30 +14,30 @@ export const lucia = new Lucia(adapter, {
       secure: process.env.NODE_ENV === 'production',
     },
   },
-})
+});
 
 export const getUser = async () => {
-  const sessionId = cookies().get(lucia.sessionCookieName)?.value || null
+  const sessionId = cookies().get(lucia.sessionCookieName)?.value || null;
   if (!sessionId) {
-    return null
+    return null;
   }
-  const { session, user } = await lucia.validateSession(sessionId)
+  const { session, user } = await lucia.validateSession(sessionId);
   try {
     if (session && session.fresh) {
-      const sessionCookie = await lucia.createSessionCookie(session.id)
+      const sessionCookie = await lucia.createSessionCookie(session.id);
       cookies().set(
         sessionCookie.name,
         sessionCookie.value,
         sessionCookie.attributes
-      )
+      );
     }
     if (!session) {
-      const sessionCookie = await lucia.createBlankSessionCookie()
+      const sessionCookie = await lucia.createBlankSessionCookie();
       cookies().set(
         sessionCookie.name,
         sessionCookie.value,
         sessionCookie.attributes
-      )
+      );
     }
   } catch (error) {}
   const dbuser = await prisma.user.findUnique({
@@ -48,6 +48,6 @@ export const getUser = async () => {
       name: true,
       email: true,
     },
-  })
-  return dbuser
-}
+  });
+  return dbuser;
+};

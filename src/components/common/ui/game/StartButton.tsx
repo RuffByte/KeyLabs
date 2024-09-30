@@ -1,10 +1,13 @@
-import React from 'react'
-import { Waypoints } from 'lucide-react'
+import React from 'react';
+import { Waypoints } from 'lucide-react';
 
 export const StartButton = () => {
   return (
-    <div className="bg-foreground absolute grid pointer-events-none left-1/2 top-1/2 [translate:-50%_-50%] place-items-center rounded-full size-16">
-      <Waypoints color="hsl(var(--background))" />
+    <div className="absolute left-1/2 top-1/2 [translate:-50%_-50%] size-16 grid place-items-center">
+      <div className="absolute bg-foreground -z-10 animate-ping rounded-full size-5/6 grid " />
+      <button className="bg-foreground grid place-items-center cursor-pointer rounded-full size-full">
+        <Waypoints color="hsl(var(--background))" />
+      </button>
     </div>
-  )
-}
+  );
+};

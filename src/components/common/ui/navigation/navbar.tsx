@@ -1,9 +1,9 @@
-import React from 'react'
-import { Info, Keyboard, Settings, User } from 'lucide-react'
+import React from 'react';
+import { Info, Keyboard, Settings, User } from 'lucide-react';
 
-import { cn } from '@/lib/utils'
-import { Dropdown, DropdownLinkItem } from '../wrapper/dropdown'
-import { Keylabslogo } from './keylabslogo'
+import { cn } from '@/lib/utils';
+import { Dropdown, DropdownLinkItem } from '../wrapper/dropdown';
+import { Keylabslogo } from './keylabslogo';
 
 interface NavigationBarProp extends React.HTMLAttributes<HTMLDivElement> {}
 
@@ -31,5 +31,5 @@ export const NavigationBar = ({ ...props }: NavigationBarProp) => {
         ></Dropdown>
       </div>
     </div>
-  )
-}
+  );
+};

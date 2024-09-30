@@ -1,11 +1,11 @@
-import React, { AnchorHTMLAttributes } from 'react'
+import React, { AnchorHTMLAttributes } from 'react';
 
-import TLink from '../transition/TLink'
+import TLink from '../transition/TLink';
 
 interface DropdownProp extends React.HTMLAttributes<HTMLDivElement> {
-  dropdownDisplay: React.ReactNode
-  dropdownItems: React.ReactNode
-  classname?: string
+  dropdownDisplay: React.ReactNode;
+  dropdownItems: React.ReactNode;
+  classname?: string;
 }
 
 export const Dropdown = ({
@@ -22,12 +22,12 @@ export const Dropdown = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 interface DropdownItemProp extends AnchorHTMLAttributes<HTMLAnchorElement> {
-  dropdownItem: (React.ReactNode | string)[]
-  href: string
+  dropdownItem: (React.ReactNode | string)[];
+  href: string;
 }
 
 export const DropdownLinkItem = ({
@@ -46,5 +46,5 @@ export const DropdownLinkItem = ({
         </div>
       ))}
     </TLink>
-  )
-}
+  );
+};

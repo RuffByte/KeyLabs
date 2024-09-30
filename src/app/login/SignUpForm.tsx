@@ -1,20 +1,20 @@
-'use client'
+'use client';
 
-import React from 'react'
-import { useRouter } from 'next/navigation'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
-import { z } from 'zod'
+import React from 'react';
+import { useRouter } from 'next/navigation';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { z } from 'zod';
 
-import TextInput from '@/components/authentication/TextInput' // Import the TextInput component
+import TextInput from '@/components/authentication/TextInput'; // Import the TextInput component
 
-import Button from '@/components/common/button'
-import { signUpSchema } from '@/schemas/zod/schemas'
-import { signUp } from './login.action'
+import Button from '@/components/common/button';
+import { signUpSchema } from '@/schemas/zod/schemas';
+import { signUp } from './login.action';
 
 const SignUpForm = () => {
-  const router = useRouter()
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -27,16 +27,16 @@ const SignUpForm = () => {
       password: '',
       confirmPassword: '',
     },
-  })
+  });
 
   // Handle form submission
   async function onSubmit(values: z.infer<typeof signUpSchema>) {
-    const res = await signUp(values)
+    const res = await signUp(values);
     if (res.success) {
-      toast.success('Account created successfully')
-      router.push('/dashboard')
+      toast.success('Account created successfully');
+      router.push('/dashboard');
     } else {
-      toast.error(res.error)
+      toast.error(res.error);
     }
   }
 
@@ -75,7 +75,7 @@ const SignUpForm = () => {
         <Button className="">Sign Up</Button>
       </form>
     </div>
-  )
-}
+  );
+};
 
-export default SignUpForm
+export default SignUpForm;

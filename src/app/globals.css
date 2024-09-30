@@ -40,3 +40,13 @@ html {
   mask-image: url('../../public/assets/images/test100.png');
   mask-size: 80px;
 }
+
+.glow {
+  box-shadow:
+    0px 0px 241.92px #0005,
+    0px 0px 138.24px #0005,
+    0px 0px 80.64px #0005,
+    0px 0px 40.32px #0005,
+    0px 0px 11.52px #0005,
+    0px 0px 5.76px #0005;
+}

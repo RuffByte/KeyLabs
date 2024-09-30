@@ -1,4 +1,4 @@
-import React from 'react'
+import React from 'react';
 
 export const OptionsBar = () => {
   return (
@@ -30,5 +30,5 @@ export const OptionsBar = () => {
         />
       </svg>
     </div>
-  )
-}
+  );
+};

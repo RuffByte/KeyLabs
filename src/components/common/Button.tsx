@@ -1,11 +1,11 @@
-import React, { PropsWithChildren } from 'react'
-import { tv } from 'tailwind-variants'
+import React, { PropsWithChildren } from 'react';
+import { tv } from 'tailwind-variants';
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils';
 
 interface ButtonProps
   extends PropsWithChildren<React.ButtonHTMLAttributes<HTMLButtonElement>> {
-  variants?: 'primary' | 'secondary'
+  variants?: 'primary' | 'secondary';
 }
 
 const button = tv({
@@ -15,14 +15,14 @@ const button = tv({
       outline: '',
     },
   },
-})
+});
 
 const Button = ({ ...props }: ButtonProps) => {
   return (
     <button {...props} className={cn(button(), props.className)}>
       {props.children}
     </button>
-  )
-}
+  );
+};
 
-export default Button
+export default Button;

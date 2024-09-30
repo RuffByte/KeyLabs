@@ -1,7 +1,7 @@
-import React from 'react'
-import { Keyboard } from 'lucide-react'
+import React from 'react';
+import { Keyboard } from 'lucide-react';
 
-import TLink from '../transition/TLink'
+import TLink from '../transition/TLink';
 
 export const Keylabslogo = () => {
   return (
@@ -11,5 +11,5 @@ export const Keylabslogo = () => {
         <h1 className="text-3xl select-none">KeyLabs</h1>
       </div>
     </TLink>
-  )
-}
+  );
+};
