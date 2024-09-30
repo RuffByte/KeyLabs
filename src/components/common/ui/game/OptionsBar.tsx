@@ -1,34 +1,79 @@
+'use client';
+
 import React from 'react';
+import { AnimatePresence } from 'framer-motion';
+
+import { useConfig } from '@/app/client-page';
+import { cn } from '@/lib/utils';
 
 export const OptionsBar = () => {
+  const { config, setConfig } = useConfig();
   return (
-    <div className="absolute flex bottom-0 items-end left-[50%] -translate-x-[50%] h-[100px]">
-      <svg
-        width="50"
-        height="50"
-        viewBox="0 0 50 50"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M36.25 38.75C48.0498 27.8596 50 0 50 0V50H0C0 50 25.3575 48.803 36.25 38.75Z"
-          fill="#141311"
-        />
-      </svg>
-
-      <div className="w-[1000px] bg-black  rounded-t-[50px] h-full" />
-      <svg
-        width="50"
-        height="50"
-        viewBox="0 0 50 50"
-        fill="none"
-        xmlns="http://www.w3.org/2000/svg"
-      >
-        <path
-          d="M13.75 38.75C1.95019 27.8596 0 0 0 0V50H50C50 50 24.6425 48.803 13.75 38.75Z"
-          fill="#141311"
-        />
-      </svg>
+    <div className="absolute bottom-0 left-[50%] -translate-x-[50%] flex items-end">
+      <OptionEdge />
+      <div className="bg-foreground gap-4 p-2 px-16 flex justify-center items-center rounded-t-[32px] h-full text-background">
+        <Option label="mode" hasLabel>
+          <OptionItem label="characters" />
+          <OptionItem label="time" />
+        </Option>
+        {config.mode === 'characters' && (
+          <Option label="characters">
+            <OptionItem label="25" />
+            <OptionItem label="50" />
+            <OptionItem label="100" />
+          </Option>
+        )}
+        {config.mode === 'time' && (
+          <Option label="time">
+            <OptionItem label="15" />
+            <OptionItem label="30" />
+            <OptionItem label="60" />
+          </Option>
+        )}
+      </div>
+      <OptionEdge className="scale-x-[-1]" />
     </div>
   );
 };
+
+type OptionProps = {
+  label: string;
+  children?: React.ReactNode;
+  hasLabel?: boolean;
+};
+
+const Option = ({ label, children, hasLabel = false }: OptionProps) => {
+  return (
+    <AnimatePresence mode="wait">
+      <div className="*:p-2 gap-4 h-full flex border border-background px-8 rounded-xl">
+        {hasLabel && (
+          <>
+            <p>{label}</p> <p>||</p>
+          </>
+        )}
+        <div className="flex !p-0">{children}</div>
+      </div>
+    </AnimatePresence>
+  );
+};
+
+type OptionItemProps = {
+  label: string;
+};
+
+const OptionItem = ({ label }: OptionItemProps) => {
+  return (
+    <button className="hover:bg-background p-2 px-4 h-full hover:text-foreground">
+      {label}
+    </button>
+  );
+};
+
+const OptionEdge = ({ className }: { className?: string }) => (
+  <div
+    className={cn(
+      'edge-32 size-8 edge-40 bg-foreground border-r border-b border-foreground',
+      className
+    )}
+  />
+);

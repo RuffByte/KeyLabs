@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { motion, Variants } from 'framer-motion';
 
+import { devConfig } from '@/devconfig';
 import { cn } from '@/lib/utils';
 
 type TransitionProps = {
@@ -53,6 +54,9 @@ const NothingOut: Variants = {
 const Transition = ({ children }: TransitionProps) => {
   const router = useRouter();
   const handleRouteChange = (path = '/') => {
+    if (!devConfig.PAGE_TRANSITION) {
+      router.push(path);
+    }
     if (isTransitioning) {
       return;
     }
@@ -61,13 +65,20 @@ const Transition = ({ children }: TransitionProps) => {
   };
 
   const handleTransitionRoute = () => {
-    console.log('finish');
     setTransitioning(false);
     router.push(path);
   };
 
   const [isTransitioning, setTransitioning] = useState(false);
   const [path, setPath] = useState('/');
+
+  if (!devConfig.PAGE_TRANSITION) {
+    return (
+      <TransitionContext.Provider value={{ handleRouteChange }}>
+        {children}
+      </TransitionContext.Provider>
+    );
+  }
 
   return (
     <TransitionContext.Provider value={{ handleRouteChange }}>

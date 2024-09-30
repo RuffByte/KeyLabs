@@ -41,6 +41,11 @@ html {
   mask-size: 80px;
 }
 
+.edge-32 {
+  mask-image: url('../../public/assets/images/edge100.png');
+  mask-size: 32px;
+}
+
 .glow {
   box-shadow:
     0px 0px 241.92px #0005,
