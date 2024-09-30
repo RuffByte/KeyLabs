@@ -4,6 +4,10 @@ import localFont from 'next/font/local';
 import './globals.css';
 
 import Head from 'next/head';
+import {
+  ReactQueryDevtools,
+  ReactQueryDevtoolsPanel,
+} from '@tanstack/react-query-devtools';
 
 import Transition from '@/components/common/ui/transition/Transition';
 import QueryClientProvider from '@/components/providers/QueryClientProvider';
@@ -79,6 +83,7 @@ export default function RootLayout({
             </div>
           </Transition>
         </body>
+        <ReactQueryDevtools initialIsOpen={false} />
       </QueryClientProvider>
     </html>
   );

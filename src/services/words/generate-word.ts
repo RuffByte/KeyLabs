@@ -6,9 +6,11 @@ type wordSet = {
 const getWordSet = async (wordSetName: string): Promise<wordSet> => {
   let fetchPromise;
   try {
-    fetchPromise = require(`../../app/static/language/${wordSetName}.json`);
+    fetchPromise = await require(
+      `../../app/static/language/${wordSetName}.json`
+    );
   } catch {
-    fetchPromise = require(`../../app/static/language/english.json`);
+    fetchPromise = await require(`../../app/static/language/english.json`);
   }
   return await fetchPromise;
 };

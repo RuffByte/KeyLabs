@@ -26,6 +26,9 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.56.2
         version: 5.56.2(react@0.0.0-experimental-3edc000d-20240926)
+      '@tanstack/react-query-devtools':
+        specifier: ^5.58.0
+        version: 5.58.0(@tanstack/react-query@5.56.2(react@0.0.0-experimental-3edc000d-20240926))(react@0.0.0-experimental-3edc000d-20240926)
       '@uidotdev/usehooks':
         specifier: 2.4.1-experimental.1
         version: 2.4.1-experimental.1(react-dom@0.0.0-experimental-3edc000d-20240926(react@0.0.0-experimental-3edc000d-20240926))(react@0.0.0-experimental-3edc000d-20240926)
@@ -76,7 +79,7 @@ importers:
         version: 3.23.8
       zustand:
         specifier: 5.0.0-rc.2
-        version: 5.0.0-rc.2(@types/react@18.3.9)(react@0.0.0-experimental-3edc000d-20240926)
+        version: 5.0.0-rc.2(@types/react@18.3.9)(react@0.0.0-experimental-3edc000d-20240926)(use-sync-external-store@1.2.2(react@0.0.0-experimental-3edc000d-20240926))
     devDependencies:
       '@ianvs/prettier-plugin-sort-imports':
         specifier: ^4.3.1
@@ -754,6 +757,15 @@ packages:
 
   '@tanstack/query-core@5.56.2':
     resolution: {integrity: sha512-gor0RI3/R5rVV3gXfddh1MM+hgl0Z4G7tj6Xxpq6p2I03NGPaJ8dITY9Gz05zYYb/EJq9vPas/T4wn9EaDPd4Q==}
+
+  '@tanstack/query-devtools@5.58.0':
+    resolution: {integrity: sha512-iFdQEFXaYYxqgrv63ots+65FGI+tNp5ZS5PdMU1DWisxk3fez5HG3FyVlbUva+RdYS5hSLbxZ9aw3yEs97GNTw==}
+
+  '@tanstack/react-query-devtools@5.58.0':
+    resolution: {integrity: sha512-qF0xCyBeVuNLygTO1sAl1X4Gv52w52SeaDdbjYQmtTOooUJ3aAVlBEtiRJFfJblWQ9p/UQG8NIcC/65RjX8Jkw==}
+    peerDependencies:
+      '@tanstack/react-query': ^5.56.2
+      react: ^18 || ^19
 
   '@tanstack/react-query@5.56.2':
     resolution: {integrity: sha512-SR0GzHVo6yzhN72pnRhkEFRAHMsUo5ZPzAxfTMvUxFIDVS6W9LYUp6nXW3fcHVdg0ZJl8opSH85jqahvm6DSVg==}
@@ -2425,6 +2437,11 @@ packages:
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
 
+  use-sync-external-store@1.2.2:
+    resolution: {integrity: sha512-PElTlVMwpblvbNqQ82d2n6RjStvdSoNe9FG28kNfz3WiXilJm4DdNkEzRhCZuIDwY8U08WVihhGR5iRqAwfDiw==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
@@ -3111,6 +3128,14 @@ snapshots:
       tslib: 2.7.0
 
   '@tanstack/query-core@5.56.2': {}
+
+  '@tanstack/query-devtools@5.58.0': {}
+
+  '@tanstack/react-query-devtools@5.58.0(@tanstack/react-query@5.56.2(react@0.0.0-experimental-3edc000d-20240926))(react@0.0.0-experimental-3edc000d-20240926)':
+    dependencies:
+      '@tanstack/query-devtools': 5.58.0
+      '@tanstack/react-query': 5.56.2(react@0.0.0-experimental-3edc000d-20240926)
+      react: 0.0.0-experimental-3edc000d-20240926
 
   '@tanstack/react-query@5.56.2(react@0.0.0-experimental-3edc000d-20240926)':
     dependencies:
@@ -4993,6 +5018,11 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
+  use-sync-external-store@1.2.2(react@0.0.0-experimental-3edc000d-20240926):
+    dependencies:
+      react: 0.0.0-experimental-3edc000d-20240926
+    optional: true
+
   util-deprecate@1.0.2: {}
 
   which-boxed-primitive@1.0.2:
@@ -5061,7 +5091,8 @@ snapshots:
 
   zod@3.23.8: {}
 
-  zustand@5.0.0-rc.2(@types/react@18.3.9)(react@0.0.0-experimental-3edc000d-20240926):
+  zustand@5.0.0-rc.2(@types/react@18.3.9)(react@0.0.0-experimental-3edc000d-20240926)(use-sync-external-store@1.2.2(react@0.0.0-experimental-3edc000d-20240926)):
     optionalDependencies:
       '@types/react': 18.3.9
       react: 0.0.0-experimental-3edc000d-20240926
+      use-sync-external-store: 1.2.2(react@0.0.0-experimental-3edc000d-20240926)

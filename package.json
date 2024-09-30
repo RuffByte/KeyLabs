@@ -16,6 +16,7 @@
     "@react-email/components": "0.0.25",
     "@remixicon/react": "^4.2.0",
     "@tanstack/react-query": "^5.56.2",
+    "@tanstack/react-query-devtools": "^5.58.0",
     "@uidotdev/usehooks": "2.4.1-experimental.1",
     "arctic": "^1.9.2",
     "clsx": "^2.1.1",

@@ -14,7 +14,7 @@ export const Dropdown = ({
   ...props
 }: DropdownProp) => {
   return (
-    <div {...props} className="relative">
+    <div {...props} className="relative select-none">
       <div className="peer">{dropdownDisplay}</div>
       <div className="absolute peer-hover:flex hover:flex hidden w-40 pt-2 right-0">
         <div className="w-full outline-4 outline outline-background bg-input text-foreground rounded">

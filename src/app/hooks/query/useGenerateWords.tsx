@@ -5,7 +5,7 @@ import { generateWords } from '@/services/words/generate-word';
 
 export const useGenerateWords = (wordset: string) => {
   const query = useQuery({
-    queryKey: [QUERY_KEY.STATIC_WORDS],
+    queryKey: [QUERY_KEY.STATIC_WORDS, wordset],
     queryFn: () => generateWords(wordset),
   });
 

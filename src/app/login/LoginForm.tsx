@@ -47,7 +47,6 @@ const LoginForm = () => {
       </h1>
       <div className="flex flex-col w-[350px] gap-2">
         <GoogleOAuthButton />
-        <hr className="border-t-2 border-tertiary" />
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
           <TextInput
             id="login-email"
