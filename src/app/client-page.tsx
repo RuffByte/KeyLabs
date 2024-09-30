@@ -36,6 +36,18 @@ export type GameData = {
   setWords: (words: wordSet) => void;
 };
 
+export type Point = {
+  index: number;
+  value: string;
+  x: number;
+  y: number;
+};
+export type PointStack = {
+  points: Point[];
+  popPoints: (state: Point[]) => void;
+  setPoints: (points: Point[]) => void;
+};
+
 export const useScreen = create<Screen>()((set) => ({
   screen: { width: 15 * 80, height: 9 * 80 },
   setScreen: (screen) => set({ screen }),
@@ -44,13 +56,23 @@ export const useScreen = create<Screen>()((set) => ({
 export const useConfig = create<GameConfig>()((set) => ({
   config: {
     mode: 'characters',
-    language: 'english',
+    language: 'english_5k',
     time: 30,
     isCustom: false,
     lengthChar: null,
   },
   setConfig: (config) => set({ config }),
   resetConfig: () => set({ config: { ...useConfig.getState().config } }),
+}));
+
+export const usePointsStack = create<PointStack>()((set) => ({
+  points: [] as Point[],
+  popPoints: (state: Point[]) =>
+    set(() => {
+      state.pop();
+      return { points: state };
+    }),
+  setPoints: (points: Point[]) => set({ points }),
 }));
 
 let allowReset = false;

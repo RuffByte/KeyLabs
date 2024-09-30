@@ -95,7 +95,7 @@ const Transition = ({ children }: TransitionProps) => {
         {children}
       </motion.div>
       {/* transition */}
-      <div className="fixed inset-0 z-[999] overflow-hidden pointer-events-none">
+      <div className="fixed inset-0 z-[9999] overflow-hidden pointer-events-none">
         {isTransitioning && (
           <motion.div
             className="absolute inset-0 size-full bg-slate-800"
