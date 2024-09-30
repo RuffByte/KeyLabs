@@ -14,6 +14,7 @@ const config: Config = {
         foreground: 'hsl(var(--foreground))',
         tertiary: 'hsl(var(--tertiary))',
         input: 'hsl(var(--tertiary))',
+        hover: 'hsl(var(--hover))',
       },
       fontFamily: {
         kollektif: ['var(--font-kollektic)'],

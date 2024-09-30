@@ -16,13 +16,27 @@ html {
   --secondary: 0, 0%, 31%;
   --foreground: 0, 0%, 12%;
   --tertiary: 0, 0%, 88%;
+  --hover: 0, 0%, 5%;
   /* --main-color: #363636;
+  --error-color: #ff0008;
+  --colorful-error-color: #ff0008; */
+
+  /*  --bg-color: #f5f5f5;
+  --main-color: #363636;
   --caret-color: #0d0d0d;
+  --sub-color: #4f4f4f;
+  --sub-alt-color: #e0e0e0;
+  --text-color: #1f1f1f;
   --error-color: #ff0008;
   --colorful-error-color: #ff0008; */
 }
 
 .grid-80 {
   mask-image: url('../../public/assets/images/grid80.png');
+  mask-size: 80px;
+}
+
+.test-100 {
+  mask-image: url('../../public/assets/images/test100.png');
   mask-size: 80px;
 }

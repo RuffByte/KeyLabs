@@ -40,7 +40,7 @@ export const DropdownLinkItem = ({
       {dropdownItem.map((item, i) => (
         <div
           key={i}
-          className="flex items-center w-full hover:bg-secondary hover:text-background py-1 justify-center"
+          className="flex items-center w-full hover:bg-hover hover:text-background hover:shadow-md py-1 justify-center"
         >
           {item}
         </div>

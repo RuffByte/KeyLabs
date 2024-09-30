@@ -1,26 +1,27 @@
 import React from 'react'
 import { Info, Keyboard, Settings, User } from 'lucide-react'
 
-import { TLink } from '../transition/TLink'
+import { cn } from '@/lib/utils'
 import { Dropdown, DropdownLinkItem } from '../wrapper/dropdown'
+import { Keylabslogo } from './keylabslogo'
 
-export const NavigationBar = () => {
+interface NavigationBarProp extends React.HTMLAttributes<HTMLDivElement> {}
+
+export const NavigationBar = ({ ...props }: NavigationBarProp) => {
   return (
-    <div className="flex absolute w-full items-center justify-between">
-      <TLink href="/">
-        <div className="flex gap-4 font-kollektif items-center p-2">
-          <Keyboard size={28} />
-          <h1 className="text-3xl">KeyLabs</h1>
-        </div>
-      </TLink>
-      <div className="flex gap-4 p-2">
-        <TLink href="/login" className="p-2 border rounded-md bg-white">
-          login wow
-        </TLink>
-        <Info size={28} />
-        <Settings size={28} />
+    <div
+      {...props}
+      className={cn(
+        'flex absolute w-full items-center justify-between top-4',
+        props.className
+      )}
+    >
+      <Keylabslogo />
+      <div className="flex gap-4 p-2 justify-center items-center hover:*:stroke-secondary">
+        <Info size={20} />
+        <Settings size={20} />
         <Dropdown
-          dropdownDisplay={<User size={28} />}
+          dropdownDisplay={<User size={20} />}
           dropdownItems={
             <DropdownLinkItem
               href="/login"
