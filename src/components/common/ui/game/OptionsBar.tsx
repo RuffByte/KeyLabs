@@ -7,15 +7,26 @@ import { CaseSensitive, Timer } from 'lucide-react';
 import { GameConfig, useConfig } from '@/app/client-page';
 import { cn } from '@/lib/utils';
 
-export const OptionsBar = ({...props}: HTMLMotionProps<'div'>) => {
+export const OptionsBar = ({ ...props }: HTMLMotionProps<'div'>) => {
   const { config, setConfig } = useConfig();
 
   const handleChangeMode = (mode: string) => {
-    setConfig({ ...config, mode: mode as GameConfig['config']['mode'] });
+    setConfig({ ...config, mode: mode });
+  };
+
+  const handleSetTime = (time: number) => {
+    setConfig({ ...config, lengthChar: null, time: time });
+  };
+
+  const handleSetChar = (length: number) => {
+    setConfig({ ...config, lengthChar: length, time: null });
   };
 
   return (
-    <motion.div {...props} className="absolute bottom-0 left-[50%] -translate-x-[50%] flex items-end">
+    <motion.div
+      {...props}
+      className="absolute bottom-0 left-[50%] -translate-x-[50%] flex items-end"
+    >
       <OptionEdge />
       <motion.div
         className="bg-foreground gap-4 p-2 px-16 flex justify-center items-center rounded-t-[32px] h-full text-background"
@@ -36,17 +47,47 @@ export const OptionsBar = ({...props}: HTMLMotionProps<'div'>) => {
         </Option>
         {config.mode === 'characters' && (
           <Option label={<CaseSensitive />} hasLabel>
-            <OptionItem value="25" name="character" defaultChecked />
-            <OptionItem value="50" name="character" />
-            <OptionItem value="100" name="character" />
-            <OptionItem value="150" name="character" />
+            <OptionItem
+              value="25"
+              name="character"
+              onChange={() => handleSetChar(25)}
+              defaultChecked
+            />
+            <OptionItem
+              value="50"
+              name="character"
+              onChange={() => handleSetChar(50)}
+            />
+            <OptionItem
+              value="100"
+              name="character"
+              onChange={() => handleSetChar(100)}
+            />
+            <OptionItem
+              value="150"
+              name="character"
+              onChange={() => handleSetChar(150)}
+            />
           </Option>
         )}
         {config.mode === 'time' && (
           <Option label={<Timer />} hasLabel>
-            <OptionItem value="15" name="time" />
-            <OptionItem value="30" name="time" defaultChecked />
-            <OptionItem value="60" name="time" />
+            <OptionItem
+              value="15"
+              name="time"
+              onChange={() => handleSetTime(15)}
+            />
+            <OptionItem
+              value="30"
+              name="time"
+              onChange={() => handleSetTime(30)}
+              defaultChecked
+            />
+            <OptionItem
+              value="60"
+              name="time"
+              onChange={() => handleSetTime(60)}
+            />
           </Option>
         )}
       </motion.div>

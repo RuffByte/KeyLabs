@@ -20,7 +20,7 @@ export type Screen = {
 
 export type GameConfig = {
   config: {
-    mode: 'characters' | 'time';
+    mode: string;
     language: string;
     time: number | null;
     isCustom: boolean;

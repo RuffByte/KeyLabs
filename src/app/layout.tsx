@@ -83,7 +83,7 @@ export default function RootLayout({
             </div>
           </Transition>
         </body>
-        <ReactQueryDevtools initialIsOpen={false} />
+        {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       </QueryClientProvider>
     </html>
   );
