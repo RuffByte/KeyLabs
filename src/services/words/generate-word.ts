@@ -1,4 +1,6 @@
-type wordSet = {
+import { devConfig } from '@/devconfig';
+
+export type wordSet = {
   name: string;
   words: string[];
 };
@@ -26,6 +28,11 @@ export const generateWords = async (
   const wordSet = await getWordSet(wordSetName);
   const length: number = wordSet.words.length;
   let words = wordSet.words;
+
+  // owo
+  if (devConfig.DEBUG_QUERY) {
+    console.log(wordSetName);
+  }
 
   for (let currentIndex = 0; currentIndex < length; currentIndex++) {
     const randomIndex: number = Math.floor(Math.random() * length);

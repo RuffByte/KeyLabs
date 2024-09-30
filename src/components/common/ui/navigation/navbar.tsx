@@ -17,7 +17,7 @@ export const NavigationBar = ({ ...props }: NavigationBarProp) => {
     <motion.div
       {...props}
       className={cn(
-        'flex absolute w-full items-center justify-between top-4',
+        'flex absolute w-full items-center justify-between top-4 z-50',
         props.className
       )}
     >
