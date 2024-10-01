@@ -69,7 +69,7 @@ export const useConfig = create<GameConfig>()((set) => ({
 
 export type PointStack = {
   points: Point[];
-  removePoints: (index: number) => void;
+  hitPoints: (index: number) => void;
   setPoints: (points: Point[]) => void;
   handleGenerate: (
     words: string,
@@ -87,7 +87,7 @@ export type Point = {
 
 export const usePointsStack = create<PointStack>()((set) => ({
   points: [] as Point[],
-  removePoints: (index: number) =>
+  hitPoints: (index: number) =>
     set((state) => {
       let arr = [...state.points];
       console.log(state.points, index, arr.length);
@@ -119,9 +119,16 @@ export type GameData = {
   words: string[];
   hasStart: boolean;
   targetSize: number;
-  setGame: (words: wordSet) => void;
-  IsPlaying: () => void;
-  EndGame: () => void;
+  charIndex: number;
+  wordIndex: number;
+  totalClick: number;
+  totalhit: number;
+  startGame: (words: wordSet) => void;
+  incrementWordIndex: () => void;
+  incrementCharIndex: () => void;
+  isPlaying: () => void;
+  endGame: () => void;
+  resetGame: () => void;
 };
 
 export const useCurrentGame = create<GameData>()((set) => ({
@@ -129,10 +136,35 @@ export const useCurrentGame = create<GameData>()((set) => ({
   words: [],
   hasStart: false,
   targetSize: 80,
-  setGame: (state: wordSet) =>
+  charIndex: 0,
+  wordIndex: 0,
+  totalClick: 0,
+  totalhit: 0,
+  startGame: (state: wordSet) =>
     set({ words: state.words, language: state.name }),
-  IsPlaying: () => set({ hasStart: true }),
-  EndGame: () => set({ hasStart: false }),
+  incrementWordIndex: () =>
+    set((prevs) => {
+      return { charIndex: 0, wordIndex: prevs.wordIndex + 1 };
+    }),
+  incrementCharIndex: () =>
+    set((prevs) => {
+      return { charIndex: prevs.charIndex + 1 };
+    }),
+  isPlaying: () => set({ hasStart: true }),
+  endGame: () =>
+    set({
+      hasStart: false,
+    }),
+  resetGame: () =>
+    set({
+      hasStart: false,
+      words: [],
+      targetSize: 80,
+      charIndex: 0,
+      wordIndex: 0,
+      totalClick: 0,
+      totalhit: 0,
+    }),
 }));
 
 let allowReset = false;
@@ -140,7 +172,7 @@ let allowReset = false;
 const ClientGamePage = () => {
   const { config } = useConfig();
   const { screen } = useScreen();
-  const { setGame, EndGame } = useCurrentGame();
+  const { startGame: setGame, endGame, targetSize } = useCurrentGame();
   const { handleGenerate } = usePointsStack();
   const [isRestarting, setRestarting] = useState(false);
 
@@ -154,13 +186,13 @@ const ClientGamePage = () => {
     queryClient.resetQueries({
       queryKey: [QUERY_KEY.STATIC_WORDS],
     });
-    EndGame();
+    endGame();
   };
 
   useEffect(() => {
     if (data) {
       setGame(data);
-      handleGenerate(data.words[0], 80, screen);
+      handleGenerate(data.words[0], targetSize, screen);
     }
   }, [data]);
 

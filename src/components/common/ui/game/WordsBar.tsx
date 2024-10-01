@@ -8,7 +8,7 @@ import { cn } from '@/lib/utils';
 export const WordsBar = () => {
   const { screen } = useScreen();
   const { config } = useConfig();
-  const { words } = useCurrentGame();
+  const { words, charIndex, wordIndex } = useCurrentGame();
 
   return (
     <div
@@ -22,7 +22,7 @@ export const WordsBar = () => {
         </p>
       </h3>
       <div className="h-full overflow-hidden flex items-center whitespace-nowrap w-[800px] absolute left-1/2 -translate-x-1/2 border-secondary rounded-full border-2">
-        <WordsView words={words} />
+        <WordsView words={words} index={wordIndex} letterIndex={charIndex} />
       </div>
       <h3 className="text-2xl font-bold  ">
         <p className="p-2 flex gap-2 items-center bg-foreground text-background rounded-md px-4 min-w-32 justify-end">
@@ -34,9 +34,9 @@ export const WordsBar = () => {
   );
 };
 
-type WordViewProps = { words: string[]; index?: number; letterIndex?: number };
+type WordViewProps = { words: string[]; index: number; letterIndex: number };
 
-const WordsView = ({ words, index = 0, letterIndex = 2 }: WordViewProps) => {
+const WordsView = ({ words, index, letterIndex }: WordViewProps) => {
   const [currentOffset, setCurrentOffset] = React.useState(0);
 
   const refs = React.useRef<(HTMLParagraphElement | null)[]>([]);

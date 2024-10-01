@@ -51,7 +51,7 @@ export const generatePoint = (
       count = 0;
       stack.push({
         index: zeroIndexLength - index,
-        value: letters[index] + (zeroIndexLength - index),
+        value: letters[index],
         x: randomX,
         y: randomY,
       });

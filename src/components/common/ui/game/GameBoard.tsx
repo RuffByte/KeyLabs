@@ -2,12 +2,7 @@
 
 import React, { MouseEvent, useRef } from 'react';
 
-import {
-  Point,
-  useCurrentGame,
-  usePointsStack,
-  useScreen,
-} from '@/app/client-page';
+import { useCurrentGame, usePointsStack, useScreen } from '@/app/client-page';
 import { distance } from '@/services/utils';
 import { StartButton } from './StartButton';
 
@@ -15,9 +10,10 @@ const GameBoard = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   // const { width, height } = useScreenSize()
 
-  const { points, removePoints } = usePointsStack();
+  const { points, hitPoints } = usePointsStack();
   const { screen } = useScreen();
-  const { targetSize, hasStart } = useCurrentGame();
+  const { targetSize, hasStart, incrementCharIndex, incrementWordIndex } =
+    useCurrentGame();
 
   const handleClick = (e: MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
@@ -25,14 +21,13 @@ const GameBoard = () => {
     const { left, top } = containerRef.current.getBoundingClientRect();
     const [clickX, clickY] = [clientX - left, clientY - top];
 
-    console.log(clickX, clickY);
-
     for (const point of points) {
-      if (distance(clickX, clickY, point.x, point.y) <= targetSize / 2) {
-        if (point.value !== points[points.length - 1].value) continue;
-        removePoints(point.index);
-        break;
-      }
+      if (distance(clickX, clickY, point.x, point.y) > targetSize / 2) continue;
+      if (point.value !== points[points.length - 1].value) continue;
+      incrementCharIndex();
+      // if (points.length <= 1) incrementWordIndex();
+      hitPoints(point.index);
+      break;
     }
   };
 
@@ -44,7 +39,7 @@ const GameBoard = () => {
       {points.map((point) => (
         <div
           key={point.index}
-          className="absolute bg-foreground z-50 [translate:-50%_-50%] text-background rounded-full grid place-items-center pointer-events-none select-none font-bold text-3xl"
+          className="absolute bg-foreground z-50 [translate:-50%_-50%] text-background rounded-full grid place-items-center pointer-events-none select-none text-4xl"
           style={{
             left: point.x,
             top: point.y,
