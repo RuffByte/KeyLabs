@@ -10,6 +10,7 @@ export const StartButton = () => {
       <div className="absolute bg-foreground -z-10 animate-ping rounded-full size-5/6 grid " />
       <motion.button
         whileHover={{ scale: 1.1 }}
+        whileTap={{ scale: 0.95 }}
         className="bg-foreground grid place-items-center cursor-pointer rounded-full size-full"
       >
         <Waypoints color="hsl(var(--background))" />

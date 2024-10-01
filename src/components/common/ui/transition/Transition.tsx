@@ -108,7 +108,7 @@ const Transition = ({ children }: TransitionProps) => {
         )}
         {!isTransitioning && (
           <motion.div
-            className="absolute inset-0 size-full bg-slate-800"
+            className="fixed inset-0 size-full bg-slate-800"
             initial="initial"
             animate="animate"
             transition={{ ease: 'easeOut', duration: 0.2 }}

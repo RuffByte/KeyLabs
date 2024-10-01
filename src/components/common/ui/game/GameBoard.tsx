@@ -1,6 +1,6 @@
 'use client';
 
-import React, { MouseEvent, useRef, useState } from 'react';
+import React, { MouseEvent, useRef } from 'react';
 
 import {
   Point,
@@ -8,7 +8,6 @@ import {
   usePointsStack,
   useScreen,
 } from '@/app/client-page';
-import { generatePoint } from '@/services/points/generate-point';
 // import { useScreenSize } from '@/app/page'
 import { StartButton } from './StartButton';
 

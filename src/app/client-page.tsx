@@ -35,7 +35,7 @@ export type GameData = {
   language: string;
   words: string[];
   targetSize: number;
-  setWords: (words: wordSet) => void;
+  setGame: (words: wordSet) => void;
 };
 
 export type Point = {
@@ -92,7 +92,7 @@ let allowReset = false;
 export const useCurrentGame = create<GameData>()((set) => ({
   language: 'english',
   words: [],
-  setWords: (state: wordSet) =>
+  setGame: (state: wordSet) =>
     set({ words: state.words, language: state.name }),
   targetSize: 80,
 }));
@@ -101,7 +101,7 @@ const ClientGamePage = () => {
   const { config } = useConfig();
   const { screen } = useScreen();
   const { data, isLoading } = useGenerateWords(config.language);
-  const { words, targetSize, setWords } = useCurrentGame();
+  const { words, targetSize, setGame } = useCurrentGame();
   const { handleGenerate } = usePointsStack();
   const [isRestarting, setRestarting] = useState(false);
 
@@ -120,7 +120,7 @@ const ClientGamePage = () => {
 
   useEffect(() => {
     if (data) {
-      setWords(data);
+      setGame(data);
     }
   }, [data]);
 
@@ -140,11 +140,11 @@ const ClientGamePage = () => {
     }
   });
 
-  document.addEventListener('keyup', function (event) {
+  document.addEventListener('keyup', function () {
     allowReset = true;
   });
 
-  document.addEventListener('focus', function (event) {
+  document.addEventListener('focus', function () {
     allowReset = true;
   });
 
