@@ -7,7 +7,7 @@ import { toast } from 'sonner';
 import { z } from 'zod';
 
 import TextInput from '@/components/authentication/TextInput';
-import Button from '@/components/common/button';
+import Button from '@/components/common/Button';
 import { forgetPasswordSchema } from '@/schemas/zod/schemas';
 import { resetPasswordAction } from './actions';
 

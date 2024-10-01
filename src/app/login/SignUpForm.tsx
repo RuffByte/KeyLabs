@@ -9,7 +9,7 @@ import { z } from 'zod';
 
 import TextInput from '@/components/authentication/TextInput'; // Import the TextInput component
 
-import Button from '@/components/common/button';
+import Button from '@/components/common/Button';
 import { signUpSchema } from '@/schemas/zod/schemas';
 import { signUp } from './login.action';
 
