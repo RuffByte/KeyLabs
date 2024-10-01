@@ -1,54 +1,107 @@
 # KeyLabs
 
-This repository hosts the in progress codebase for [KeyLabs](https://github.com/tulza/KeyLabs) V2! KeyLabs is an online game inspired by typing tests such as [MonkeyType](https://monkeytype.com/) and [TypeRacer](https://play.typeracer.com/) and aiming games such as [AimLabs](https://aimlabs.com/) and [Aimbooster](https://www.aimbooster.com/). Originally KeyLabs was developed during the Terrible Ideas Hackathon, where we managed to score second place, however due to the lack of time, some features were unpolished / uncompleted and needed major refactoring. Hence KeyLabs V2.
+This repository hosts the in progress codebase for [KeyLabs](https://github.com/tulza/KeyLabs) V2! <br/>
 
-# Technologies Used
+KeyLabs is an online game inspired by typing tests such as [MonkeyType](https://monkeytype.com/) and [TypeRacer](https://play.typeracer.com/) and aiming games such as [AimLabs](https://aimlabs.com/) and [Aimbooster](https://www.aimbooster.com/). <br/>
+
+Originally KeyLabs was developed during the Terrible Ideas Hackathon, where we managed to score second place, however due to the lack of time, some features were unpolished / uncompleted and needed major refactoring. Hence KeyLabs V2.
+
+| Developer | Github                           |
+| --------- | -------------------------------- |
+| Tulza     | [here](https://github.com/Tulza) |
+| Antga     | [here](https://github.com/AntGa) |
+
+### Technologies:
 
 <div align="center">
-<img src="https://img.shields.io/badge/next%20js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white"/>
-<img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/>
-<img src="https://img.shields.io/badge/Lucia_Auth-8A2BE2?style=for-the-badge&logo=Lucia&logoColor=white"/>
-<img src="https://img.shields.io/badge/Framer_Motion-black?style=for-the-badge&logo=framer&logoColor=blue"/>
-<img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white"/>
-<img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white"/>
-<img src="https://img.shields.io/badge/npm-CB3837?style=for-the-badge&logo=npm&logoColor=white"/>
-<img src="    https://img.shields.io/badge/Node%20js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white"/>
-
+    <!-- Next js -->
+    <img src="https://img.shields.io/badge/next%20js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white"/>
+    <!-- React -->
+    <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB"/>
+    <!-- Typescript -->
+    <img src="https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white"/>
+    <!-- Framer motion -->
+    <img src="https://img.shields.io/badge/Framer_Motion-black?style=for-the-badge&logo=framer&logoColor=blue"/>
+    <!-- TailwindCSS -->
+    <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white"/>
 </div>
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<div align="center">
+    <!-- PostgreSQL -->
+    <img src="https://img.shields.io/badge/PostgreSQL-316192?style=for-the-badge&logo=postgresql&logoColor=white"/>
+    <!-- Supabase -->
+    <img src="https://img.shields.io/badge/Supabase-181818?style=for-the-badge&logo=supabase&logoColor=3ecf8e"/>
+    <!-- Prisma -->
+    <img src="https://img.shields.io/badge/Prisma-3982CE?style=for-the-badge&logo=Prisma&logoColor=white"/>
+    <!-- Zod -->
+    <img src="https://img.shields.io/badge/Zod-000000?style=for-the-badge&logo=zod&logoColor=3068B7"/>
+    <!-- Tanstack query -->
+    <img src="https://img.shields.io/badge/tanstack_query-FF4154?style=for-the-badge&logo=reactquery&logoColor=ffffff"/>
+    <!-- Tanstack query -->
+    <img src="https://img.shields.io/badge/Zustand-884662?style=for-the-badge"/>
+</div>
 
-## Getting Started
+<div align="center">
+    <!-- Lucia Auth -->
+    <img src="https://img.shields.io/badge/Lucia_Auth-8A2BE2?style=for-the-badge&logo=Lucia&logoColor=white"/>
+    <!-- Lucia Auth -->
+    <img src="https://img.shields.io/badge/Argon2-6A0BE2?style=for-the-badge"/>
+    <!-- Oslo -->
+    <img src="https://img.shields.io/badge/Oslo-000?style=for-the-badge"/>
+    <!-- Google Auth -->
+    <img src="https://img.shields.io/badge/Google_OAuth-fff?style=for-the-badge&logo=google&logoColor=black"/>
+</div>
 
-First, run the development server:
+<div align="center">
+    <!-- cloudflare -->
+    <img src="https://img.shields.io/badge/Cloudflare-F38020?style=for-the-badge&logo=Cloudflare&logoColor=white">
+    <!-- cloudflare -->
+    <img src="https://img.shields.io/badge/Google_Cloud-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white">
+</div>
+
+<div align="center">
+    <!-- PNPM -->
+    <img src="https://img.shields.io/badge/pnpm-CB3837?style=for-the-badge&logo=npm&logoColor=white"/>
+    <!-- NodeJS -->
+    <img src="https://img.shields.io/badge/Node%20js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white"/>
+    <!-- Figma -->
+    <img src="https://img.shields.io/badge/Figma-F24E1E?style=for-the-badge&logo=figma&logoColor=white"/>
+    <!-- Prettier -->
+    <img src="https://img.shields.io/badge/prettier-1A2C34?style=for-the-badge&logo=prettier&logoColor=F7BA3E"/>
+</div>
+
+## Running the project
+
+cloning the project
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/RuffByte/KeyLabs.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+change directory to the project then install dependencies
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+cd .\KeyLabs\
+pnpm install
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Create the .env file then update the values,
 
-## Learn More
+```env
+cp .env-example .env
+```
 
-To learn more about Next.js, take a look at the following resources:
+run development server
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+pnpm run dev
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result!
 
-## Deploy on Vercel
+---
+<br/>
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/fbe90ece-0e86-41e5-93cd-fc12bec30ab9"/>
+</div>
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
