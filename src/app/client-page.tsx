@@ -3,9 +3,15 @@
 import React, { useEffect, useState } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
+import { Globe } from 'lucide-react';
 import { create } from 'zustand';
 
+import Dialog, {
+  DialogContent,
+  DialogTriggerButton,
+} from '@/components/common/Dialog';
 import GameBoard from '@/components/common/ui/game/GameBoard';
+import { LanguageSelectionDialog } from '@/components/common/ui/game/LanguageSelectionDialog';
 import { OptionsBar } from '@/components/common/ui/game/OptionsBar';
 import { WordsBar } from '@/components/common/ui/game/WordsBar';
 import { NavigationBar } from '@/components/common/ui/navigation/navbar';
@@ -34,8 +40,11 @@ export type GameConfig = {
 export type GameData = {
   language: string;
   words: string[];
+  hasStart: boolean;
   targetSize: number;
   setGame: (words: wordSet) => void;
+  StartGame: () => void;
+  EndGame: () => void;
 };
 
 export type Point = {
@@ -92,32 +101,33 @@ let allowReset = false;
 export const useCurrentGame = create<GameData>()((set) => ({
   language: 'english',
   words: [],
+  hasStart: false,
+  targetSize: 80,
   setGame: (state: wordSet) =>
     set({ words: state.words, language: state.name }),
-  targetSize: 80,
+  StartGame: () => set({ hasStart: true }),
+  EndGame: () => set({ hasStart: false }),
 }));
 
 const ClientGamePage = () => {
   const { config } = useConfig();
   const { screen } = useScreen();
   const { data, isLoading } = useGenerateWords(config.language);
-  const { words, targetSize, setGame } = useCurrentGame();
+  const { words, targetSize, setGame, EndGame } = useCurrentGame();
   const { handleGenerate } = usePointsStack();
   const [isRestarting, setRestarting] = useState(false);
 
+  // * put function here that should run in the middle of the transition
   const queryClient = useQueryClient();
   const handleRestart = () => {
     if (isRestarting) return;
     queryClient.resetQueries({
       queryKey: [QUERY_KEY.STATIC_WORDS],
     });
+    EndGame();
   };
 
-  useEffect(() => {
-    if (isLoading) return;
-    handleGenerate(words[0], targetSize, screen);
-  }, [isLoading]);
-
+  // handleGenerate(words[0], targetSize, screen);
   useEffect(() => {
     if (data) {
       setGame(data);
@@ -127,6 +137,10 @@ const ClientGamePage = () => {
   useEffect(() => {
     if (!isRestarting) handleRestart();
   }, [isRestarting]);
+
+  useEffect(() => {
+    setRestarting(true);
+  }, [config.language]);
 
   document.addEventListener('keydown', function (event) {
     if (event.repeat != undefined) {
@@ -151,17 +165,26 @@ const ClientGamePage = () => {
   return (
     <>
       <NavigationBar />
-      <motion.div
-        animate={{
-          filter: isRestarting ? 'blur(8px)' : 'blur(0px)',
-          opacity: isRestarting ? 0 : 1,
-        }}
-        onAnimationComplete={() => setRestarting(false)}
-        className="flex flex-col justify-center items-center h-full "
-      >
-        <WordsBar />
-        <GameBoard />
-      </motion.div>
+      <Dialog>
+        <motion.div
+          animate={{
+            filter: isRestarting ? 'blur(8px)' : 'blur(0px)',
+            opacity: isRestarting ? 0 : 1,
+          }}
+          onAnimationComplete={() => setRestarting(false)}
+          className="flex flex-col justify-center items-center h-full "
+        >
+          <WordsBar />
+          <GameBoard />
+          <DialogTriggerButton>
+            {config.language}
+            <Globe size={20} strokeWidth={1.5} />
+          </DialogTriggerButton>
+        </motion.div>
+        <DialogContent>
+          <LanguageSelectionDialog />
+        </DialogContent>
+      </Dialog>
       <OptionsBar />
     </>
   );

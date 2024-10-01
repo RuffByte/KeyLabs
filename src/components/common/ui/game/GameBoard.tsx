@@ -25,7 +25,7 @@ const GameBoard = () => {
 
   const { points } = usePointsStack();
   const { screen } = useScreen();
-  const { targetSize } = useCurrentGame();
+  const { targetSize, hasStart } = useCurrentGame();
 
   return (
     <div
@@ -51,7 +51,7 @@ const GameBoard = () => {
         ref={containerRef}
         className="grid-80 bg-secondary size-full"
       />
-      <StartButton />
+      {!hasStart && <StartButton />}
     </div>
   );
 };
