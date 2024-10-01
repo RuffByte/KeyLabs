@@ -20,13 +20,13 @@ const config: Config = {
         kollektif: ['var(--font-kollektic)'],
       },
       screens: {
-        desktop: '1440px',
+        desktop: '1280px',
       },
       width: {
-        desktop: '1440px',
+        desktop: '1280px',
       },
       minWidth: {
-        desktop: '1440px',
+        desktop: '1280px',
       },
       borderRadius: {
         input: '8px',

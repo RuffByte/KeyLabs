@@ -36,7 +36,7 @@ export const WordsBar = () => {
 
 type WordViewProps = { words: string[]; index?: number; letterIndex?: number };
 
-const WordsView = ({ words, index = 2, letterIndex = 4 }: WordViewProps) => {
+const WordsView = ({ words, index = 0, letterIndex = 2 }: WordViewProps) => {
   const [currentOffset, setCurrentOffset] = React.useState(0);
 
   const refs = React.useRef<(HTMLParagraphElement | null)[]>([]);
@@ -49,7 +49,7 @@ const WordsView = ({ words, index = 2, letterIndex = 4 }: WordViewProps) => {
   if (words.length < 10) {
     currentWords = words;
   } else {
-    currentWords = words.slice(index, index + 15);
+    currentWords = words.slice(0, index + 15);
   }
 
   React.useEffect(() => {
@@ -70,26 +70,25 @@ const WordsView = ({ words, index = 2, letterIndex = 4 }: WordViewProps) => {
       transition={{ duration: 0.5, ease: 'easeInOut' }}
     >
       {currentWords.map((word, i) => (
-        <>
-          <p
-            key={i}
-            ref={(el) => {
-              refs.current[i] = el;
-            }}
-          >
-            {index === i ? (
-              <>
-                {word.split('').map((letter, j) => (
-                  <span className={cn(letterIndex > j && 'text-foreground')}>
-                    {letter}
-                  </span>
-                ))}
-              </>
-            ) : (
-              <span className={cn(index > i && 'text-foreground')}>{word}</span>
-            )}
-          </p>
-        </>
+        <p
+          key={i}
+          ref={(el) => {
+            refs.current[i] = el;
+          }}
+        >
+          {index === i ? (
+            word.split('').map((letter, j) => (
+              <span
+                key={`${i}-${j}`}
+                className={cn(letterIndex > j && 'text-foreground')}
+              >
+                {letter}
+              </span>
+            ))
+          ) : (
+            <span className={cn(index > i && 'text-foreground')}>{word}</span>
+          )}
+        </p>
       ))}
     </motion.div>
   );

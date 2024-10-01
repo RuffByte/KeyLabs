@@ -1,4 +1,5 @@
 import { Point } from '@/app/client-page';
+import { distance } from '../utils';
 
 export const generatePoint = (
   word: string = '',
@@ -6,6 +7,7 @@ export const generatePoint = (
   screen: { width: number; height: number }
 ) => {
   const letters = word.trim().split('');
+  const zeroIndexLength = word.length - 1;
   const MAX_FAILS = 100;
   const MAX_LOOP_RETRY = 5;
 
@@ -18,6 +20,7 @@ export const generatePoint = (
   let count = 0;
   let retry = 0;
   let index = 0;
+
   while (true) {
     if (count > MAX_FAILS) {
       if (retry > MAX_LOOP_RETRY) {
@@ -47,19 +50,14 @@ export const generatePoint = (
     if (valid) {
       count = 0;
       stack.push({
-        index: index,
-        value: letters[index],
+        index: zeroIndexLength - index,
+        value: letters[index] + (zeroIndexLength - index),
         x: randomX,
         y: randomY,
       });
       index++;
     }
   }
-  return stack;
-};
-
-const distance = (x1: number, y1: number, x2: number, y2: number) => {
-  const x = x2 - x1;
-  const y = y2 - y1;
-  return Math.sqrt(x * x + y * y);
+  console.log(stack);
+  return stack.reverse();
 };

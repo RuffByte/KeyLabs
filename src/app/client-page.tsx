@@ -20,10 +20,23 @@ import { generatePoint } from '@/services/points/generate-point';
 import { wordSet } from '@/services/words/generate-word';
 import { useGenerateWords } from './hooks/query/useGenerateWords';
 
+// *
+// *
+// *
+
 export type Screen = {
   screen: { width: number; height: number };
   setScreen: (screen: { width: number; height: number }) => void;
 };
+
+export const useScreen = create<Screen>()((set) => ({
+  screen: { width: 15 * 80, height: 9 * 80 },
+  setScreen: (screen) => set({ screen }),
+}));
+
+// *
+// *
+// *
 
 export type GameConfig = {
   config: {
@@ -36,38 +49,6 @@ export type GameConfig = {
   setConfig: (config: GameConfig['config']) => void;
   resetConfig: () => void;
 };
-
-export type GameData = {
-  language: string;
-  words: string[];
-  hasStart: boolean;
-  targetSize: number;
-  setGame: (words: wordSet) => void;
-  IsPlaying: () => void;
-  EndGame: () => void;
-};
-
-export type Point = {
-  index: number;
-  value: string;
-  x: number;
-  y: number;
-};
-export type PointStack = {
-  points: Point[];
-  popPoints: (state: Point[]) => void;
-  setPoints: (points: Point[]) => void;
-  handleGenerate: (
-    words: string,
-    targetSize: number,
-    screen: { width: number; height: number }
-  ) => void;
-};
-
-export const useScreen = create<Screen>()((set) => ({
-  screen: { width: 15 * 80, height: 9 * 80 },
-  setScreen: (screen) => set({ screen }),
-}));
 
 export const useConfig = create<GameConfig>()((set) => ({
   config: {
@@ -82,12 +63,45 @@ export const useConfig = create<GameConfig>()((set) => ({
   resetConfig: () => set({ config: { ...useConfig.getState().config } }),
 }));
 
+// *
+// *
+// *
+
+export type PointStack = {
+  points: Point[];
+  removePoints: (index: number) => void;
+  setPoints: (points: Point[]) => void;
+  handleGenerate: (
+    words: string,
+    targetSize: number,
+    screen: { width: number; height: number }
+  ) => void;
+};
+
+export type Point = {
+  index: number;
+  value: string;
+  x: number;
+  y: number;
+};
+
 export const usePointsStack = create<PointStack>()((set) => ({
   points: [] as Point[],
-  popPoints: (state: Point[]) =>
-    set(() => {
-      state.pop();
-      return { points: state };
+  removePoints: (index: number) =>
+    set((state) => {
+      let arr = [...state.points];
+      console.log(state.points, index, arr.length);
+      if (index === arr.length - 1) {
+        arr.pop();
+      } else {
+        // this is so cursed lmfao
+        // swap the value with the popped one
+        // situation: popped value is the same as top of stack
+        const point = arr.pop();
+        const { x, y, value } = point!;
+        arr[index] = { index, value, x, y };
+      }
+      return { points: arr };
     }),
   setPoints: (points: Point[]) => set({ points }),
   handleGenerate: (word, targetSize, screen) =>
@@ -96,7 +110,19 @@ export const usePointsStack = create<PointStack>()((set) => ({
     }),
 }));
 
-let allowReset = false;
+// *
+// *
+// *
+
+export type GameData = {
+  language: string;
+  words: string[];
+  hasStart: boolean;
+  targetSize: number;
+  setGame: (words: wordSet) => void;
+  IsPlaying: () => void;
+  EndGame: () => void;
+};
 
 export const useCurrentGame = create<GameData>()((set) => ({
   language: 'english',
@@ -109,11 +135,17 @@ export const useCurrentGame = create<GameData>()((set) => ({
   EndGame: () => set({ hasStart: false }),
 }));
 
+let allowReset = false;
+
 const ClientGamePage = () => {
   const { config } = useConfig();
-  const { data } = useGenerateWords(config.language);
+  const { screen } = useScreen();
   const { setGame, EndGame } = useCurrentGame();
+  const { handleGenerate } = usePointsStack();
   const [isRestarting, setRestarting] = useState(false);
+
+  // * inital fetching
+  const { data } = useGenerateWords(config.language);
 
   // * put function here that should run in the middle of the transition
   const queryClient = useQueryClient();
@@ -128,6 +160,7 @@ const ClientGamePage = () => {
   useEffect(() => {
     if (data) {
       setGame(data);
+      handleGenerate(data.words[0], 80, screen);
     }
   }, [data]);
 
@@ -138,6 +171,10 @@ const ClientGamePage = () => {
   useEffect(() => {
     setRestarting(true);
   }, [config.language]);
+
+  useEffect(() => {
+    setRestarting(true);
+  }, []);
 
   document.addEventListener('keydown', function (event) {
     if (event.repeat != undefined) {
