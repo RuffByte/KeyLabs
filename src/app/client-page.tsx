@@ -43,7 +43,7 @@ export type GameData = {
   hasStart: boolean;
   targetSize: number;
   setGame: (words: wordSet) => void;
-  StartGame: () => void;
+  IsPlaying: () => void;
   EndGame: () => void;
 };
 
@@ -105,16 +105,14 @@ export const useCurrentGame = create<GameData>()((set) => ({
   targetSize: 80,
   setGame: (state: wordSet) =>
     set({ words: state.words, language: state.name }),
-  StartGame: () => set({ hasStart: true }),
+  IsPlaying: () => set({ hasStart: true }),
   EndGame: () => set({ hasStart: false }),
 }));
 
 const ClientGamePage = () => {
   const { config } = useConfig();
-  const { screen } = useScreen();
-  const { data, isLoading } = useGenerateWords(config.language);
-  const { words, targetSize, setGame, EndGame } = useCurrentGame();
-  const { handleGenerate } = usePointsStack();
+  const { data } = useGenerateWords(config.language);
+  const { setGame, EndGame } = useCurrentGame();
   const [isRestarting, setRestarting] = useState(false);
 
   // * put function here that should run in the middle of the transition
@@ -127,7 +125,6 @@ const ClientGamePage = () => {
     EndGame();
   };
 
-  // handleGenerate(words[0], targetSize, screen);
   useEffect(() => {
     if (data) {
       setGame(data);

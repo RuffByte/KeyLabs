@@ -9,7 +9,7 @@ export const LanguageSelectionDialog = () => {
   return (
     <div className="min-w-[600px] pb-8">
       <div className="flex p-4  justify-between items-center border-b">
-        <h3 className="text-2xl font-bold">Languages</h3>
+        <h3 className="text-2xl">Languages set</h3>
       </div>
       {(languages as string[]).map((language) => (
         <LanguageItem

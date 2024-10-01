@@ -2,12 +2,7 @@
 
 import React, { MouseEvent, useRef } from 'react';
 
-import {
-  Point,
-  useCurrentGame,
-  usePointsStack,
-  useScreen,
-} from '@/app/client-page';
+import { useCurrentGame, usePointsStack, useScreen } from '@/app/client-page';
 // import { useScreenSize } from '@/app/page'
 import { StartButton } from './StartButton';
 

@@ -22,7 +22,7 @@ export const useDialog = () => {
 };
 
 export const Dialog = ({ children }: { children: React.ReactNode }) => {
-  const [open, setopen] = useState(true);
+  const [open, setopen] = useState(false);
 
   const handleClose = () => {
     setopen(false);

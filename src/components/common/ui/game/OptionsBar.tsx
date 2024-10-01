@@ -156,7 +156,7 @@ const OptionItem = ({
 const OptionEdge = ({ className }: { className?: string }) => (
   <div
     className={cn(
-      'edge-32 size-8 edge-40 bg-foreground border-r border-b border-foreground',
+      'edge-32 size-8 bg-foreground outline-r-4 outline-b-4 outline-foreground',
       className
     )}
   />
