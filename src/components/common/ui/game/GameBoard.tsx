@@ -1,8 +1,13 @@
 'use client';
 
-import React, { MouseEvent, useRef } from 'react';
+import React, { MouseEvent, useRef, useState } from 'react';
 
-import { Point, useCurrentGame, useScreen } from '@/app/client-page';
+import {
+  Point,
+  useCurrentGame,
+  usePointsStack,
+  useScreen,
+} from '@/app/client-page';
 import { generatePoint } from '@/services/points/generate-point';
 // import { useScreenSize } from '@/app/page'
 import { StartButton } from './StartButton';
@@ -10,7 +15,6 @@ import { StartButton } from './StartButton';
 const GameBoard = () => {
   const containerRef = useRef<HTMLDivElement>(null);
   // const { width, height } = useScreenSize()
-
   const handleClick = (e: MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
     const { clientX, clientY } = e;
@@ -20,10 +24,10 @@ const GameBoard = () => {
     console.log(clickX, clickY);
   };
 
+  const { points } = usePointsStack();
   const { screen } = useScreen();
-  const { words } = useCurrentGame();
-  const CIRCLE_SIZE = 120;
-  const points = generatePoint(words[0], CIRCLE_SIZE, screen);
+  const { targetSize } = useCurrentGame();
+
   return (
     <div
       className="relative border-secondary"
@@ -36,8 +40,8 @@ const GameBoard = () => {
           style={{
             left: point.x,
             top: point.y,
-            width: CIRCLE_SIZE,
-            height: CIRCLE_SIZE,
+            width: targetSize,
+            height: targetSize,
           }}
         >
           {point.value}

@@ -10,6 +10,7 @@ import { OptionsBar } from '@/components/common/ui/game/OptionsBar';
 import { WordsBar } from '@/components/common/ui/game/WordsBar';
 import { NavigationBar } from '@/components/common/ui/navigation/navbar';
 import { QUERY_KEY } from '@/lib/utils/queryKeys';
+import { generatePoint } from '@/services/points/generate-point';
 import { wordSet } from '@/services/words/generate-word';
 import { useGenerateWords } from './hooks/query/useGenerateWords';
 
@@ -33,6 +34,7 @@ export type GameConfig = {
 export type GameData = {
   language: string;
   words: string[];
+  targetSize: number;
   setWords: (words: wordSet) => void;
 };
 
@@ -46,6 +48,11 @@ export type PointStack = {
   points: Point[];
   popPoints: (state: Point[]) => void;
   setPoints: (points: Point[]) => void;
+  handleGenerate: (
+    words: string,
+    targetSize: number,
+    screen: { width: number; height: number }
+  ) => void;
 };
 
 export const useScreen = create<Screen>()((set) => ({
@@ -60,6 +67,7 @@ export const useConfig = create<GameConfig>()((set) => ({
     time: 30,
     isCustom: false,
     lengthChar: null,
+    targetSize: 80,
   },
   setConfig: (config) => set({ config }),
   resetConfig: () => set({ config: { ...useConfig.getState().config } }),
@@ -73,6 +81,10 @@ export const usePointsStack = create<PointStack>()((set) => ({
       return { points: state };
     }),
   setPoints: (points: Point[]) => set({ points }),
+  handleGenerate: (word, targetSize, screen) =>
+    set({
+      points: generatePoint(word, targetSize, screen),
+    }),
 }));
 
 let allowReset = false;
@@ -82,12 +94,15 @@ export const useCurrentGame = create<GameData>()((set) => ({
   words: [],
   setWords: (state: wordSet) =>
     set({ words: state.words, language: state.name }),
+  targetSize: 80,
 }));
 
 const ClientGamePage = () => {
   const { config } = useConfig();
+  const { screen } = useScreen();
   const { data, isLoading } = useGenerateWords(config.language);
-  const { setWords } = useCurrentGame();
+  const { words, targetSize, setWords } = useCurrentGame();
+  const { handleGenerate } = usePointsStack();
   const [isRestarting, setRestarting] = useState(false);
 
   const queryClient = useQueryClient();
@@ -100,10 +115,14 @@ const ClientGamePage = () => {
 
   useEffect(() => {
     if (isLoading) return;
+    handleGenerate(words[0], targetSize, screen);
+  }, [isLoading]);
+
+  useEffect(() => {
     if (data) {
       setWords(data);
     }
-  }, [data, isLoading]);
+  }, [data]);
 
   useEffect(() => {
     if (!isRestarting) handleRestart();
