@@ -1,7 +1,9 @@
 import React from 'react';
+import { motion } from 'framer-motion';
 import { CaseSensitive, Timer } from 'lucide-react';
 
 import { useConfig, useCurrentGame, useScreen } from '@/app/client-page';
+import { cn } from '@/lib/utils';
 
 export const WordsBar = () => {
   const { screen } = useScreen();
@@ -20,9 +22,7 @@ export const WordsBar = () => {
         </p>
       </h3>
       <div className="h-full overflow-hidden flex items-center whitespace-nowrap w-[800px] absolute left-1/2 -translate-x-1/2 border-secondary rounded-full border-2">
-        <div className="text-3xl left-1/2 absolute flex whitespace-pre ">
-          <WordsView words={words} index={0} />
-        </div>
+        <WordsView words={words} />
       </div>
       <h3 className="text-2xl font-bold  ">
         <p className="p-2 flex gap-2 items-center bg-foreground text-background rounded-md px-4 min-w-32 justify-end">
@@ -34,36 +34,65 @@ export const WordsBar = () => {
   );
 };
 
-type WordViewProps = { words: string[]; index: number };
+type WordViewProps = { words: string[]; index?: number; letterIndex?: number };
 
-const WordsView = ({ words, index }: WordViewProps) => {
-  const offsetArr = [];
+const WordsView = ({ words, index = 2, letterIndex = 4 }: WordViewProps) => {
+  const [currentOffset, setCurrentOffset] = React.useState(0);
 
-  // const [currentOffset, setCurrentOffset] = React.useState(0);
+  const refs = React.useRef<(HTMLParagraphElement | null)[]>([]);
 
   const handleSetOffset = (offset: number) => {
-    // setCurrentOffset(offset);
+    setCurrentOffset(offset);
   };
 
-  let currentWord: string[] = [];
+  let currentWords: string[] = [];
   if (words.length < 10) {
-    currentWord = words;
+    currentWords = words;
   } else {
-    currentWord = words.slice(index, index + 10 + index);
+    currentWords = words.slice(index, index + 15);
   }
 
-  return currentWord.map((word, i) => {
-    const ref = React.useRef<HTMLParagraphElement>(null);
-    if (ref.current) {
-      const { offsetWidth, offsetLeft } = ref.current;
+  React.useEffect(() => {
+    const ref = refs.current[index];
+    if (ref) {
+      const { offsetWidth, offsetLeft } = ref;
+      console.log(offsetWidth, offsetLeft);
       handleSetOffset(offsetLeft + offsetWidth / 2);
+    } else {
+      console.log('no ref');
     }
-    return (
-      <p ref={ref} key={i}>
-        {word}{' '}
-      </p>
-    );
-  });
+  }, [currentWords, index]);
+
+  return (
+    <motion.div
+      className="text-3xl left-1/2 absolute gap-2 flex whitespace-pre text-input"
+      animate={{ x: -currentOffset }}
+      transition={{ duration: 0.5, ease: 'easeInOut' }}
+    >
+      {currentWords.map((word, i) => (
+        <>
+          <p
+            key={i}
+            ref={(el) => {
+              refs.current[i] = el;
+            }}
+          >
+            {index === i ? (
+              <>
+                {word.split('').map((letter, j) => (
+                  <span className={cn(letterIndex > j && 'text-foreground')}>
+                    {letter}
+                  </span>
+                ))}
+              </>
+            ) : (
+              <span className={cn(index > i && 'text-foreground')}>{word}</span>
+            )}
+          </p>
+        </>
+      ))}
+    </motion.div>
+  );
 };
 
-export default WordsBar;
+export default WordsView;
