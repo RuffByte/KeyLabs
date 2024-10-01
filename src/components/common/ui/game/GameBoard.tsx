@@ -12,7 +12,7 @@ const GameBoard = () => {
 
   const { points, hitPoints } = usePointsStack();
   const { screen } = useScreen();
-  const { targetSize, hasStart, incrementCharIndex, incrementWordIndex } =
+  const { targetSize, hasStart, incrementCharIndex, handleNextWord } =
     useCurrentGame();
 
   const handleClick = (e: MouseEvent<HTMLDivElement>) => {
@@ -25,7 +25,7 @@ const GameBoard = () => {
       if (distance(clickX, clickY, point.x, point.y) > targetSize / 2) continue;
       if (point.value !== points[points.length - 1].value) continue;
       incrementCharIndex();
-      // if (points.length <= 1) incrementWordIndex();
+      if (points.length <= 1) handleNextWord();
       hitPoints(point.index);
       break;
     }

@@ -76,6 +76,7 @@ export type PointStack = {
     targetSize: number,
     screen: { width: number; height: number }
   ) => void;
+  handleClear: () => void;
 };
 
 export type Point = {
@@ -108,6 +109,7 @@ export const usePointsStack = create<PointStack>()((set) => ({
     set({
       points: generatePoint(word, targetSize, screen),
     }),
+  handleClear: () => set({ points: [] }),
 }));
 
 // *
@@ -123,8 +125,8 @@ export type GameData = {
   wordIndex: number;
   totalClick: number;
   totalhit: number;
-  startGame: (words: wordSet) => void;
-  incrementWordIndex: () => void;
+  setGame: (words: wordSet) => void;
+  handleNextWord: () => void;
   incrementCharIndex: () => void;
   isPlaying: () => void;
   endGame: () => void;
@@ -140,9 +142,9 @@ export const useCurrentGame = create<GameData>()((set) => ({
   wordIndex: 0,
   totalClick: 0,
   totalhit: 0,
-  startGame: (state: wordSet) =>
+  setGame: (state: wordSet) =>
     set({ words: state.words, language: state.name }),
-  incrementWordIndex: () =>
+  handleNextWord: () =>
     set((prevs) => {
       return { charIndex: 0, wordIndex: prevs.wordIndex + 1 };
     }),
@@ -172,8 +174,9 @@ let allowReset = false;
 const ClientGamePage = () => {
   const { config } = useConfig();
   const { screen } = useScreen();
-  const { startGame: setGame, endGame, targetSize } = useCurrentGame();
-  const { handleGenerate } = usePointsStack();
+  const { setGame, endGame, targetSize, wordIndex, hasStart, resetGame } =
+    useCurrentGame();
+  const { handleGenerate, handleClear } = usePointsStack();
   const [isRestarting, setRestarting] = useState(false);
 
   // * inital fetching
@@ -182,19 +185,28 @@ const ClientGamePage = () => {
   // * put function here that should run in the middle of the transition
   const queryClient = useQueryClient();
   const handleRestart = () => {
+    handleClear();
+    resetGame();
+    handleClear();
+    endGame();
     if (isRestarting) return;
     queryClient.resetQueries({
       queryKey: [QUERY_KEY.STATIC_WORDS],
     });
-    endGame();
   };
 
   useEffect(() => {
-    if (data) {
-      setGame(data);
+    if (data && hasStart) {
       handleGenerate(data.words[0], targetSize, screen);
+      setGame(data);
     }
-  }, [data]);
+  }, [data, hasStart]);
+
+  useEffect(() => {
+    if (data && hasStart) {
+      handleGenerate(data.words[wordIndex], targetSize, screen);
+    }
+  }, [wordIndex]);
 
   useEffect(() => {
     if (!isRestarting) handleRestart();
@@ -202,6 +214,8 @@ const ClientGamePage = () => {
 
   useEffect(() => {
     setRestarting(true);
+    resetGame();
+    handleClear();
   }, [config.language]);
 
   useEffect(() => {
