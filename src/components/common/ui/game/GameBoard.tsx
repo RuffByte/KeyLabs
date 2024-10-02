@@ -1,12 +1,12 @@
 'use client';
 
 import React, { MouseEvent, useRef } from 'react';
-import { init } from 'next/dist/compiled/webpack/webpack';
-import { AnimatePresence, motion, Variants } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 
 import { useCurrentGame, usePointsStack, useScreen } from '@/app/client-page';
 import { distance } from '@/services/utils';
 import { StartButton } from './StartButton';
+import { hitVariants } from '@/lib/variants/variants';
 
 const GameBoard = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -78,12 +78,5 @@ const GameBoard = () => {
   );
 };
 
-const hitVariants = (index: number) => {
-  return {
-    initial: { opacity: 0 },
-    animate: { opacity: 1, transition: { duration: 0.2, delay: index * 0.1 } },
-    exit: { opacity: 0, scale: 1.2, transition: { duration: 0.1 } },
-  } as Variants;
-};
 
 export default GameBoard;

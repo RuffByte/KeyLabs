@@ -84,7 +84,7 @@ const Transition = ({ children }: TransitionProps) => {
     <TransitionContext.Provider value={{ handleRouteChange }}>
       <motion.div
         className={cn(
-          'origin-bottom w-dvw overflow-x-hidden relative',
+          'origin-bottom w-dvw overflow-hidden relative',
           isTransitioning && 'overflow-hidden h-dvh relative'
         )}
         initial="initial"

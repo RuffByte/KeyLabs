@@ -25,6 +25,7 @@ import { WordsBar } from '@/components/common/ui/game/WordsBar';
 import { NavigationBar } from '@/components/common/ui/navigation/navbar';
 import { devConfig } from '@/devconfig';
 import { QUERY_KEY } from '@/lib/utils/queryKeys';
+import { OptionBarOutVariants } from '@/lib/variants/variants';
 import { generatePoint } from '@/services/points/generate-point';
 import { wordSet } from '@/services/words/generate-word';
 import { useGenerateWords } from './hooks/query/useGenerateWords';
@@ -130,12 +131,14 @@ export const usePointsStack = create<PointStack>()((set) => ({
 // *===================================================================================================
 
 export type GameDataProps = {
+  mode: string;
   language: string;
   words: string[];
   // bool
   hasStart: boolean;
   hasFinish: boolean;
   // target
+  charCount: number;
   targetSize: number;
   charIndex: number;
   wordIndex: number;
@@ -157,6 +160,7 @@ export type GameDataProps = {
 };
 
 export type GameInitializeProps = {
+  mode: string;
   totalTime: number;
   totalChar: number;
   targetSize: number;
@@ -164,10 +168,12 @@ export type GameInitializeProps = {
 };
 
 export const useCurrentGame = create<GameDataProps>()((set) => ({
+  mode: 'characters',
   language: 'english',
   words: [],
   totalTime: 0,
   totalChar: 0,
+  charCount: 0,
   hasStart: false,
   hasFinish: false,
   targetSize: 0,
@@ -191,6 +197,7 @@ export const useCurrentGame = create<GameDataProps>()((set) => ({
       hasStart: true,
       hasFinish: false,
       charIndex: 0,
+      charCount: 0,
       wordIndex: 0,
       totalClick: 0,
       totalHit: 0,
@@ -209,6 +216,7 @@ export const useCurrentGame = create<GameDataProps>()((set) => ({
       hasStart: false,
       hasFinish: false,
       charIndex: 0,
+      charCount: 0,
       wordIndex: 0,
       totalClick: 0,
       totalHit: 0,
@@ -219,7 +227,7 @@ export const useCurrentGame = create<GameDataProps>()((set) => ({
     }),
   incrementHit: () =>
     set((prevs) => {
-      return { totalHit: prevs.totalHit + 1 };
+      return { totalHit: prevs.totalHit + 1, charCount: prevs.charCount + 1 };
     }),
   handleFinish: () => set({ hasFinish: true }),
 }));
@@ -293,6 +301,7 @@ const ClientGamePage = () => {
 
   const handleStartGame = () => {
     InitializeGame({
+      mode: config.mode,
       totalTime: config.time,
       totalChar: config.lengthChar,
       targetSize: config.targetSize,
@@ -365,8 +374,9 @@ const ClientGamePage = () => {
       />
       <NavigationBar />
       <OptionsBar
-        initial={{ x: '-50%' }}
-        animate={{ opacity: hasStart ? 0 : 1, y: hasStart ? '100%' : '0%' }}
+        initial="initial"
+        animate="animate"
+        variants={OptionBarOutVariants(hasStart)}
       />
 
       {/* Game Container */}

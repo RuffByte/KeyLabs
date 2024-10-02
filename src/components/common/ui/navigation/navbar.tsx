@@ -6,6 +6,7 @@ import { Info, Settings, User } from 'lucide-react';
 
 import { useCurrentGame } from '@/app/client-page';
 import { cn } from '@/lib/utils';
+import { NavigationOutVariants } from '@/lib/variants/variants';
 import { Dropdown, DropdownLinkItem } from '../wrapper/dropdown';
 import { Keylabslogo } from './keylabslogo';
 
@@ -26,7 +27,8 @@ export const NavigationBar = ({ ...props }: NavigationBarProp) => {
       <Keylabslogo />
       <motion.div
         className="flex gap-4 p-2 justify-center items-center hover:*:stroke-secondary"
-        animate={{ opacity: hasStart ? 0 : 1, y: hasStart ? '-100%' : '0%' }}
+        animate="animate"
+        variants={NavigationOutVariants(hasStart)}
       >
         <Info size={20} />
         <Settings size={20} />

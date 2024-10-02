@@ -1,16 +1,11 @@
-import React, { useRef } from 'react';
-import {
-  animate,
-  motion,
-  motionValue,
-  useIsomorphicLayoutEffect,
-} from 'framer-motion';
+import React, { useRef, useState } from 'react';
+import { animate, motion, useIsomorphicLayoutEffect } from 'framer-motion';
 import { CaseSensitive, Timer } from 'lucide-react';
 
 import {
-  useCurrentGame,
+  GameDataProps,
+  PreGameConfig,
   useGameContext,
-  usePointsStack,
   usePreConfig,
   useScreen,
 } from '@/app/client-page';
@@ -47,21 +42,20 @@ export const WordsBar = () => {
     };
   }, [Gamedata.totalTime, Gamedata.hasStart]);
 
+  useIsomorphicLayoutEffect(() => {
+    if (Gamedata.mode !== 'characters') return;
+    if (Gamedata.charCount >= Gamedata.totalChar) {
+      Gamedata.finishGame();
+    }
+  }, [Gamedata.charCount]);
   return (
     <div
       className="flex justify-between relative items-center h-[60px] px-6 select-none"
       style={{ width: screen.width }}
     >
-      <h3 className="text-2xl font-bold ">
-        <p className="p-2 flex gap-2 items-center bg-foreground text-background rounded-md px-4 min-w-32">
-          <CaseSensitive size={32} />
-          {Gamedata.hasStart ? (
-            <span>{Gamedata.totalChar ? Gamedata.totalChar : '---'}</span>
-          ) : (
-            <span>{config.lengthChar ? config.lengthChar : '---'}</span>
-          )}
-        </p>
-      </h3>
+      <DisplayWrapper>
+        <CharacterDisplay config={config} Gamedata={Gamedata} />
+      </DisplayWrapper>
       <div className="h-full overflow-hidden flex items-center whitespace-nowrap w-[600px] absolute left-1/2 -translate-x-1/2 border-secondary rounded-full border-2">
         <WordsView
           words={Gamedata.words}
@@ -69,19 +63,56 @@ export const WordsBar = () => {
           letterIndex={Gamedata.charIndex}
         />
       </div>
-      <h3 className="text-2xl font-bold  ">
+      <h3 className="text-2xl  ">
         <p className="p-2 flex gap-2 items-center bg-foreground text-background rounded-md px-4 min-w-32 justify-end">
           {Gamedata.hasStart ? (
             <span ref={refTimer}>
-              {Gamedata.totalTime ? Gamedata.totalTime : '---'}
+              {Gamedata.totalTime ? `${config.time}s` : '0s'}
             </span>
           ) : (
-            <span>{config.time ? config.time : '---'}</span>
+            <span>{config.time ? `${config.time}s` : '0s'}</span>
           )}
           <Timer size={32} />
         </p>
       </h3>
     </div>
+  );
+};
+
+const CharacterDisplay = ({
+  config,
+  Gamedata,
+}: {
+  config: PreGameConfig['config'];
+  Gamedata: GameDataProps;
+}) => {
+  if (!Gamedata.hasStart) {
+    return (
+      <>
+        <CaseSensitive size={32} />
+        {config.mode === 'characters' && `0/${config.lengthChar}`}
+        {config.mode === 'time' && config.lengthChar}
+      </>
+    );
+  } else {
+    return (
+      <>
+        <CaseSensitive size={32} />
+        {Gamedata.mode === 'characters' &&
+          `${Gamedata.charCount}/${Gamedata.totalChar}`}
+        {Gamedata.mode === 'time' && Gamedata.charCount}
+      </>
+    );
+  }
+};
+
+const DisplayWrapper = ({ children }: { children: React.ReactNode }) => {
+  return (
+    <h3 className="text-2xl ">
+      <p className="p-2 flex gap-2 items-center bg-foreground text-background rounded-md px-4 min-w-32">
+        {children}
+      </p>
+    </h3>
   );
 };
 

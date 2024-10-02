@@ -1,10 +1,10 @@
 'use client';
 
 import React from 'react';
-import { AnimatePresence, HTMLMotionProps, motion } from 'framer-motion';
+import { HTMLMotionProps, motion } from 'framer-motion';
 import { CaseSensitive, Timer } from 'lucide-react';
 
-import { PreGameConfig, usePreConfig } from '@/app/client-page';
+import { usePreConfig } from '@/app/client-page';
 import { cn } from '@/lib/utils';
 
 export const OptionsBar = ({ ...props }: HTMLMotionProps<'div'>) => {
@@ -53,6 +53,11 @@ export const OptionsBar = ({ ...props }: HTMLMotionProps<'div'>) => {
         </Option>
         {config.mode === 'characters' && (
           <Option label={<CaseSensitive />} hasLabel>
+            <OptionItem
+              value="5"
+              name="character"
+              onChange={() => handleSetChar(5)}
+            />
             <OptionItem
               value="25"
               name="character"
