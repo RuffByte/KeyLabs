@@ -1,11 +1,11 @@
-import React, { AnchorHTMLAttributes } from 'react'
+import React, { AnchorHTMLAttributes } from 'react';
 
-import TLink from '../transition/TLink'
+import TLink from '../transition/TLink';
 
 interface DropdownProp extends React.HTMLAttributes<HTMLDivElement> {
-  dropdownDisplay: React.ReactNode
-  dropdownItems: React.ReactNode
-  classname?: string
+  dropdownDisplay: React.ReactNode;
+  dropdownItems: React.ReactNode;
+  classname?: string;
 }
 
 export const Dropdown = ({
@@ -14,7 +14,7 @@ export const Dropdown = ({
   ...props
 }: DropdownProp) => {
   return (
-    <div {...props} className="relative">
+    <div {...props} className="relative select-none">
       <div className="peer">{dropdownDisplay}</div>
       <div className="absolute peer-hover:flex hover:flex hidden w-40 pt-2 right-0">
         <div className="w-full outline-4 outline outline-background bg-input text-foreground rounded">
@@ -22,12 +22,12 @@ export const Dropdown = ({
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 interface DropdownItemProp extends AnchorHTMLAttributes<HTMLAnchorElement> {
-  dropdownItem: (React.ReactNode | string)[]
-  href: string
+  dropdownItem: (React.ReactNode | string)[];
+  href: string;
 }
 
 export const DropdownLinkItem = ({
@@ -40,11 +40,11 @@ export const DropdownLinkItem = ({
       {dropdownItem.map((item, i) => (
         <div
           key={i}
-          className="flex items-center w-full hover:bg-secondary hover:text-background py-1 justify-center"
+          className="flex items-center w-full hover:bg-hover hover:text-background hover:shadow-md py-1 justify-center"
         >
           {item}
         </div>
       ))}
     </TLink>
-  )
-}
+  );
+};

@@ -1,26 +1,39 @@
-import React from 'react'
-import { Info, Keyboard, Settings, User } from 'lucide-react'
+'use client';
 
-import { TLink } from '../transition/TLink'
-import { Dropdown, DropdownLinkItem } from '../wrapper/dropdown'
+import React from 'react';
+import { HTMLMotionProps, motion } from 'framer-motion';
+import { Info, Settings, User } from 'lucide-react';
 
-export const NavigationBar = () => {
+import { useCurrentGame } from '@/app/client-page';
+import { cn } from '@/lib/utils';
+import { NavigationOutVariants } from '@/lib/variants/variants';
+import { Dropdown, DropdownLinkItem } from '../wrapper/dropdown';
+import { Keylabslogo } from './keylabslogo';
+
+interface NavigationBarProp extends HTMLMotionProps<'div'> {
+  enabled?: boolean;
+}
+
+export const NavigationBar = ({ ...props }: NavigationBarProp) => {
+  const { hasStart } = useCurrentGame();
   return (
-    <div className="flex absolute w-full items-center justify-between">
-      <TLink href="/">
-        <div className="flex gap-4 font-kollektif items-center p-2">
-          <Keyboard size={28} />
-          <h1 className="text-3xl">KeyLabs</h1>
-        </div>
-      </TLink>
-      <div className="flex gap-4 p-2">
-        <TLink href="/login" className="p-2 border rounded-md bg-white">
-          login wow
-        </TLink>
-        <Info size={28} />
-        <Settings size={28} />
+    <motion.div
+      {...props}
+      className={cn(
+        'flex absolute w-desktop items-center justify-between top-4 z-50',
+        props.className
+      )}
+    >
+      <Keylabslogo />
+      <motion.div
+        className="flex gap-4 p-2 justify-center items-center hover:*:stroke-secondary"
+        animate="animate"
+        variants={NavigationOutVariants(hasStart)}
+      >
+        <Info size={20} />
+        <Settings size={20} />
         <Dropdown
-          dropdownDisplay={<User size={28} />}
+          dropdownDisplay={<User size={20} />}
           dropdownItems={
             <DropdownLinkItem
               href="/login"
@@ -28,7 +41,7 @@ export const NavigationBar = () => {
             />
           }
         ></Dropdown>
-      </div>
-    </div>
-  )
-}
+      </motion.div>
+    </motion.div>
+  );
+};

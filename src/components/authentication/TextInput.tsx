@@ -1,9 +1,9 @@
 // TextInput.tsx
-import React, { forwardRef } from 'react'
+import React, { forwardRef } from 'react';
 
 interface TextInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  errors?: string
-  classname?: string
+  errors?: string;
+  classname?: string;
 }
 
 const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
@@ -17,10 +17,10 @@ const TextInput = forwardRef<HTMLInputElement, TextInputProps>(
         />
         {errors && <p className="text-red-500">{errors}</p>}
       </div>
-    )
+    );
   }
-)
+);
 
-TextInput.displayName = 'TextInput'
+TextInput.displayName = 'TextInput';
 
-export default TextInput
+export default TextInput;

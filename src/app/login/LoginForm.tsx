@@ -1,21 +1,21 @@
-'use client'
+'use client';
 
-import React from 'react'
-import { useRouter } from 'next/navigation'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useForm } from 'react-hook-form'
-import { toast } from 'sonner'
-import { z } from 'zod'
+import React from 'react';
+import { useRouter } from 'next/navigation';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
+import { z } from 'zod';
 
-import { GoogleOAuthButton } from '@/components/authentication/GoogleOAuthButton'
-import TextInput from '@/components/authentication/TextInput' // Import the TextInput component
-import Button from '@/components/common/button'
-import TLink from '@/components/common/ui/transition/TLink'
-import { signInSchema } from '@/schemas/zod/schemas'
-import { signIn } from './login.action'
+import { GoogleOAuthButton } from '@/components/authentication/GoogleOAuthButton';
+import TextInput from '@/components/authentication/TextInput'; // Import the TextInput component
+import Button from '@/components/common/Button';
+import TLink from '@/components/common/ui/transition/TLink';
+import { signInSchema } from '@/schemas/zod/schemas';
+import { signIn } from './login.action';
 
 const LoginForm = () => {
-  const router = useRouter()
+  const router = useRouter();
   // Setup form with react-hook-form and zod schema
   const {
     register,
@@ -27,16 +27,16 @@ const LoginForm = () => {
       email: '',
       password: '',
     },
-  })
+  });
 
   // Handle form submission
   async function onSubmit(values: z.infer<typeof signInSchema>) {
-    const res = await signIn(values)
+    const res = await signIn(values);
     if (res.success) {
-      toast.success('Login successful')
-      router.push('/dashboard')
+      toast.success('Login successful');
+      router.push('/dashboard');
     } else {
-      toast.error(res.error)
+      toast.error(res.error);
     }
   }
 
@@ -47,7 +47,6 @@ const LoginForm = () => {
       </h1>
       <div className="flex flex-col w-[350px] gap-2">
         <GoogleOAuthButton />
-        <hr className="border-t-2 border-tertiary" />
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
           <TextInput
             id="login-email"
@@ -71,7 +70,7 @@ const LoginForm = () => {
         </TLink>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default LoginForm
+export default LoginForm;

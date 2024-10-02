@@ -1,4 +1,4 @@
-import type { Config } from 'tailwindcss'
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
   content: [
@@ -14,18 +14,19 @@ const config: Config = {
         foreground: 'hsl(var(--foreground))',
         tertiary: 'hsl(var(--tertiary))',
         input: 'hsl(var(--tertiary))',
+        hover: 'hsl(var(--hover))',
       },
       fontFamily: {
         kollektif: ['var(--font-kollektic)'],
       },
       screens: {
-        desktop: '1440px',
+        desktop: '1280px',
       },
       width: {
-        desktop: '1440px',
+        desktop: '1280px',
       },
       minWidth: {
-        desktop: '1440px',
+        desktop: '1280px',
       },
       borderRadius: {
         input: '8px',
@@ -36,6 +37,6 @@ const config: Config = {
     },
   },
   plugins: [],
-}
+};
 
-export default config
+export default config;

@@ -1,14 +1,14 @@
-'use client'
+'use client';
 
-import React, { AnchorHTMLAttributes, HTMLAttributes } from 'react'
+import React, { AnchorHTMLAttributes, HTMLAttributes } from 'react';
 
-import { cn } from '@/lib/utils'
-import { useTransition } from './Transition'
+import { cn } from '@/lib/utils';
+import { useTransition } from './Transition';
 
 interface TransitionLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
-  className?: string
-  href: string
-  children: React.ReactNode
+  className?: string;
+  href: string;
+  children: React.ReactNode;
 }
 
 export const TLink = ({
@@ -17,7 +17,7 @@ export const TLink = ({
   href,
   ...props
 }: TransitionLinkProps) => {
-  const { handleRouteChange } = useTransition()
+  const { handleRouteChange } = useTransition();
   return (
     <a
       {...props}
@@ -26,7 +26,7 @@ export const TLink = ({
     >
       {children}
     </a>
-  )
-}
+  );
+};
 
-export default TLink
+export default TLink;

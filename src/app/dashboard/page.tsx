@@ -1,13 +1,13 @@
-import React from 'react'
-import { redirect } from 'next/navigation'
+import React from 'react';
+import { redirect } from 'next/navigation';
 
-import SignOutButton from '@/components/authentication/SignOutButton'
-import { getUser } from '@/lib/lucia'
+import SignOutButton from '@/components/authentication/SignOutButton';
+import { getUser } from '@/lib/lucia';
 
 const page = async () => {
-  const user = await getUser()
+  const user = await getUser();
   if (!user) {
-    redirect('/login')
+    redirect('/login');
   }
 
   return (
@@ -15,7 +15,7 @@ const page = async () => {
       <div className="text-white">you are logged in as {user.name}</div>
       <SignOutButton>Sign Out</SignOutButton>
     </div>
-  )
-}
+  );
+};
 
-export default page
+export default page;
