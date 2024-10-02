@@ -12,22 +12,22 @@ export const OptionsBar = ({ ...props }: HTMLMotionProps<'div'>) => {
 
   const handleChangeMode = (mode: string) => {
     if (config.mode === 'characters')
-      setConfig({ ...config, mode: mode, lengthChar: null, time: 30 });
-    else setConfig({ ...config, mode: mode, lengthChar: 25, time: null });
+      setConfig({ ...config, mode: mode, lengthChar: 0, time: 30 });
+    else setConfig({ ...config, mode: mode, lengthChar: 25, time: 0 });
   };
 
   const handleSetTime = (time: number) => {
-    setConfig({ ...config, lengthChar: null, time: time });
+    setConfig({ ...config, lengthChar: 0, time: time });
   };
 
   const handleSetChar = (length: number) => {
-    setConfig({ ...config, lengthChar: length, time: null });
+    setConfig({ ...config, lengthChar: length, time: 0 });
   };
 
   return (
     <motion.div
       {...props}
-      className="absolute bottom-0 left-[50%] -translate-x-[50%] flex items-end"
+      className="absolute z-50 bottom-0 left-[50%] -translate-x-[50%] flex items-end"
     >
       <OptionEdge />
       <motion.div

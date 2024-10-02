@@ -19,23 +19,25 @@ import { cn } from '@/lib/utils';
 export const WordsBar = () => {
   const { screen } = useScreen();
   const { config } = usePreConfig();
-  const { handleResetGame, Gamedata } = useGameContext();
+  const { Gamedata } = useGameContext();
   const refTimer = useRef<HTMLParagraphElement>(null);
 
   useIsomorphicLayoutEffect(() => {
-    if (config.mode !== 'time' || !Gamedata.hasStart || !config.time) return;
+    if (config.mode !== 'time' || !Gamedata.hasStart || !Gamedata.totalTime)
+      return;
     const timer = refTimer.current;
     if (!timer) return;
 
-    const animation = animate(config.time, 0, {
-      duration: config.time,
+    const animation = animate(Gamedata.totalTime, 0, {
+      duration: Gamedata.totalTime,
       ease: 'linear',
       onUpdate: (value) => {
         // console.log(value);
-        console.log(value);
         timer.innerHTML = Math.ceil(value).toString();
       },
       onComplete: () => {
+        console.log(Gamedata);
+        console.log(config);
         Gamedata.handleFinish();
       },
     });
@@ -43,7 +45,7 @@ export const WordsBar = () => {
     return () => {
       animation.stop();
     };
-  }, [config.time, Gamedata.hasStart]);
+  }, [Gamedata.totalTime, Gamedata.hasStart]);
 
   return (
     <div
@@ -53,7 +55,11 @@ export const WordsBar = () => {
       <h3 className="text-2xl font-bold ">
         <p className="p-2 flex gap-2 items-center bg-foreground text-background rounded-md px-4 min-w-32">
           <CaseSensitive size={32} />
-          <span>{config.lengthChar ? config.lengthChar : '---'}</span>
+          {Gamedata.hasStart ? (
+            <span>{Gamedata.totalChar ? Gamedata.totalChar : '---'}</span>
+          ) : (
+            <span>{config.lengthChar ? config.lengthChar : '---'}</span>
+          )}
         </p>
       </h3>
       <div className="h-full overflow-hidden flex items-center whitespace-nowrap w-[800px] absolute left-1/2 -translate-x-1/2 border-secondary rounded-full border-2">
@@ -65,7 +71,13 @@ export const WordsBar = () => {
       </div>
       <h3 className="text-2xl font-bold  ">
         <p className="p-2 flex gap-2 items-center bg-foreground text-background rounded-md px-4 min-w-32 justify-end">
-          <span ref={refTimer}>{config.time ? config.time : '---'}</span>
+          {Gamedata.hasStart ? (
+            <span ref={refTimer}>
+              {Gamedata.totalTime ? Gamedata.totalTime : '---'}
+            </span>
+          ) : (
+            <span>{config.time ? config.time : '---'}</span>
+          )}
           <Timer size={32} />
         </p>
       </h3>

@@ -1,10 +1,11 @@
 import React from 'react';
 import { Check } from 'lucide-react';
 
-import { usePreConfig } from '@/app/client-page';
+import { useGameContext, usePreConfig } from '@/app/client-page';
 import languages from '../../../../app/static/language/_list.json';
 
 export const LanguageSelectionDialog = () => {
+  const { handleResetGame } = useGameContext();
   const { config, setConfig } = usePreConfig();
   return (
     <div className="min-w-[600px] pb-8">
@@ -16,7 +17,10 @@ export const LanguageSelectionDialog = () => {
           key={language}
           name={language}
           currentLang={config.language}
-          onClick={() => setConfig({ ...config, language: language })}
+          onClick={() => {
+            setConfig({ ...config, language: language });
+            handleResetGame();
+          }}
         />
       ))}
     </div>

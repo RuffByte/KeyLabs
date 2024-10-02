@@ -8,7 +8,7 @@ import React, {
   useState,
 } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { Globe } from 'lucide-react';
 import { create } from 'zustand';
 
@@ -52,8 +52,9 @@ export type PreGameConfig = {
     mode: string;
     language: string;
     isCustom: boolean;
-    time: number | null;
-    lengthChar: number | null;
+    time: number;
+    lengthChar: number;
+    targetSize: number;
   };
   setConfig: (config: PreGameConfig['config']) => void;
   resetConfig: () => void;
@@ -63,7 +64,7 @@ export const usePreConfig = create<PreGameConfig>()((set) => ({
   config: {
     mode: 'characters',
     language: 'english_5k',
-    time: null,
+    time: 0,
     isCustom: false,
     lengthChar: 30,
     targetSize: 80,
@@ -128,39 +129,53 @@ export const usePointsStack = create<PointStack>()((set) => ({
 // *===================================================================================================
 // *===================================================================================================
 
-export type GameData = {
+export type GameDataProps = {
   language: string;
   words: string[];
+  // bool
   hasStart: boolean;
   hasFinish: boolean;
+  // target
   targetSize: number;
   charIndex: number;
   wordIndex: number;
+  //
+  totalTime: number;
+  totalChar: number;
   totalClick: number;
-  totalhit: number;
-  setGame: (words: wordSet) => void;
+  totalHit: number;
+  setMode: (words: wordSet) => void;
+  InitializeGame: (game: GameInitializeProps) => void;
   handleNextWord: () => void;
   incrementCharIndex: () => void;
-  startGame: () => void;
   endGame: () => void;
+  finishGame: () => void;
   resetGame: () => void;
   incrementClick: () => void;
   incrementHit: () => void;
   handleFinish: () => void;
 };
 
-export const useCurrentGame = create<GameData>()((set) => ({
+export type GameInitializeProps = {
+  totalTime: number;
+  totalChar: number;
+  targetSize: number;
+  languge: string;
+};
+
+export const useCurrentGame = create<GameDataProps>()((set) => ({
   language: 'english',
   words: [],
   totalTime: 0,
+  totalChar: 0,
   hasStart: false,
   hasFinish: false,
   targetSize: 80,
   charIndex: 0,
   wordIndex: 0,
   totalClick: 0,
-  totalhit: 0,
-  setGame: (state: wordSet) =>
+  totalHit: 0,
+  setMode: (state: wordSet) =>
     set({ words: state.words, language: state.name }),
   handleNextWord: () =>
     set((prevs) => {
@@ -170,20 +185,34 @@ export const useCurrentGame = create<GameData>()((set) => ({
     set((prevs) => {
       return { charIndex: prevs.charIndex + 1 };
     }),
-  startGame: () => set({ hasStart: true }),
+  InitializeGame: (game) =>
+    set({
+      ...game,
+      hasStart: true,
+      hasFinish: false,
+      charIndex: 0,
+      wordIndex: 0,
+      totalClick: 0,
+      totalHit: 0,
+    }),
   endGame: () =>
     set({
       hasStart: false,
     }),
+  finishGame: () =>
+    set({
+      hasFinish: true,
+    }),
   resetGame: () =>
     set({
+      totalTime: 0,
       hasStart: false,
       hasFinish: false,
       targetSize: 80,
       charIndex: 0,
       wordIndex: 0,
       totalClick: 0,
-      totalhit: 0,
+      totalHit: 0,
     }),
   incrementClick: () =>
     set((prevs) => {
@@ -191,15 +220,16 @@ export const useCurrentGame = create<GameData>()((set) => ({
     }),
   incrementHit: () =>
     set((prevs) => {
-      return { totalhit: prevs.totalhit + 1 };
+      return { totalHit: prevs.totalHit + 1 };
     }),
   handleFinish: () => set({ hasFinish: true }),
 }));
 
 type GameContextProps = {
-  Gamedata: GameData;
+  Gamedata: GameDataProps;
   handleResetGame: () => void;
   handleEndGame: () => void;
+  handleStartGame: () => void;
 };
 
 // *===================================================================================================
@@ -226,8 +256,20 @@ let allowReset = false;
 const ClientGamePage = () => {
   const { config } = usePreConfig();
   const { screen } = useScreen();
-  const { setGame, endGame, targetSize, wordIndex, hasStart, resetGame } =
-    useCurrentGame();
+  const {
+    setMode,
+    endGame,
+    targetSize,
+    wordIndex,
+    hasStart,
+    resetGame,
+    hasFinish,
+    finishGame,
+    totalClick,
+    totalTime,
+    totalHit,
+    InitializeGame,
+  } = useCurrentGame();
   const { handleGenerate, handleClear } = usePointsStack();
   const [isRestarting, setRestarting] = useState(false);
   const queryClient = useQueryClient();
@@ -239,12 +281,23 @@ const ClientGamePage = () => {
 
   // * handle to reset game
   const handleRestart = () => {
+    if (isRestarting) {
+      queryClient.resetQueries({
+        queryKey: [QUERY_KEY.STATIC_WORDS],
+      });
+    }
     setRestarting(false);
     resetGame();
     handleClear();
     endGame();
-    queryClient.resetQueries({
-      queryKey: [QUERY_KEY.STATIC_WORDS],
+  };
+
+  const handleStartGame = () => {
+    InitializeGame({
+      totalTime: config.time,
+      totalChar: config.lengthChar,
+      targetSize: config.targetSize,
+      languge: config.language,
     });
   };
 
@@ -254,14 +307,14 @@ const ClientGamePage = () => {
   };
 
   // * handle to go to endscreen menu
-  const handleEndGame = () => {
-    endGame();
+  const handleFinishGame = () => {
+    finishGame();
   };
 
   // * Effects
   useEffect(() => {
     if (data) {
-      setGame(data);
+      setMode(data);
     }
   }, [data]);
 
@@ -298,8 +351,9 @@ const ClientGamePage = () => {
     <GameContext.Provider
       value={{
         Gamedata: useCurrentGame(),
-        handleResetGame: handleRestart,
-        handleEndGame: handleEndGame,
+        handleResetGame: handleBlurToRestart,
+        handleEndGame: handleFinishGame,
+        handleStartGame: handleStartGame,
       }}
     >
       {/* otherstuff */}
@@ -308,7 +362,7 @@ const ClientGamePage = () => {
       <FunctionDebugger
         handleRestart={handleRestart}
         handleBlurToRestart={handleBlurToRestart}
-        handleEndGame={handleEndGame}
+        handleEndGame={handleFinishGame}
       />
       <NavigationBar />
       <OptionsBar
@@ -327,14 +381,31 @@ const ClientGamePage = () => {
           className="flex flex-col justify-center items-center h-full "
         >
           {/* Game */}
-          <WordsBar />
-          <GameBoard />
-          <motion.div animate={{ opacity: hasStart ? 0 : 1 }}>
-            <DialogTriggerButton>
-              {config.language}
-              <Globe size={20} strokeWidth={1.5} />
-            </DialogTriggerButton>
-          </motion.div>
+          <AnimatePresence mode="wait">
+            {hasFinish ? (
+              <div>
+                <p>put score info here</p>
+                <p>totalTime: {totalTime}</p>
+                <p>targetSize: {targetSize}</p>
+                <p>totalClick: {totalClick}</p>
+                <p>totalHit: {totalHit}</p>
+              </div>
+            ) : (
+              <motion.div exit={{ opacity: 0 }} key="gameboard">
+                <WordsBar />
+                <GameBoard />
+                <motion.div
+                  animate={{ opacity: hasStart ? 0 : 1 }}
+                  className="flex justify-center"
+                >
+                  <DialogTriggerButton>
+                    {config.language}
+                    <Globe size={20} strokeWidth={1.5} />
+                  </DialogTriggerButton>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
           {/* Game */}
         </motion.div>
         <DialogContent>
