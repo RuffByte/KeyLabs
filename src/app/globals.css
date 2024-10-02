@@ -43,8 +43,8 @@ html {
 
 /*} */
 
-.grid-80 {
-  mask-image: url('../../public/assets/images/grid80.png');
+.grid-72 {
+  mask-image: url('../../public/assets/images/grid72.png');
   mask-size: 80px;
 }
 

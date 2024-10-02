@@ -71,7 +71,7 @@ const GameBoard = () => {
       <div
         onMouseDown={handleClick}
         ref={containerRef}
-        className="grid-80 bg-secondary size-full"
+        className="grid-72 bg-secondary size-full"
       />
       {!hasStart && <StartButton />}
     </div>

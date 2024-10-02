@@ -62,7 +62,7 @@ export const WordsBar = () => {
           )}
         </p>
       </h3>
-      <div className="h-full overflow-hidden flex items-center whitespace-nowrap w-[800px] absolute left-1/2 -translate-x-1/2 border-secondary rounded-full border-2">
+      <div className="h-full overflow-hidden flex items-center whitespace-nowrap w-[600px] absolute left-1/2 -translate-x-1/2 border-secondary rounded-full border-2">
         <WordsView
           words={Gamedata.words}
           index={Gamedata.wordIndex}

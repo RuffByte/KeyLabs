@@ -39,7 +39,7 @@ export type Screen = {
 };
 
 export const useScreen = create<Screen>()((set) => ({
-  screen: { width: 15 * 80, height: 9 * 80 },
+  screen: { width: 15 * 72, height: 9 * 72 },
   setScreen: (screen) => set({ screen }),
 }));
 
@@ -67,7 +67,7 @@ export const usePreConfig = create<PreGameConfig>()((set) => ({
     time: 0,
     isCustom: false,
     lengthChar: 30,
-    targetSize: 80,
+    targetSize: 16 * 6,
   },
   setConfig: (config) => set({ config }),
   resetConfig: () => set({ config: { ...usePreConfig.getState().config } }),
@@ -170,7 +170,7 @@ export const useCurrentGame = create<GameDataProps>()((set) => ({
   totalChar: 0,
   hasStart: false,
   hasFinish: false,
-  targetSize: 80,
+  targetSize: 0,
   charIndex: 0,
   wordIndex: 0,
   totalClick: 0,
@@ -208,7 +208,6 @@ export const useCurrentGame = create<GameDataProps>()((set) => ({
       totalTime: 0,
       hasStart: false,
       hasFinish: false,
-      targetSize: 80,
       charIndex: 0,
       wordIndex: 0,
       totalClick: 0,
@@ -383,7 +382,7 @@ const ClientGamePage = () => {
           {/* Game */}
           <AnimatePresence mode="wait">
             {hasFinish ? (
-              <div>
+              <div className="text-xl">
                 <p>put score info here</p>
                 <p>totalTime: {totalTime}</p>
                 <p>targetSize: {targetSize}</p>
