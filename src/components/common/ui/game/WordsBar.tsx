@@ -1,5 +1,10 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useRef } from 'react';
+import {
+  animate,
+  motion,
+  motionValue,
+  useIsomorphicLayoutEffect,
+} from 'framer-motion';
 import { CaseSensitive, Timer } from 'lucide-react';
 
 import { useConfig, useCurrentGame, useScreen } from '@/app/client-page';
@@ -8,7 +13,27 @@ import { cn } from '@/lib/utils';
 export const WordsBar = () => {
   const { screen } = useScreen();
   const { config } = useConfig();
-  const { words, charIndex, wordIndex } = useCurrentGame();
+  const { words, charIndex, wordIndex, hasStart } = useCurrentGame();
+
+  const refTimer = useRef<HTMLParagraphElement>(null);
+
+  useIsomorphicLayoutEffect(() => {
+    if (config.mode !== 'time' || !hasStart || !config.time) return;
+    const timer = refTimer.current;
+    if (!timer) return;
+
+    const animation = animate(config.time, 0, {
+      duration: config.time,
+      ease: 'linear',
+      onUpdate: (value) => {
+        // console.log(value);
+        console.log(value);
+        timer.innerHTML = Math.ceil(value).toString();
+      },
+    });
+    animation.play();
+    return () => animation.stop();
+  }, [config.time, hasStart]);
 
   return (
     <div
@@ -18,7 +43,7 @@ export const WordsBar = () => {
       <h3 className="text-2xl font-bold ">
         <p className="p-2 flex gap-2 items-center bg-foreground text-background rounded-md px-4 min-w-32">
           <CaseSensitive size={32} />
-          {config.lengthChar ? config.lengthChar : '---'}
+          <span>{config.lengthChar ? config.lengthChar : '---'}</span>
         </p>
       </h3>
       <div className="h-full overflow-hidden flex items-center whitespace-nowrap w-[800px] absolute left-1/2 -translate-x-1/2 border-secondary rounded-full border-2">
@@ -26,7 +51,7 @@ export const WordsBar = () => {
       </div>
       <h3 className="text-2xl font-bold  ">
         <p className="p-2 flex gap-2 items-center bg-foreground text-background rounded-md px-4 min-w-32 justify-end">
-          {config.time ? config.time : '---'}
+          <span ref={refTimer}>{config.time ? config.time : '---'}</span>
           <Timer size={32} />
         </p>
       </h3>

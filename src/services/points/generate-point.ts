@@ -54,6 +54,7 @@ export const generatePoint = (
         value: letters[index],
         x: randomX,
         y: randomY,
+        key: zeroIndexLength - index,
       });
       index++;
     }

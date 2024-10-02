@@ -1,6 +1,6 @@
 import React from 'react';
 
-const KeyLabsIcon = ({
+const KeyLabsLogo = ({
   className,
   stroke,
 }: {
@@ -87,4 +87,4 @@ const KeyLabsIcon = ({
   );
 };
 
-export default KeyLabsIcon;
+export default KeyLabsLogo;

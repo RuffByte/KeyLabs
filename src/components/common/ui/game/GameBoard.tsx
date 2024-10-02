@@ -1,6 +1,8 @@
 'use client';
 
 import React, { MouseEvent, useRef } from 'react';
+import { init } from 'next/dist/compiled/webpack/webpack';
+import { AnimatePresence, motion, Variants } from 'framer-motion';
 
 import { useCurrentGame, usePointsStack, useScreen } from '@/app/client-page';
 import { distance } from '@/services/utils';
@@ -21,6 +23,8 @@ const GameBoard = () => {
     const { left, top } = containerRef.current.getBoundingClientRect();
     const [clickX, clickY] = [clientX - left, clientY - top];
 
+    console.log(clickX, clickY);
+
     for (const point of points) {
       if (distance(clickX, clickY, point.x, point.y) > targetSize / 2) continue;
       if (point.value !== points[points.length - 1].value) continue;
@@ -36,20 +40,26 @@ const GameBoard = () => {
       className="relative border-secondary"
       style={{ width: screen.width, height: screen.height }}
     >
-      {points.map((point) => (
-        <div
-          key={point.index}
-          className="absolute bg-foreground z-50 [translate:-50%_-50%] text-background rounded-full grid place-items-center pointer-events-none select-none text-4xl"
-          style={{
-            left: point.x,
-            top: point.y,
-            width: targetSize,
-            height: targetSize,
-          }}
-        >
-          {point.value}
-        </div>
-      ))}
+      <AnimatePresence>
+        {points.map((point, i) => (
+          <motion.div
+            key={point.key}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            variants={hitVariants(i)}
+            className="absolute bg-foreground z-50 [translate:-50%_-50%] text-background rounded-full grid place-items-center pointer-events-none  select-none text-4xl"
+            style={{
+              left: point.x,
+              top: point.y,
+              width: targetSize,
+              height: targetSize,
+            }}
+          >
+            {point.value}
+          </motion.div>
+        ))}
+      </AnimatePresence>
       <div
         onMouseDown={handleClick}
         ref={containerRef}
@@ -58,6 +68,14 @@ const GameBoard = () => {
       {!hasStart && <StartButton />}
     </div>
   );
+};
+
+const hitVariants = (index: number) => {
+  return {
+    initial: { opacity: 0 },
+    animate: { opacity: 1, transition: { duration: 0.2, delay: index * 0.1 } },
+    exit: { opacity: 0, scale: 1.2, transition: { duration: 0.1 } },
+  } as Variants;
 };
 
 export default GameBoard;

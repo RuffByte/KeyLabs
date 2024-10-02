@@ -84,6 +84,7 @@ export type Point = {
   value: string;
   x: number;
   y: number;
+  key: number;
 };
 
 export const usePointsStack = create<PointStack>()((set) => ({
@@ -98,9 +99,11 @@ export const usePointsStack = create<PointStack>()((set) => ({
         // this is so cursed lmfao
         // swap the value with the popped one
         // situation: popped value is the same as top of stack
-        const point = arr.pop();
-        const { x, y, value } = point!;
-        arr[index] = { index, value, x, y };
+        [arr[index], arr[arr.length - 1]] = [
+          { ...arr[arr.length - 1], index: index },
+          { ...arr[index], index: arr.length - 1 },
+        ];
+        arr.pop();
       }
       return { points: arr };
     }),
@@ -160,7 +163,6 @@ export const useCurrentGame = create<GameData>()((set) => ({
   resetGame: () =>
     set({
       hasStart: false,
-      words: [],
       targetSize: 80,
       charIndex: 0,
       wordIndex: 0,
@@ -185,28 +187,26 @@ const ClientGamePage = () => {
   // * put function here that should run in the middle of the transition
   const queryClient = useQueryClient();
   const handleRestart = () => {
-    handleClear();
+    if (isRestarting) return;
     resetGame();
     handleClear();
     endGame();
-    if (isRestarting) return;
     queryClient.resetQueries({
       queryKey: [QUERY_KEY.STATIC_WORDS],
     });
   };
 
   useEffect(() => {
-    if (data && hasStart) {
-      handleGenerate(data.words[0], targetSize, screen);
+    if (data) {
       setGame(data);
     }
-  }, [data, hasStart]);
+  }, [data]);
 
   useEffect(() => {
     if (data && hasStart) {
       handleGenerate(data.words[wordIndex], targetSize, screen);
     }
-  }, [wordIndex]);
+  }, [wordIndex, hasStart]);
 
   useEffect(() => {
     if (!isRestarting) handleRestart();
@@ -244,7 +244,9 @@ const ClientGamePage = () => {
 
   return (
     <>
-      <NavigationBar />
+      <NavigationBar
+        animate={{ opacity: hasStart ? 0 : 1, y: hasStart ? '-100%' : '0%' }}
+      />
       <Dialog>
         <motion.div
           animate={{
@@ -256,16 +258,21 @@ const ClientGamePage = () => {
         >
           <WordsBar />
           <GameBoard />
-          <DialogTriggerButton>
-            {config.language}
-            <Globe size={20} strokeWidth={1.5} />
-          </DialogTriggerButton>
+          <motion.div animate={{ opacity: hasStart ? 0 : 1 }}>
+            <DialogTriggerButton>
+              {config.language}
+              <Globe size={20} strokeWidth={1.5} />
+            </DialogTriggerButton>
+          </motion.div>
         </motion.div>
         <DialogContent>
           <LanguageSelectionDialog />
         </DialogContent>
       </Dialog>
-      <OptionsBar />
+      <OptionsBar
+        initial={{ x: '-50%' }}
+        animate={{ opacity: hasStart ? 0 : 1, y: hasStart ? '100%' : '0%' }}
+      />
     </>
   );
 };
