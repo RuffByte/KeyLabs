@@ -7,18 +7,23 @@ import {
 } from 'framer-motion';
 import { CaseSensitive, Timer } from 'lucide-react';
 
-import { useConfig, useCurrentGame, useScreen } from '@/app/client-page';
+import {
+  useCurrentGame,
+  useGameContext,
+  usePointsStack,
+  usePreConfig,
+  useScreen,
+} from '@/app/client-page';
 import { cn } from '@/lib/utils';
 
 export const WordsBar = () => {
   const { screen } = useScreen();
-  const { config } = useConfig();
-  const { words, charIndex, wordIndex, hasStart } = useCurrentGame();
-
+  const { config } = usePreConfig();
+  const { handleResetGame, Gamedata } = useGameContext();
   const refTimer = useRef<HTMLParagraphElement>(null);
 
   useIsomorphicLayoutEffect(() => {
-    if (config.mode !== 'time' || !hasStart || !config.time) return;
+    if (config.mode !== 'time' || !Gamedata.hasStart || !config.time) return;
     const timer = refTimer.current;
     if (!timer) return;
 
@@ -30,10 +35,15 @@ export const WordsBar = () => {
         console.log(value);
         timer.innerHTML = Math.ceil(value).toString();
       },
+      onComplete: () => {
+        Gamedata.handleFinish();
+      },
     });
     animation.play();
-    return () => animation.stop();
-  }, [config.time, hasStart]);
+    return () => {
+      animation.stop();
+    };
+  }, [config.time, Gamedata.hasStart]);
 
   return (
     <div
@@ -47,7 +57,11 @@ export const WordsBar = () => {
         </p>
       </h3>
       <div className="h-full overflow-hidden flex items-center whitespace-nowrap w-[800px] absolute left-1/2 -translate-x-1/2 border-secondary rounded-full border-2">
-        <WordsView words={words} index={wordIndex} letterIndex={charIndex} />
+        <WordsView
+          words={Gamedata.words}
+          index={Gamedata.wordIndex}
+          letterIndex={Gamedata.charIndex}
+        />
       </div>
       <h3 className="text-2xl font-bold  ">
         <p className="p-2 flex gap-2 items-center bg-foreground text-background rounded-md px-4 min-w-32 justify-end">

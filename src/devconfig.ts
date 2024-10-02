@@ -1,9 +1,3 @@
-type DevConfigType = {
-  PAGE_TRANSITION: boolean;
-  VERSION: string;
-  DEBUG_QUERY: boolean;
-};
-
 const colours = {
   reset: '\x1b[0m',
   bright: '\x1b[1m',
@@ -50,15 +44,18 @@ if (process.env.ENVIRONMENT === 'DEVELOPMENT') {
   );
 }
 
-export const devConfig: DevConfigType =
-  process.env.ENVIRONMENT === 'DEVELOPMENT'
-    ? {
-        PAGE_TRANSITION: true,
-        VERSION: '0.0.0',
-        DEBUG_QUERY: true,
-      }
-    : {
-        PAGE_TRANSITION: true,
-        VERSION: '0.0.0',
-        DEBUG_QUERY: false,
-      };
+type DevConfigType = {
+  PAGE_TRANSITION: boolean;
+  VERSION: string;
+  DEBUG_QUERY: boolean;
+  DEBUG_MENU: boolean;
+};
+
+const isdev = process.env.ENVIRONMENT === 'DEVELOPMENT';
+
+export const devConfig: DevConfigType = {
+  PAGE_TRANSITION: isdev ? true : true,
+  VERSION: '0.0.0',
+  DEBUG_QUERY: isdev ? true : false,
+  DEBUG_MENU: isdev ? true : false,
+};

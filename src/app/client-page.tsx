@@ -1,28 +1,37 @@
 'use client';
 
-import React, { useEffect, useState } from 'react';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from 'react';
 import { useQueryClient } from '@tanstack/react-query';
 import { motion } from 'framer-motion';
 import { Globe } from 'lucide-react';
 import { create } from 'zustand';
 
+import { Debugger } from '@/components/common/Debugger';
 import Dialog, {
   DialogContent,
   DialogTriggerButton,
 } from '@/components/common/Dialog';
+import { FunctionDebugger } from '@/components/common/FunctionDebugger';
 import GameBoard from '@/components/common/ui/game/GameBoard';
 import { LanguageSelectionDialog } from '@/components/common/ui/game/LanguageSelectionDialog';
 import { OptionsBar } from '@/components/common/ui/game/OptionsBar';
 import { WordsBar } from '@/components/common/ui/game/WordsBar';
 import { NavigationBar } from '@/components/common/ui/navigation/navbar';
+import { devConfig } from '@/devconfig';
 import { QUERY_KEY } from '@/lib/utils/queryKeys';
 import { generatePoint } from '@/services/points/generate-point';
 import { wordSet } from '@/services/words/generate-word';
 import { useGenerateWords } from './hooks/query/useGenerateWords';
 
-// *
-// *
-// *
+// *===================================================================================================
+// *===================================================================================================
+// *===================================================================================================
 
 export type Screen = {
   screen: { width: number; height: number };
@@ -34,38 +43,38 @@ export const useScreen = create<Screen>()((set) => ({
   setScreen: (screen) => set({ screen }),
 }));
 
-// *
-// *
-// *
+// *===================================================================================================
+// *===================================================================================================
+// *===================================================================================================
 
-export type GameConfig = {
+export type PreGameConfig = {
   config: {
     mode: string;
     language: string;
-    time: number | null;
     isCustom: boolean;
+    time: number | null;
     lengthChar: number | null;
   };
-  setConfig: (config: GameConfig['config']) => void;
+  setConfig: (config: PreGameConfig['config']) => void;
   resetConfig: () => void;
 };
 
-export const useConfig = create<GameConfig>()((set) => ({
+export const usePreConfig = create<PreGameConfig>()((set) => ({
   config: {
     mode: 'characters',
     language: 'english_5k',
-    time: 30,
+    time: null,
     isCustom: false,
-    lengthChar: null,
+    lengthChar: 30,
     targetSize: 80,
   },
   setConfig: (config) => set({ config }),
-  resetConfig: () => set({ config: { ...useConfig.getState().config } }),
+  resetConfig: () => set({ config: { ...usePreConfig.getState().config } }),
 }));
 
-// *
-// *
-// *
+// *===================================================================================================
+// *===================================================================================================
+// *===================================================================================================
 
 export type PointStack = {
   points: Point[];
@@ -115,14 +124,15 @@ export const usePointsStack = create<PointStack>()((set) => ({
   handleClear: () => set({ points: [] }),
 }));
 
-// *
-// *
-// *
+// *===================================================================================================
+// *===================================================================================================
+// *===================================================================================================
 
 export type GameData = {
   language: string;
   words: string[];
   hasStart: boolean;
+  hasFinish: boolean;
   targetSize: number;
   charIndex: number;
   wordIndex: number;
@@ -131,15 +141,20 @@ export type GameData = {
   setGame: (words: wordSet) => void;
   handleNextWord: () => void;
   incrementCharIndex: () => void;
-  isPlaying: () => void;
+  startGame: () => void;
   endGame: () => void;
   resetGame: () => void;
+  incrementClick: () => void;
+  incrementHit: () => void;
+  handleFinish: () => void;
 };
 
 export const useCurrentGame = create<GameData>()((set) => ({
   language: 'english',
   words: [],
+  totalTime: 0,
   hasStart: false,
+  hasFinish: false,
   targetSize: 80,
   charIndex: 0,
   wordIndex: 0,
@@ -155,7 +170,7 @@ export const useCurrentGame = create<GameData>()((set) => ({
     set((prevs) => {
       return { charIndex: prevs.charIndex + 1 };
     }),
-  isPlaying: () => set({ hasStart: true }),
+  startGame: () => set({ hasStart: true }),
   endGame: () =>
     set({
       hasStart: false,
@@ -163,31 +178,68 @@ export const useCurrentGame = create<GameData>()((set) => ({
   resetGame: () =>
     set({
       hasStart: false,
+      hasFinish: false,
       targetSize: 80,
       charIndex: 0,
       wordIndex: 0,
       totalClick: 0,
       totalhit: 0,
     }),
+  incrementClick: () =>
+    set((prevs) => {
+      return { totalClick: prevs.totalClick + 1 };
+    }),
+  incrementHit: () =>
+    set((prevs) => {
+      return { totalhit: prevs.totalhit + 1 };
+    }),
+  handleFinish: () => set({ hasFinish: true }),
 }));
+
+type GameContextProps = {
+  Gamedata: GameData;
+  handleResetGame: () => void;
+  handleEndGame: () => void;
+};
+
+// *===================================================================================================
+// *===================================================================================================
+// *===================================================================================================
+// ? context, use to cohaerere global state into handle and pass to other component
+
+const GameContext = createContext<GameContextProps>({} as GameContextProps);
+
+export const useGameContext = () => {
+  const context = useContext(GameContext);
+  if (!context) {
+    throw new Error('useGameContext must be used within a GameProvider');
+  }
+  return context;
+};
+
+// *===================================================================================================
+// *===================================================================================================
+// *===================================================================================================
 
 let allowReset = false;
 
 const ClientGamePage = () => {
-  const { config } = useConfig();
+  const { config } = usePreConfig();
   const { screen } = useScreen();
   const { setGame, endGame, targetSize, wordIndex, hasStart, resetGame } =
     useCurrentGame();
   const { handleGenerate, handleClear } = usePointsStack();
   const [isRestarting, setRestarting] = useState(false);
+  const queryClient = useQueryClient();
 
   // * inital fetching
   const { data } = useGenerateWords(config.language);
 
-  // * put function here that should run in the middle of the transition
-  const queryClient = useQueryClient();
+  // ! handles
+
+  // * handle to reset game
   const handleRestart = () => {
-    if (isRestarting) return;
+    setRestarting(false);
     resetGame();
     handleClear();
     endGame();
@@ -196,6 +248,17 @@ const ClientGamePage = () => {
     });
   };
 
+  // * handle to blur then reset
+  const handleBlurToRestart = () => {
+    setRestarting(true);
+  };
+
+  // * handle to go to endscreen menu
+  const handleEndGame = () => {
+    endGame();
+  };
+
+  // * Effects
   useEffect(() => {
     if (data) {
       setGame(data);
@@ -208,20 +271,9 @@ const ClientGamePage = () => {
     }
   }, [wordIndex, hasStart]);
 
-  useEffect(() => {
-    if (!isRestarting) handleRestart();
-  }, [isRestarting]);
+  // ! Events
 
-  useEffect(() => {
-    setRestarting(true);
-    resetGame();
-    handleClear();
-  }, [config.language]);
-
-  useEffect(() => {
-    setRestarting(true);
-  }, []);
-
+  // * Reset
   document.addEventListener('keydown', function (event) {
     if (event.repeat != undefined) {
       allowReset = !event.repeat;
@@ -243,19 +295,38 @@ const ClientGamePage = () => {
   });
 
   return (
-    <>
-      <NavigationBar
-        animate={{ opacity: hasStart ? 0 : 1, y: hasStart ? '-100%' : '0%' }}
+    <GameContext.Provider
+      value={{
+        Gamedata: useCurrentGame(),
+        handleResetGame: handleRestart,
+        handleEndGame: handleEndGame,
+      }}
+    >
+      {/* otherstuff */}
+      {devConfig.DEBUG_MENU && <Debugger />}
+      {/* DEBUG */}
+      <FunctionDebugger
+        handleRestart={handleRestart}
+        handleBlurToRestart={handleBlurToRestart}
+        handleEndGame={handleEndGame}
       />
+      <NavigationBar />
+      <OptionsBar
+        initial={{ x: '-50%' }}
+        animate={{ opacity: hasStart ? 0 : 1, y: hasStart ? '100%' : '0%' }}
+      />
+
+      {/* Game Container */}
       <Dialog>
         <motion.div
           animate={{
             filter: isRestarting ? 'blur(8px)' : 'blur(0px)',
             opacity: isRestarting ? 0 : 1,
           }}
-          onAnimationComplete={() => setRestarting(false)}
+          onAnimationComplete={handleRestart}
           className="flex flex-col justify-center items-center h-full "
         >
+          {/* Game */}
           <WordsBar />
           <GameBoard />
           <motion.div animate={{ opacity: hasStart ? 0 : 1 }}>
@@ -264,16 +335,13 @@ const ClientGamePage = () => {
               <Globe size={20} strokeWidth={1.5} />
             </DialogTriggerButton>
           </motion.div>
+          {/* Game */}
         </motion.div>
         <DialogContent>
           <LanguageSelectionDialog />
         </DialogContent>
       </Dialog>
-      <OptionsBar
-        initial={{ x: '-50%' }}
-        animate={{ opacity: hasStart ? 0 : 1, y: hasStart ? '100%' : '0%' }}
-      />
-    </>
+    </GameContext.Provider>
   );
 };
 

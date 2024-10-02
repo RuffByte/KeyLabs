@@ -1,11 +1,11 @@
 import React from 'react';
 import { Check } from 'lucide-react';
 
-import { useConfig } from '@/app/client-page';
+import { usePreConfig } from '@/app/client-page';
 import languages from '../../../../app/static/language/_list.json';
 
 export const LanguageSelectionDialog = () => {
-  const { config, setConfig } = useConfig();
+  const { config, setConfig } = usePreConfig();
   return (
     <div className="min-w-[600px] pb-8">
       <div className="flex p-4  justify-between items-center border-b">

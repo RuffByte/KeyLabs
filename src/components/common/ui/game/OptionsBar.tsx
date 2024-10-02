@@ -4,14 +4,16 @@ import React from 'react';
 import { AnimatePresence, HTMLMotionProps, motion } from 'framer-motion';
 import { CaseSensitive, Timer } from 'lucide-react';
 
-import { GameConfig, useConfig } from '@/app/client-page';
+import { PreGameConfig, usePreConfig } from '@/app/client-page';
 import { cn } from '@/lib/utils';
 
 export const OptionsBar = ({ ...props }: HTMLMotionProps<'div'>) => {
-  const { config, setConfig } = useConfig();
+  const { config, setConfig } = usePreConfig();
 
   const handleChangeMode = (mode: string) => {
-    setConfig({ ...config, mode: mode });
+    if (config.mode === 'characters')
+      setConfig({ ...config, mode: mode, lengthChar: null, time: 30 });
+    else setConfig({ ...config, mode: mode, lengthChar: 25, time: null });
   };
 
   const handleSetTime = (time: number) => {
@@ -36,13 +38,17 @@ export const OptionsBar = ({ ...props }: HTMLMotionProps<'div'>) => {
           <OptionItem
             value="characters"
             name="mode"
-            onChange={() => handleChangeMode('characters')}
+            onChange={() => {
+              handleChangeMode('characters');
+            }}
             defaultChecked
           />
           <OptionItem
             value="time"
             name="mode"
-            onChange={() => handleChangeMode('time')}
+            onChange={() => {
+              handleChangeMode('time');
+            }}
           />
         </Option>
         {config.mode === 'characters' && (
@@ -72,6 +78,11 @@ export const OptionsBar = ({ ...props }: HTMLMotionProps<'div'>) => {
         )}
         {config.mode === 'time' && (
           <Option label={<Timer />} hasLabel>
+            <OptionItem
+              value="5"
+              name="time"
+              onChange={() => handleSetTime(5)}
+            />
             <OptionItem
               value="15"
               name="time"

@@ -14,8 +14,14 @@ const GameBoard = () => {
 
   const { points, hitPoints } = usePointsStack();
   const { screen } = useScreen();
-  const { targetSize, hasStart, incrementCharIndex, handleNextWord } =
-    useCurrentGame();
+  const {
+    targetSize,
+    hasStart,
+    incrementCharIndex,
+    handleNextWord,
+    incrementClick,
+    incrementHit,
+  } = useCurrentGame();
 
   const handleClick = (e: MouseEvent<HTMLDivElement>) => {
     if (!containerRef.current) return;
@@ -24,6 +30,7 @@ const GameBoard = () => {
     const [clickX, clickY] = [clientX - left, clientY - top];
 
     console.log(clickX, clickY);
+    incrementClick();
 
     for (const point of points) {
       if (distance(clickX, clickY, point.x, point.y) > targetSize / 2) continue;
@@ -31,6 +38,7 @@ const GameBoard = () => {
       incrementCharIndex();
       if (points.length <= 1) handleNextWord();
       hitPoints(point.index);
+      incrementHit();
       break;
     }
   };
@@ -47,7 +55,7 @@ const GameBoard = () => {
             initial="initial"
             animate="animate"
             exit="exit"
-            variants={hitVariants(i)}
+            variants={hitVariants(points.length - i)}
             className="absolute bg-foreground z-50 [translate:-50%_-50%] text-background rounded-full grid place-items-center pointer-events-none  select-none text-4xl"
             style={{
               left: point.x,
