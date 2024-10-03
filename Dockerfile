@@ -1,5 +1,5 @@
 # Use the official Node.js image as the base image
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 
 # Set the working directory
 WORKDIR /app
@@ -15,12 +15,12 @@ RUN pnpm install --frozen-lockfile
 
 # Copy the rest of the application code
 COPY . .
-
+RUN npx prisma generate
 # Build the Next.js application
 RUN pnpm build
 
 # Use a minimal production image
-FROM node:18-alpine AS runner
+FROM node:20-alpine AS runner
 
 # Set the working directory
 WORKDIR /app
@@ -38,7 +38,7 @@ RUN npm install -g pnpm && pnpm install --prod --frozen-lockfile
 ENV NODE_ENV production
 
 # Expose the port
-EXPOSE 8080
+EXPOSE 3000
 
 # Start the Next.js application
 CMD ["pnpm", "start"]
