@@ -12,7 +12,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { Globe } from 'lucide-react';
 import { create } from 'zustand';
 
-import { Debugger } from '@/components/common/Debugger';
+// import { Debugger } from '@/components/common/Debugger';
 import Dialog, {
   DialogContent,
   DialogTriggerButton,
@@ -365,7 +365,7 @@ const ClientGamePage = () => {
       }}
     >
       {/* otherstuff */}
-      {devConfig.DEBUG_MENU && <Debugger />}
+      {/* {devConfig.DEBUG_MENU && <Debugger />} */}
       {/* DEBUG */}
       <FunctionDebugger
         handleRestart={handleRestart}
