@@ -11,7 +11,7 @@ import Button from '@/components/common/Button';
 import { resetPasswordSchema } from '@/schemas/zod/schemas';
 import { resetPasswordAction } from './actions';
 
-const ResetPasswordForm: React.FC = () => {
+const ResetPasswordForm = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const token = searchParams.get('token');

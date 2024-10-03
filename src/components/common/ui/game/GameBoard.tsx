@@ -4,9 +4,9 @@ import React, { MouseEvent, useRef } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
 import { useCurrentGame, usePointsStack, useScreen } from '@/app/client-page';
+import { hitVariants } from '@/lib/variants/variants';
 import { distance } from '@/services/utils';
 import { StartButton } from './StartButton';
-import { hitVariants } from '@/lib/variants/variants';
 
 const GameBoard = () => {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -77,6 +77,5 @@ const GameBoard = () => {
     </div>
   );
 };
-
 
 export default GameBoard;
