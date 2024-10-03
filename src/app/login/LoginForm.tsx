@@ -9,7 +9,7 @@ import { z } from 'zod'
 
 import { GoogleOAuthButton } from '@/components/authentication/GoogleOAuthButton'
 import TextInput from '@/components/authentication/TextInput' // Import the TextInput component
-import Button from '@/components/common/button'
+import Button from '@/components/common/Button'
 import TLink from '@/components/common/ui/transition/TLink'
 import { signInSchema } from '@/schemas/zod/schemas'
 import { signIn } from './login.action'

@@ -5,7 +5,7 @@ import { RiGoogleFill } from '@remixicon/react'
 import { toast } from 'sonner'
 
 import { getGoogleOauthConsentUrl } from '@/app/login/login.action'
-import Button from '../common/button'
+import Button from '@/components/common/Button'
 
 export const GoogleOAuthButton = () => {
   return (

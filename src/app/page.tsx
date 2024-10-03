@@ -1,3 +1,5 @@
+import React from 'react'
+
 import TLink from '@/components/common/ui/transition/TLink'
 
 export default function Home() {
