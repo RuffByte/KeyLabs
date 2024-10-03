@@ -8,7 +8,6 @@ import { prisma } from '@/lib/prisma';
 
 // http://localhost:3000/api/auth/google/callback
 export async function GET(req: NextRequest) {
-  console.log('Hello');
   const url = req.nextUrl;
   const code = url.searchParams.get('code');
   const state = url.searchParams.get('state');
