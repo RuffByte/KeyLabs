@@ -6,7 +6,6 @@ import { googleOAuthClient } from '@/lib/googleOauth';
 import { lucia } from '@/lib/lucia';
 import { prisma } from '@/lib/prisma';
 
-// http://localhost:3000/api/auth/google/callback
 export async function GET(req: NextRequest) {
   const url = req.nextUrl;
   const code = url.searchParams.get('code');
