@@ -77,7 +77,7 @@ export default function RootLayout({
         >
           <Transition>
             <div className="h-dvh w-dvw grid overflow-hidden place-items-center">
-              <div className="max-w-screen-desktop w-full h-full flex flex-col box-border">
+              <div className="max-w-screen-desktop w-full h-full flex flex-col box-border p-4">
                 {children}
               </div>
             </div>
