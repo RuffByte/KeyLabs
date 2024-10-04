@@ -16,7 +16,7 @@ jobs:
       PROJECT_ID: ${{ secrets.PROJECT_ID }}
       GAR_LOCATION: ${{ secrets.GAR_LOCATION }} 
       REPOSITORY: ${{ secrets.REPOSITORY }} 
-      SERVICE: image-converter
+      SERVICE: keylabs
       REGION: ${{ secrets.GAR_LOCATION }}
 
     steps:
