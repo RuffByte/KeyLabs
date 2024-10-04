@@ -1,7 +1,6 @@
 import React from 'react';
 
 import { AvatarAndName } from './AvatarAndName';
-import { ExperienceBar } from './ExperienceBar';
 import { TestStats } from './TestStats';
 
 export const AccountDetails = () => {
