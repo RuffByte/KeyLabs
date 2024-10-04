@@ -53,10 +53,13 @@ Originally KeyLabs was developed during the Terrible Ideas Hackathon, where we m
 </div>
 
 <div align="center">
-    <!-- cloudflare -->
-    <img src="https://img.shields.io/badge/Cloudflare-F38020?style=for-the-badge&logo=Cloudflare&logoColor=white">
-    <!-- cloudflare -->
+    <!-- docker -->
+    <img src="https://img.shields.io/badge/Docker-2CA5E0?style=for-the-badge&logo=docker&logoColor=white">
+    <!-- github actions -->
+    <img src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white">
+    <!-- google cloud -->
     <img src="https://img.shields.io/badge/Google_Cloud-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white">
+     
 </div>
 
 <div align="center">
