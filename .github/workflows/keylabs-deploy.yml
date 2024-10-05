@@ -14,8 +14,8 @@ jobs:
     environment: GCR
     env:
       PROJECT_ID: ${{ secrets.PROJECT_ID }}
-      GAR_LOCATION: ${{ secrets.GAR_LOCATION }} 
-      REPOSITORY: ${{ secrets.REPOSITORY }} 
+      GAR_LOCATION: ${{ secrets.GAR_LOCATION }}
+      REPOSITORY: ${{ secrets.REPOSITORY }}
       SERVICE: keylabs
       REGION: ${{ secrets.GAR_LOCATION }}
 

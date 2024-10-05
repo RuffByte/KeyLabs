@@ -148,6 +148,7 @@ export type GameDataProps = {
   totalClick: number;
   totalHit: number;
   setMode: (words: wordSet) => void;
+  setTime: (time: number) => void;
   InitializeGame: (game: GameInitializeProps) => void;
   handleNextWord: () => void;
   incrementCharIndex: () => void;
@@ -191,6 +192,7 @@ export const useCurrentGame = create<GameDataProps>()((set) => ({
     set((prevs) => {
       return { charIndex: prevs.charIndex + 1 };
     }),
+  setTime: (time: number) => set({ totalTime: time }),
   InitializeGame: (game) =>
     set({
       ...game,
@@ -387,7 +389,7 @@ const ClientGamePage = () => {
             opacity: isRestarting ? 0 : 1,
           }}
           onAnimationComplete={handleRestart}
-          className="flex flex-col justify-center items-center h-full "
+          className="flex h-full flex-col items-center justify-center"
         >
           {/* Game */}
           <AnimatePresence mode="wait">
