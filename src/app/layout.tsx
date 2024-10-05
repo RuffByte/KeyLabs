@@ -76,8 +76,8 @@ export default function RootLayout({
           className={`${kollektif.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <Transition>
-            <div className="h-dvh w-dvw grid overflow-hidden place-items-center">
-              <div className="max-w-screen-desktop w-full h-full flex flex-col box-border p-4">
+            <div className="grid h-dvh w-dvw place-items-center overflow-hidden">
+              <div className="box-border flex h-full w-full max-w-screen-desktop flex-col p-4">
                 {children}
               </div>
             </div>

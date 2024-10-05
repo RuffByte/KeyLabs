@@ -10,15 +10,15 @@ const UserDropdown: React.FC<UserDropdownProps> = ({ isOpen }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="absolute right-0 mt-3 w-48 bg-white border rounded shadow-lg z-10">
+    <div className="absolute right-0 z-10 mt-3 w-48 rounded border bg-white shadow-lg">
       <ul className="py-1">
-        <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">
+        <li className="cursor-pointer px-4 py-2 hover:bg-gray-200">
           User Account
         </li>
-        <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">
+        <li className="cursor-pointer px-4 py-2 hover:bg-gray-200">
           User Settings
         </li>
-        <li className="px-4 py-2 hover:bg-gray-200 cursor-pointer">Sign Out</li>
+        <li className="cursor-pointer px-4 py-2 hover:bg-gray-200">Sign Out</li>
       </ul>
     </div>
   );

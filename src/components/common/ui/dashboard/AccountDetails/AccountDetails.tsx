@@ -5,7 +5,7 @@ import { TestStats } from './TestStats';
 
 export const AccountDetails = () => {
   return (
-    <div className="bg-tertiary w-full rounded-lg flex p-4 flex-col md:flex-row">
+    <div className="flex w-full flex-col rounded-lg bg-tertiary p-4 md:flex-row">
       <AvatarAndName />
       <TestStats />
     </div>

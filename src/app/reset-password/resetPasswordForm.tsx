@@ -53,7 +53,7 @@ const ResetPasswordForm = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-4 w-[350px]"
+      className="flex w-[350px] flex-col gap-4"
     >
       <TextInput
         id="reset-password"
@@ -69,7 +69,7 @@ const ResetPasswordForm = () => {
         {...register('confirmPassword')}
         errors={errors.confirmPassword?.message}
       />
-      <Button type="submit" className="rounded bg-blue-500 text-white p-2 mt-2">
+      <Button type="submit" className="mt-2 rounded bg-blue-500 p-2 text-white">
         Reset Password
       </Button>
     </form>

@@ -27,11 +27,11 @@ export const OptionsBar = ({ ...props }: HTMLMotionProps<'div'>) => {
   return (
     <motion.div
       {...props}
-      className="absolute z-50 bottom-0 left-[50%] -translate-x-[50%] flex items-end"
+      className="absolute bottom-0 left-[50%] z-50 flex -translate-x-[50%] items-end"
     >
       <OptionEdge />
       <motion.div
-        className="bg-foreground gap-4 p-2 px-16 flex justify-center items-center rounded-t-[32px] h-full text-background"
+        className="flex h-full items-center justify-center gap-4 rounded-t-[32px] bg-foreground p-2 px-16 text-background"
         animate={{ width: 'full' }}
       >
         <Option label="mode" hasLabel>
@@ -124,14 +124,14 @@ const Option = ({ label, children, hasLabel = false }: OptionProps) => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="items-center gap-4 px-4 select-none h-full flex border border-background rounded-xl"
+      className="flex h-full select-none items-center gap-4 rounded-xl border border-background px-4"
     >
       {hasLabel && (
         <>
           <div className="border-r pr-4">{label}</div>
         </>
       )}
-      <div className="flex w-min !p-0.5 items-center justify-center">
+      <div className="flex w-min items-center justify-center !p-0.5">
         {children}
       </div>
     </motion.div>
@@ -153,15 +153,15 @@ const OptionItem = ({
 }: OptionItemProps) => {
   return (
     <>
-      <div className="peer w-min h-min relative">
+      <div className="peer relative h-min w-min">
         <input
-          className="peer size-full cursor-pointer absolute opacity-0"
+          className="peer absolute size-full cursor-pointer opacity-0"
           type="radio"
           onChange={onChange}
           name={name}
           defaultChecked={defaultChecked}
         />
-        <div className="peer-hover:bg-secondary peer-checked:!bg-background peer-checked:!text-foreground p-2 px-4 h-full hover:text-foreground">
+        <div className="h-full p-2 px-4 hover:text-foreground peer-checked:!bg-background peer-checked:!text-foreground peer-hover:bg-secondary">
           {value}
         </div>
       </div>
@@ -172,7 +172,7 @@ const OptionItem = ({
 const OptionEdge = ({ className }: { className?: string }) => (
   <div
     className={cn(
-      'edge-32 size-8 bg-foreground outline-r-4 outline-b-4 outline-foreground',
+      'edge-32 outline-r-4 outline-b-4 size-8 bg-foreground outline-foreground',
       className
     )}
   />

@@ -22,3 +22,5 @@ export const GameTimer = forwardRef<HTMLSpanElement>((props, ref) => {
     </h3>
   );
 });
+//need this for build i guess
+GameTimer.displayName = 'GameTimer';

@@ -1,6 +1,6 @@
-import { NextResponse } from 'next/server'
+import { NextResponse } from 'next/server';
 
-import { prisma } from '@/lib/prisma'
+import { prisma } from '@/lib/prisma';
 
 export const GET = async () => {
   try {
@@ -16,14 +16,14 @@ export const GET = async () => {
           },
         },
       },
-    })
+    });
 
-    return NextResponse.json(topScores)
+    return NextResponse.json(topScores);
   } catch (error) {
-    console.error('Error fetching leaderboard:', error)
+    console.error('Error fetching leaderboard:', error);
     return NextResponse.json(
       { error: 'Failed to fetch leaderboard' },
       { status: 500 }
-    )
+    );
   }
-}
+};

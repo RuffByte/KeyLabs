@@ -10,7 +10,7 @@ import Button from '../common/Button';
 export const GoogleOAuthButton = () => {
   return (
     <Button
-      className="flex items-center rounded-input justify-center w-full bg-white px-4 py-2 text-sm text-black hover:bg-gray-100 hover:border"
+      className="flex w-full items-center justify-center rounded-input bg-white px-4 py-2 text-sm text-black hover:border hover:bg-gray-100"
       onClick={async () => {
         const res = await getGoogleOauthConsentUrl();
         if (res.url) {

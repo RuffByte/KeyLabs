@@ -20,13 +20,13 @@ export const NavigationBar = ({ ...props }: NavigationBarProp) => {
     <motion.div
       {...props}
       className={cn(
-        'flex absolute w-desktop items-center justify-between top-4 z-50',
+        'absolute top-4 z-50 flex w-desktop items-center justify-between',
         props.className
       )}
     >
       <Keylabslogo />
       <motion.div
-        className="flex gap-4 p-2 justify-center items-center hover:*:stroke-secondary"
+        className="flex items-center justify-center gap-4 p-2 hover:*:stroke-secondary"
         animate="animate"
         variants={NavigationOutVariants(hasStart)}
       >

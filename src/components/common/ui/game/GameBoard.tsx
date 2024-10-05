@@ -56,7 +56,7 @@ const GameBoard = () => {
             animate="animate"
             exit="exit"
             variants={hitVariants(points.length - i)}
-            className="absolute bg-foreground z-50 [translate:-50%_-50%] text-background rounded-full grid place-items-center pointer-events-none  select-none text-4xl"
+            className="pointer-events-none absolute z-50 grid select-none place-items-center rounded-full bg-foreground text-4xl text-background [translate:-50%_-50%]"
             style={{
               left: point.x,
               top: point.y,
@@ -71,7 +71,7 @@ const GameBoard = () => {
       <div
         onMouseDown={handleClick}
         ref={containerRef}
-        className="grid-72 bg-secondary size-full"
+        className="grid-72 size-full bg-secondary"
       />
       {!hasStart && <StartButton />}
     </div>

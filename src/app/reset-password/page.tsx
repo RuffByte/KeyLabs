@@ -4,8 +4,8 @@ import ResetPasswordForm from './resetPasswordForm';
 
 const ResetPasswordPage = () => {
   return (
-    <div className="flex flex-col items-center justify-center h-screen">
-      <h1 className="text-xl mb-4">Reset Password</h1>
+    <div className="flex h-screen flex-col items-center justify-center">
+      <h1 className="mb-4 text-xl">Reset Password</h1>
       <Suspense fallback={<div>Loading...</div>}>
         <ResetPasswordForm />
       </Suspense>

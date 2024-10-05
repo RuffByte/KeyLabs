@@ -13,7 +13,7 @@ const page = async () => {
   }
 
   return (
-    <div className="flex h-full justify-center items-center flex-col">
+    <div className="flex h-full flex-col items-center justify-center">
       <NavigationBar />
       <AccountDetails />
       <div className="text-white">you are logged in as {user.name}</div>

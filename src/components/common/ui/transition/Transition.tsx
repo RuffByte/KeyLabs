@@ -84,8 +84,8 @@ const Transition = ({ children }: TransitionProps) => {
     <TransitionContext.Provider value={{ handleRouteChange }}>
       <motion.div
         className={cn(
-          'origin-bottom w-dvw overflow-hidden relative',
-          isTransitioning && 'overflow-hidden h-dvh relative'
+          'relative w-dvw origin-bottom overflow-hidden',
+          isTransitioning && 'relative h-dvh overflow-hidden'
         )}
         initial="initial"
         animate={isTransitioning ? 'animate' : 'finish'}
@@ -95,7 +95,7 @@ const Transition = ({ children }: TransitionProps) => {
         {children}
       </motion.div>
       {/* transition */}
-      <div className="fixed inset-0 z-[9999] overflow-hidden pointer-events-none">
+      <div className="pointer-events-none fixed inset-0 z-[9999] overflow-hidden">
         {isTransitioning && (
           <motion.div
             className="absolute inset-0 size-full bg-slate-800"
