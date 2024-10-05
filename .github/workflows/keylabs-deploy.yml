@@ -54,7 +54,7 @@ jobs:
             --max-instances=3 \
             --platform=managed \
             --allow-unauthenticated \
-            --set-env-vars PROJECT_ID=${{ secrets.PROJECT_ID  }},GAR_LOCATION=${{ secrets.GAR_LOCATION }},REPOSITORY=${{ secrets.REPOSITORY }},SERVICE=keylabs,REGION=${{ secrets.GAR_LOCATION }},DATABASE_URL=${{ secrets.DATABASE_URL }},DIRECT_URL=${{ secrets.DIRECT_URL }},GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }},GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }},NEXT_PUBLIC_URL=${{ secrets.NEXT_PUBLIC_URL }},RESEND_API_KEY=${{ secrets.RESEND_API_KEY }},EMAIL_FROM=${{ secrets.EMAIL_FROM }}
+            --set-env-vars PROJECT_ID=${{secrets.PROJECT_ID}},GAR_LOCATION=${{secrets.GAR_LOCATION}},REPOSITORY=${{secrets.REPOSITORY}},SERVICE=keylabs,REGION=${{secrets.GAR_LOCATION}},DATABASE_URL=${{secrets.DATABASE_URL}},DIRECT_URL=${{secrets.DIRECT_URL}},GOOGLE_CLIENT_ID=${{secrets.GOOGLE_CLIENT_ID}},GOOGLE_CLIENT_SECRET=${{secrets.GOOGLE_CLIENT_SECRET}},NEXT_PUBLIC_URL=${{secrets.NEXT_PUBLIC_URL}},RESEND_API_KEY=${{secrets.RESEND_API_KEY}},EMAIL_FROM=${{secrets.EMAIL_FROM}}
 
       - name: Show Output
         run: echo "Deployment completed"
