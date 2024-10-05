@@ -30,6 +30,7 @@ import { generatePoint } from '@/services/points/generate-point';
 import { wordSet } from '@/services/words/generate-word';
 import { submitGameData } from './actions';
 import { useGenerateWords } from './hooks/query/useGenerateWords';
+import { GameData } from './types/gameData';
 import { User } from './types/user';
 
 // *===================================================================================================
@@ -258,17 +259,6 @@ export const useGameContext = () => {
   return context;
 };
 
-interface GameData {
-  mode: string;
-  language: string;
-  totalTime: number;
-  totalChar: number;
-  totalClick: number;
-  totalHit: number;
-  targetSize: number;
-  wpm: number;
-  accuracy: number;
-}
 const saveToLocalStorage = (gameData: GameData) => {
   // Retrieve existing game data from local storage
   const existingData = JSON.parse(localStorage.getItem('gameData') || '[]');
@@ -304,6 +294,7 @@ const ClientGamePage = ({ user }: { user: User }) => {
     totalTime,
     totalHit,
     InitializeGame,
+    totalChar,
   } = useCurrentGame();
   const { handleGenerate, handleClear } = usePointsStack();
   const [isRestarting, setRestarting] = useState(false);
@@ -348,27 +339,27 @@ const ClientGamePage = ({ user }: { user: User }) => {
   };
 
   const handleSubmitGameData = () => {
-    if (!hasFinish) return;
-    const wpm = Math.floor((config.lengthChar / 5) * (60 / totalTime));
+    const rawWpm = Math.floor((totalHit / 5) * (60 / totalTime));
     const accuracy = (totalHit / totalClick) * 100;
+    const wpm = Math.floor(rawWpm * (accuracy / 100));
 
     const gameData: GameData = {
       mode: config.mode,
       language: config.language,
-      totalTime,
-      totalChar: config.lengthChar,
-      totalClick,
-      totalHit,
-      targetSize,
-      wpm,
+      totalTime: totalTime,
+      totalChar: totalHit,
+      totalClick: totalClick,
+      totalHit: totalHit,
+      targetSize: targetSize,
+      wpm: wpm,
       accuracy: accuracy,
+      rawWpm: rawWpm,
     };
 
     if (user) {
       submitGameData({
         ...gameData,
         userName: user.name,
-        wpm, // Include wpm in the submission
       });
     } else {
       saveToLocalStorage({ ...gameData, wpm });

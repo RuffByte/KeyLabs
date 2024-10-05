@@ -1,27 +1,21 @@
 'use server';
 
-import { prisma } from '@/lib/prisma'; // Or Supabase if you're using Supabase
+import { prisma } from '@/lib/prisma';
+import { GameData } from './types/gameData';
 
-export async function submitGameData(gameData: {
-  mode: string;
-  language: string;
-  totalTime: number;
-  totalChar: number;
-  totalClick: number;
-  totalHit: number;
-  userName: string;
-  wpm: number;
-  accuracy: number;
-}) {
+//need to uml this better because i am not
+
+export async function submitGameData(gameData: GameData) {
   await prisma.gameEntry.create({
     data: {
       mode: gameData.mode,
       language: gameData.language,
       wpm: gameData.wpm,
-      charsTyped: gameData.totalChar,
-      clicks: gameData.totalClick,
+      totalChar: gameData.totalChar,
+      totalClicks: gameData.totalClick,
+      totalTime: gameData.totalTime,
       accuracy: gameData.accuracy,
-      gameDuration: gameData.totalTime,
+      rawWpm: gameData.rawWpm,
       user: {
         connect: { name: gameData.userName },
       },

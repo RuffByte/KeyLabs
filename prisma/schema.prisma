@@ -43,18 +43,16 @@ model PasswordResetToken {
 }
 
 model GameEntry {
-  id           String   @id @default(cuid())
-  userName     String
-  mode         String
-  language     String
-  wpm          Int
-  charsTyped   Int
-  clicks       Int
-  accuracy     Float
-  gameDuration Int
-  wordGoal     Int?
-  timeGoal     Int?
-  createdAt    DateTime @default(now())
-
-  user User @relation(fields: [userName], references: [name])
+  id          String   @id @default(cuid())
+  userName    String
+  mode        String
+  language    String
+  wpm         Int
+  rawWpm      Int
+  totalChar   Int
+  totalClicks Int
+  totalTime   Float
+  accuracy    Float
+  createdAt   DateTime @default(now())
+  user        User     @relation(fields: [userName], references: [name])
 }
