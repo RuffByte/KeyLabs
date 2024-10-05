@@ -28,7 +28,9 @@ import { QUERY_KEY } from '@/lib/utils/queryKeys';
 import { OptionBarOutVariants } from '@/lib/variants/variants';
 import { generatePoint } from '@/services/points/generate-point';
 import { wordSet } from '@/services/words/generate-word';
+import { submitGameData } from './actions';
 import { useGenerateWords } from './hooks/query/useGenerateWords';
+import { User } from './types/user';
 
 // *===================================================================================================
 // *===================================================================================================
@@ -256,13 +258,37 @@ export const useGameContext = () => {
   return context;
 };
 
+interface GameData {
+  mode: string;
+  language: string;
+  totalTime: number;
+  totalChar: number;
+  totalClick: number;
+  totalHit: number;
+  targetSize: number;
+  wpm: number;
+  accuracy: number;
+}
+const saveToLocalStorage = (gameData: GameData) => {
+  // Retrieve existing game data from local storage
+  const existingData = JSON.parse(localStorage.getItem('gameData') || '[]');
+
+  // Check the maximum limit
+  if (existingData.length >= 10) {
+    existingData.shift(); // Remove the oldest entry
+  }
+
+  existingData.push(gameData); // Add new game data
+  localStorage.setItem('gameData', JSON.stringify(existingData)); // Save back to local storage
+};
+
 // *===================================================================================================
 // *===================================================================================================
 // *===================================================================================================
 
 let allowReset = false;
 
-const ClientGamePage = () => {
+const ClientGamePage = ({ user }: { user: User }) => {
   const { config } = usePreConfig();
   const { screen } = useScreen();
   const {
@@ -320,6 +346,41 @@ const ClientGamePage = () => {
   const handleFinishGame = () => {
     finishGame();
   };
+
+  const handleSubmitGameData = () => {
+    if (!hasFinish) return;
+    const wpm = Math.floor((config.lengthChar / 5) * (60 / totalTime));
+    const accuracy = (totalHit / totalClick) * 100;
+
+    const gameData: GameData = {
+      mode: config.mode,
+      language: config.language,
+      totalTime,
+      totalChar: config.lengthChar,
+      totalClick,
+      totalHit,
+      targetSize,
+      wpm,
+      accuracy: accuracy,
+    };
+
+    if (user) {
+      submitGameData({
+        ...gameData,
+        userName: user.name,
+        wpm, // Include wpm in the submission
+      });
+    } else {
+      saveToLocalStorage({ ...gameData, wpm });
+    }
+  };
+
+  useEffect(() => {
+    // workaround as wordbar sets hasFInished to true on load fml
+    if (hasFinish && totalClick > 0) {
+      handleSubmitGameData();
+    }
+  }, [hasFinish]);
 
   // * Effects
   useEffect(() => {
@@ -400,6 +461,9 @@ const ClientGamePage = () => {
                 <p>targetSize: {targetSize}</p>
                 <p>totalClick: {totalClick}</p>
                 <p>totalHit: {totalHit}</p>
+                <p>
+                  WPM: {Math.floor((config.lengthChar / 5) * (60 / totalTime))}
+                </p>
               </div>
             ) : (
               <motion.div exit={{ opacity: 0 }} key="gameboard">

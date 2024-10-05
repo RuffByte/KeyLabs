@@ -1,5 +1,10 @@
 import React, { useRef, useState } from 'react';
-import { animate, motion, useIsomorphicLayoutEffect } from 'framer-motion';
+import {
+  animate,
+  cancelFrame,
+  motion,
+  useIsomorphicLayoutEffect,
+} from 'framer-motion';
 import { CaseSensitive, Timer } from 'lucide-react';
 
 import {
@@ -16,13 +21,52 @@ export const WordsBar = () => {
   const { screen } = useScreen();
   const { config } = usePreConfig();
   const { Gamedata } = useGameContext();
+  const refTimer = useRef<HTMLSpanElement>(null); // Ref for the timer
+  const [elapsedTime, setElapsedTime] = useState(0);
 
   useIsomorphicLayoutEffect(() => {
     if (Gamedata.mode !== 'characters') return;
     if (Gamedata.charCount >= Gamedata.totalChar) {
+      Gamedata.setTime(elapsedTime);
       Gamedata.finishGame();
     }
   }, [Gamedata.charCount]);
+
+  //timer loic
+  useIsomorphicLayoutEffect(() => {
+    if (!Gamedata.hasStart) return;
+
+    const startTime = new Date();
+    const intervalId = setInterval(() => {
+      const currentTime = new Date();
+      const elapsedMilliseconds = currentTime.getTime() - startTime.getTime();
+      const elapsedSeconds = (elapsedMilliseconds / 1000).toFixed(2); // Store with two decimal places
+
+      if (config.mode === 'time') {
+        const remainingTime = (
+          config.time - parseFloat(elapsedSeconds)
+        ).toFixed(2);
+        if (parseFloat(remainingTime) <= 0) {
+          clearInterval(intervalId);
+          Gamedata.handleFinish();
+        }
+
+        setElapsedTime(parseFloat(remainingTime)); // Store as 2 decimal places
+        if (refTimer.current) {
+          // Display only the whole number part
+          refTimer.current.innerHTML = `${Math.floor(parseFloat(remainingTime))}s`;
+        }
+      } else if (config.mode === 'characters') {
+        setElapsedTime(parseFloat(elapsedSeconds)); // Store as 2 decimal places
+        if (refTimer.current) {
+          refTimer.current.innerHTML = `${Math.floor(parseFloat(elapsedSeconds))}s`;
+        }
+      }
+    }, 100);
+
+    return () => clearInterval(intervalId);
+  }, [config.mode, config.time, Gamedata.hasStart]);
+
   return (
     <div
       className="relative flex h-[60px] select-none items-center justify-between px-6"
@@ -38,7 +82,7 @@ export const WordsBar = () => {
           letterIndex={Gamedata.charIndex}
         />
       </div>
-      <GameTimer />
+      <GameTimer ref={refTimer} />
     </div>
   );
 };

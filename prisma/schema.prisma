@@ -17,7 +17,7 @@ datasource db {
 model User {
   id             String               @id @default(cuid())
   email          String               @unique
-  name           String
+  name           String               @unique
   role           String?
   hashedPassword String?
   picture        String?
@@ -44,7 +44,7 @@ model PasswordResetToken {
 
 model GameEntry {
   id           String   @id @default(cuid())
-  userId       String
+  userName     String
   mode         String
   language     String
   wpm          Int
@@ -56,5 +56,5 @@ model GameEntry {
   timeGoal     Int?
   createdAt    DateTime @default(now())
 
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userName], references: [name])
 }
