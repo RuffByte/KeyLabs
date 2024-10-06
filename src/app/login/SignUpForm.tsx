@@ -41,8 +41,8 @@ const SignUpForm = () => {
   }
 
   return (
-    <div className="flex flex-col w-[350px]">
-      <h1 className="mb-2 text-foreground text-xl font-bold">Sign up</h1>
+    <div className="flex w-[350px] flex-col">
+      <h1 className="mb-2 text-xl font-bold text-foreground">Sign up</h1>
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
         <TextInput
           type="text"

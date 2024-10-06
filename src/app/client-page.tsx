@@ -18,6 +18,7 @@ import Dialog, {
   DialogTriggerButton,
 } from '@/components/common/Dialog';
 import { FunctionDebugger } from '@/components/common/FunctionDebugger';
+import { EndGameScreen } from '@/components/common/ui/game/EndGameScreen';
 import GameBoard from '@/components/common/ui/game/GameBoard';
 import { LanguageSelectionDialog } from '@/components/common/ui/game/LanguageSelectionDialog';
 import { OptionsBar } from '@/components/common/ui/game/OptionsBar';
@@ -28,7 +29,10 @@ import { QUERY_KEY } from '@/lib/utils/queryKeys';
 import { OptionBarOutVariants } from '@/lib/variants/variants';
 import { generatePoint } from '@/services/points/generate-point';
 import { wordSet } from '@/services/words/generate-word';
+import { submitGameData } from './actions';
 import { useGenerateWords } from './hooks/query/useGenerateWords';
+import { GameData } from './types/gameData';
+import { User } from './types/user';
 
 // *===================================================================================================
 // *===================================================================================================
@@ -148,6 +152,7 @@ export type GameDataProps = {
   totalClick: number;
   totalHit: number;
   setMode: (words: wordSet) => void;
+  setTime: (time: number) => void;
   InitializeGame: (game: GameInitializeProps) => void;
   handleNextWord: () => void;
   incrementCharIndex: () => void;
@@ -191,6 +196,7 @@ export const useCurrentGame = create<GameDataProps>()((set) => ({
     set((prevs) => {
       return { charIndex: prevs.charIndex + 1 };
     }),
+  setTime: (time: number) => set({ totalTime: time }),
   InitializeGame: (game) =>
     set({
       ...game,
@@ -254,13 +260,55 @@ export const useGameContext = () => {
   return context;
 };
 
+const saveToLocalStorage = (gameData: GameData) => {
+  // Retrieve existing game data from local storage
+  const existingData = JSON.parse(localStorage.getItem('gameData') || '[]');
+
+  // Check the maximum limit
+  if (existingData.length >= 10) {
+    existingData.shift(); // Remove the oldest entry
+  }
+
+  existingData.push(gameData); // Add new game data
+  localStorage.setItem('gameData', JSON.stringify(existingData)); // Save back to local storage
+};
+
 // *===================================================================================================
 // *===================================================================================================
 // *===================================================================================================
+
+const calculateEndGameData = (
+  totalHit: number,
+  totalClick: number,
+  totalTime: number,
+  targetSize: number,
+  config: PreGameConfig['config']
+) => {
+  const accuracy = (totalHit / totalClick) * 100;
+  const rawWpm = Math.floor((totalHit / 5) * (60 / totalTime));
+  const wpm = Math.floor(rawWpm * (accuracy / 100));
+  const rawLpm = Math.floor(totalHit * (60 / totalTime));
+  const lmp = Math.floor(rawLpm * (accuracy / 100));
+
+  return {
+    mode: config.mode,
+    language: config.language,
+    totalTime: totalTime,
+    totalChar: totalHit,
+    totalClick: totalClick,
+    totalHit: totalHit,
+    targetSize: targetSize,
+    wpm: wpm,
+    rawWpm: rawWpm,
+    lpm: lmp,
+    rawLpm: rawLpm,
+    accuracy: accuracy,
+  };
+};
 
 let allowReset = false;
 
-const ClientGamePage = () => {
+const ClientGamePage = ({ user }: { user: User }) => {
   const { config } = usePreConfig();
   const { screen } = useScreen();
   const {
@@ -276,10 +324,12 @@ const ClientGamePage = () => {
     totalTime,
     totalHit,
     InitializeGame,
+    totalChar,
   } = useCurrentGame();
   const { handleGenerate, handleClear } = usePointsStack();
   const [isRestarting, setRestarting] = useState(false);
   const queryClient = useQueryClient();
+  const [endGameData, setEndGameData] = useState<GameData | null>(null); // Add state for end game data
 
   // * inital fetching
   const { data } = useGenerateWords(config.language);
@@ -318,6 +368,34 @@ const ClientGamePage = () => {
   const handleFinishGame = () => {
     finishGame();
   };
+
+  // * Logic for submitting game data
+  const handleSubmitGameData = () => {
+    const gameData = calculateEndGameData(
+      totalHit,
+      totalClick,
+      totalTime,
+      targetSize,
+      config
+    );
+    setEndGameData(gameData); // Store game data for the EndGameScreen
+
+    if (user) {
+      submitGameData({
+        ...gameData,
+        userName: user.name,
+      });
+    } else {
+      saveToLocalStorage({ ...gameData, wpm: gameData.wpm });
+    }
+  };
+
+  useEffect(() => {
+    // workaround as wordbar sets hasFinish to true on load fml
+    if (hasFinish && totalClick > 0) {
+      handleSubmitGameData();
+    }
+  }, [hasFinish]);
 
   // * Effects
   useEffect(() => {
@@ -365,8 +443,6 @@ const ClientGamePage = () => {
       }}
     >
       {/* otherstuff */}
-      {/* {devConfig.DEBUG_MENU && <Debugger />} */}
-      {/* DEBUG */}
       <FunctionDebugger
         handleRestart={handleRestart}
         handleBlurToRestart={handleBlurToRestart}
@@ -387,18 +463,12 @@ const ClientGamePage = () => {
             opacity: isRestarting ? 0 : 1,
           }}
           onAnimationComplete={handleRestart}
-          className="flex flex-col justify-center items-center h-full "
+          className="flex h-full flex-col items-center justify-center"
         >
           {/* Game */}
           <AnimatePresence mode="wait">
             {hasFinish ? (
-              <div className="text-xl">
-                <p>put score info here</p>
-                <p>totalTime: {totalTime}</p>
-                <p>targetSize: {targetSize}</p>
-                <p>totalClick: {totalClick}</p>
-                <p>totalHit: {totalHit}</p>
-              </div>
+              <EndGameScreen gameData={endGameData} /> // Pass the game data to the EndGameScreen component
             ) : (
               <motion.div exit={{ opacity: 0 }} key="gameboard">
                 <WordsBar />

@@ -1,18 +1,35 @@
+import { cache } from 'react';
 import { cookies } from 'next/headers';
 import { PrismaAdapter } from '@lucia-auth/adapter-prisma';
 import { Lucia } from 'lucia';
+import type { Session, User } from 'lucia';
 
 import { prisma } from './prisma';
 
 const adapter = new PrismaAdapter(prisma.session, prisma.user);
 
+declare module 'lucia' {
+  interface Register {
+    Lucia: typeof lucia;
+    DatabaseUserAttributes: DatabaseUserAttributes;
+  }
+}
+
+interface DatabaseUserAttributes {
+  name: string;
+}
+
 export const lucia = new Lucia(adapter, {
   sessionCookie: {
     name: 'antga-auth-cookie',
-    expires: false,
     attributes: {
       secure: process.env.NODE_ENV === 'production',
     },
+  },
+  getUserAttributes: (attributes) => {
+    return {
+      name: attributes.name,
+    };
   },
 });
 
@@ -39,7 +56,9 @@ export const getUser = async () => {
         sessionCookie.attributes
       );
     }
-  } catch (error) {}
+  } catch (error) {
+    return null;
+  }
   const dbuser = await prisma.user.findUnique({
     where: {
       id: user?.id,

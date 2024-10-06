@@ -2,12 +2,12 @@ import React from 'react';
 
 export const FunctionDebugger = ({ ...props }: any) => {
   return (
-    <div className="bg-foreground flex-col flex gap-1 text-2xl text-background left-0 absolute z-[9999] p-2 ">
+    <div className="absolute left-0 z-[9999] flex flex-col gap-1 bg-foreground p-2 text-2xl text-background">
       {Object.keys(props).map((item, i) => {
         return (
           <button
             key={i}
-            className="border p-4 border-accent"
+            className="border-accent border p-4"
             onClick={() => props[item]()}
           >
             {item}

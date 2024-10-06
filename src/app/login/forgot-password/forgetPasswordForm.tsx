@@ -35,7 +35,7 @@ const ForgetPasswordForm: React.FC = () => {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-4 w-[350px]"
+      className="flex w-[350px] flex-col gap-4"
     >
       <TextInput
         id="email"
@@ -46,7 +46,7 @@ const ForgetPasswordForm: React.FC = () => {
       />
       <Button
         type="submit"
-        className="rounded bg-input px-5 py-1 text-sm mt-2 text-foreground"
+        className="mt-2 rounded bg-input px-5 py-1 text-sm text-foreground"
       >
         Send Reset Password
       </Button>

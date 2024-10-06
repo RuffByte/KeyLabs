@@ -7,9 +7,9 @@ import TLink from '../transition/TLink';
 export const Keylabslogo = () => {
   return (
     <TLink href="/">
-      <div className="flex gap-4 font-kollektif items-center p-2">
-        <KeyLabsLogo className="stroke-black size-8" />
-        <h1 className="text-3xl select-none">KeyLabs</h1>
+      <div className="flex items-center gap-4 p-2 font-kollektif">
+        <KeyLabsLogo className="size-8 stroke-black" />
+        <h1 className="select-none text-3xl">KeyLabs</h1>
       </div>
     </TLink>
   );

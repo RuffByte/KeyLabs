@@ -51,7 +51,7 @@ const Modal = () => {
   return (
     <div
       onClick={handleClose}
-      className="fixed w-dvw h-dvh left-0 bg-black/70 z-[999]"
+      className="fixed left-0 z-[999] h-dvh w-dvw bg-black/70"
     />
   );
 };
@@ -60,7 +60,7 @@ export const DialogContent = ({ children }: { children: React.ReactNode }) => {
   const { open } = useDialog();
   if (!open) return;
   return (
-    <div className="rounded-lg absolute bg-background z-[1000] left-1/2 top-1/2 [translate:-50%_-50%]">
+    <div className="absolute left-1/2 top-1/2 z-[1000] rounded-lg bg-background [translate:-50%_-50%]">
       {children}
     </div>
   );
@@ -76,7 +76,7 @@ export const DialogTriggerButton = ({
     <Button
       onClick={handleToggle}
       className={cn(
-        'w-min px-8 flex gap-2 items-center',
+        'flex w-min items-center gap-2 px-8',
         open && 'border-secondary'
       )}
       variant="outline"

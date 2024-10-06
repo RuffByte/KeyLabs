@@ -1,5 +1,10 @@
 import React, { useRef, useState } from 'react';
-import { animate, motion, useIsomorphicLayoutEffect } from 'framer-motion';
+import {
+  animate,
+  cancelFrame,
+  motion,
+  useIsomorphicLayoutEffect,
+} from 'framer-motion';
 import { CaseSensitive, Timer } from 'lucide-react';
 
 import {
@@ -10,71 +15,74 @@ import {
   useScreen,
 } from '@/app/client-page';
 import { cn } from '@/lib/utils';
+import { GameTimer } from './Timer';
 
 export const WordsBar = () => {
   const { screen } = useScreen();
   const { config } = usePreConfig();
   const { Gamedata } = useGameContext();
-  const refTimer = useRef<HTMLParagraphElement>(null);
-
-  useIsomorphicLayoutEffect(() => {
-    if (config.mode !== 'time' || !Gamedata.hasStart || !Gamedata.totalTime)
-      return;
-    const timer = refTimer.current;
-    if (!timer) return;
-
-    const animation = animate(Gamedata.totalTime, 0, {
-      duration: Gamedata.totalTime,
-      ease: 'linear',
-      onUpdate: (value) => {
-        // console.log(value);
-        timer.innerHTML = Math.ceil(value).toString();
-      },
-      onComplete: () => {
-        console.log(Gamedata);
-        console.log(config);
-        Gamedata.handleFinish();
-      },
-    });
-    animation.play();
-    return () => {
-      animation.stop();
-    };
-  }, [Gamedata.totalTime, Gamedata.hasStart]);
+  const refTimer = useRef<HTMLSpanElement>(null); // Ref for the timer
+  const [elapsedTime, setElapsedTime] = useState(0);
 
   useIsomorphicLayoutEffect(() => {
     if (Gamedata.mode !== 'characters') return;
     if (Gamedata.charCount >= Gamedata.totalChar) {
+      Gamedata.setTime(elapsedTime);
       Gamedata.finishGame();
     }
   }, [Gamedata.charCount]);
+
+  //timer loic
+  useIsomorphicLayoutEffect(() => {
+    if (!Gamedata.hasStart) return;
+
+    const startTime = new Date();
+    const intervalId = setInterval(() => {
+      const currentTime = new Date();
+      const elapsedMilliseconds = currentTime.getTime() - startTime.getTime();
+      const elapsedSeconds = (elapsedMilliseconds / 1000).toFixed(2); // Store with two decimal places
+
+      if (config.mode === 'time') {
+        const remainingTime = (
+          config.time - parseFloat(elapsedSeconds)
+        ).toFixed(2);
+        if (parseFloat(remainingTime) <= 0) {
+          clearInterval(intervalId);
+          Gamedata.handleFinish();
+        }
+
+        setElapsedTime(parseFloat(remainingTime)); // Store as 2 decimal places
+        if (refTimer.current) {
+          // Display only the whole number part
+          refTimer.current.innerHTML = `${Math.floor(parseFloat(remainingTime))}s`;
+        }
+      } else if (config.mode === 'characters') {
+        setElapsedTime(parseFloat(elapsedSeconds)); // Store as 2 decimal places
+        if (refTimer.current) {
+          refTimer.current.innerHTML = `${Math.floor(parseFloat(elapsedSeconds))}s`;
+        }
+      }
+    }, 100);
+
+    return () => clearInterval(intervalId);
+  }, [config.mode, config.time, Gamedata.hasStart]);
+
   return (
     <div
-      className="flex justify-between relative items-center h-[60px] px-6 select-none"
+      className="relative flex h-[60px] select-none items-center justify-between px-6"
       style={{ width: screen.width }}
     >
       <DisplayWrapper>
         <CharacterDisplay config={config} Gamedata={Gamedata} />
       </DisplayWrapper>
-      <div className="h-full overflow-hidden flex items-center whitespace-nowrap w-[600px] absolute left-1/2 -translate-x-1/2 border-secondary rounded-full border-2">
+      <div className="absolute left-1/2 flex h-full w-[600px] -translate-x-1/2 items-center overflow-hidden whitespace-nowrap rounded-full border-2 border-secondary">
         <WordsView
           words={Gamedata.words}
           index={Gamedata.wordIndex}
           letterIndex={Gamedata.charIndex}
         />
       </div>
-      <h3 className="text-2xl  ">
-        <p className="p-2 flex gap-2 items-center bg-foreground text-background rounded-md px-4 min-w-32 justify-end">
-          {Gamedata.hasStart ? (
-            <span ref={refTimer}>
-              {Gamedata.totalTime ? `${config.time}s` : '0s'}
-            </span>
-          ) : (
-            <span>{config.time ? `${config.time}s` : '0s'}</span>
-          )}
-          <Timer size={32} />
-        </p>
-      </h3>
+      <GameTimer ref={refTimer} />
     </div>
   );
 };
@@ -108,8 +116,8 @@ const CharacterDisplay = ({
 
 const DisplayWrapper = ({ children }: { children: React.ReactNode }) => {
   return (
-    <h3 className="text-2xl ">
-      <p className="p-2 flex gap-2 items-center bg-foreground text-background rounded-md px-4 min-w-32">
+    <h3 className="text-2xl">
+      <p className="flex min-w-32 items-center gap-2 rounded-md bg-foreground p-2 px-4 text-background">
         {children}
       </p>
     </h3>
@@ -147,7 +155,7 @@ const WordsView = ({ words, index, letterIndex }: WordViewProps) => {
 
   return (
     <motion.div
-      className="text-3xl left-1/2 absolute gap-2 flex whitespace-pre text-input"
+      className="absolute left-1/2 flex gap-2 whitespace-pre text-3xl text-input"
       animate={{ x: -currentOffset }}
       transition={{ duration: 0.5, ease: 'easeInOut' }}
     >

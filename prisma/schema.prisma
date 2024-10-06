@@ -17,12 +17,13 @@ datasource db {
 model User {
   id             String               @id @default(cuid())
   email          String               @unique
-  name           String
+  name           String               @unique
   role           String?
   hashedPassword String?
   picture        String?
   session        Session[]
   resetTokens    PasswordResetToken[]
+  GameEntry      GameEntry[]
 }
 
 model Session {
@@ -39,4 +40,22 @@ model PasswordResetToken {
   token     String   @unique
   expiresAt DateTime
   user      User     @relation(fields: [userId], references: [id])
+}
+
+model GameEntry {
+  id          String   @id @default(cuid())
+  userName    String
+  mode        String
+  language    String
+  wpm         Int
+  rawWpm      Int
+  lpm         Int
+  rawLpm      Int
+  totalChar   Int
+  totalClicks Int
+  totalTime   Float
+  accuracy    Float
+  createdAt   DateTime @default(now())
+  targetSize  Int
+  user        User     @relation(fields: [userName], references: [name])
 }

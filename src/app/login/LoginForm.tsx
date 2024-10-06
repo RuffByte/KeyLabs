@@ -42,10 +42,10 @@ const LoginForm = () => {
 
   return (
     <div>
-      <h1 className="mb-2 text-foreground text-xl font-bold font-kollektif">
+      <h1 className="mb-2 font-kollektif text-xl font-bold text-foreground">
         Login
       </h1>
-      <div className="flex flex-col w-[350px] gap-2">
+      <div className="flex w-[350px] flex-col gap-2">
         <GoogleOAuthButton />
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-2">
           <TextInput

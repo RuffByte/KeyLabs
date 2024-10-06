@@ -16,8 +16,8 @@ export const Dropdown = ({
   return (
     <div {...props} className="relative select-none">
       <div className="peer">{dropdownDisplay}</div>
-      <div className="absolute peer-hover:flex hover:flex hidden w-40 pt-2 right-0">
-        <div className="w-full outline-4 outline outline-background bg-input text-foreground rounded">
+      <div className="absolute right-0 hidden w-40 pt-2 hover:flex peer-hover:flex">
+        <div className="w-full rounded bg-input text-foreground outline outline-4 outline-background">
           {dropdownItems}
         </div>
       </div>
@@ -40,7 +40,7 @@ export const DropdownLinkItem = ({
       {dropdownItem.map((item, i) => (
         <div
           key={i}
-          className="flex items-center w-full hover:bg-hover hover:text-background hover:shadow-md py-1 justify-center"
+          className="flex w-full items-center justify-center py-1 hover:bg-hover hover:text-background hover:shadow-md"
         >
           {item}
         </div>

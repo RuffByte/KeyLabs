@@ -9,13 +9,13 @@ import { useGameContext } from '@/app/client-page';
 export const StartButton = () => {
   const { handleStartGame } = useGameContext();
   return (
-    <div className="absolute z-[999] left-1/2 top-1/2 [translate:-50%_-50%] size-16 grid place-items-center">
-      <div className="absolute bg-foreground -z-10 animate-ping rounded-full size-5/6 grid " />
+    <div className="absolute left-1/2 top-1/2 z-[999] grid size-16 place-items-center [translate:-50%_-50%]">
+      <div className="absolute -z-10 grid size-5/6 animate-ping rounded-full bg-foreground" />
       <motion.button
         onClick={handleStartGame}
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.95 }}
-        className="bg-foreground grid place-items-center cursor-pointer rounded-full size-full"
+        className="grid size-full cursor-pointer place-items-center rounded-full bg-foreground"
       >
         <Waypoints color="hsl(var(--background))" />
       </motion.button>
