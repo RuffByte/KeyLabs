@@ -64,7 +64,15 @@ export default function RootLayout({
   return (
     <html lang="en" className="bg-background">
       <Head>
-        <meta property="og:site_name" content="KeyLabs" />
+        <meta
+          name="description"
+          content="A website where you click and aim letters"
+        />
+
+        <meta
+          property="og:url"
+          content="https://keylabs-786232600197.australia-southeast1.run.app"
+        />
         <meta property="og:type" content="website" />
         <meta property="og:title" content="KeyLabs" />
         <meta
@@ -73,7 +81,26 @@ export default function RootLayout({
         />
         <meta
           property="og:image"
-          content="https://keylabs-786232600197.australia-southeast1.run.app/api/images/og"
+          content="https://opengraph.b-cdn.net/production/images/93a2cf31-a32b-495a-8e2c-d03816b5db51.png?token=xHeF-33nhDGk-mrHb6g_O7NpSezmqzJSYbjj4GPcnk4&height=512&width=1024&expires=33264205101"
+        />
+
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta
+          property="twitter:domain"
+          content="keylabs-786232600197.australia-southeast1.run.app"
+        />
+        <meta
+          property="twitter:url"
+          content="https://keylabs-786232600197.australia-southeast1.run.app"
+        />
+        <meta name="twitter:title" content="KeyLabs" />
+        <meta
+          name="twitter:description"
+          content="A website where you click and aim letters"
+        />
+        <meta
+          name="twitter:image"
+          content="https://opengraph.b-cdn.net/production/images/93a2cf31-a32b-495a-8e2c-d03816b5db51.png?token=xHeF-33nhDGk-mrHb6g_O7NpSezmqzJSYbjj4GPcnk4&height=512&width=1024&expires=33264205101"
         />
       </Head>
       <QueryClientProvider>
