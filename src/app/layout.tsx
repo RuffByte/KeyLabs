@@ -71,7 +71,10 @@ export default function RootLayout({
           property="og:description"
           content="A website where you click and aim letters"
         />
-        <meta property="og:image" content="public\assets\images\og-image.png" />
+        <meta
+          property="og:image"
+          content="https://keylabs-786232600197.australia-southeast1.run.app/api/images/og"
+        />
       </Head>
       <QueryClientProvider>
         <body
