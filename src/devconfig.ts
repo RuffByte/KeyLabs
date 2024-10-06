@@ -59,5 +59,5 @@ export const devConfig: DevConfigType = {
   VERSION: '0.0.0',
   DEBUG_QUERY: isdev ? true : false,
   DEBUG_MENU: isdev ? true : false,
-  DEBUG_FUNCTION: isdev ? true : false,
+  DEBUG_FUNCTION: isdev ? true : true,
 };

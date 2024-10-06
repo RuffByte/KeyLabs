@@ -470,7 +470,7 @@ const ClientGamePage = ({ user }: { user: User }) => {
           {/* Game */}
           <AnimatePresence mode="wait">
             {hasFinish ? (
-              <EndGameScreen gameData={endGameData} /> // Pass the game data to the EndGameScreen component
+              <EndGameScreen gameData={endGameData} />
             ) : (
               <motion.div exit={{ opacity: 0 }} key="gameboard">
                 <WordsBar />

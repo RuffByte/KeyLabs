@@ -1,36 +1,37 @@
-import React from 'react';
-import { Crown, MoveRight, RotateCcw } from 'lucide-react';
+import React, { HTMLAttributes } from 'react';
+import { ArrowRight, Crown, MoveRight, RotateCcw } from 'lucide-react';
 
 import { GameData } from '@/app/types/gameData';
 import { cn } from '@/lib/utils';
 
-//welcome back to anton front end (rip)
-const StatBox = ({
-  title,
-  stat,
-  className,
-}: {
-  title: string;
-  stat: string | number;
+interface StatBoxProps extends HTMLAttributes<HTMLDivElement> {
+  label: string;
+  value: string | number;
   className?: string;
-}) => {
+}
+
+//welcome back to anton front end (rip)
+const StatBox = ({ label, value, className }: StatBoxProps) => {
   return (
-    <div className="bg-highlight flex h-24 w-full flex-col items-center justify-center rounded-xl">
-      <h1>{title}</h1>
-      <p className="text-3xl">{stat}</p>
+    <div
+      className={cn(
+        'flex h-32 w-full flex-col items-center justify-center gap-1 rounded-xl bg-highlight',
+        className
+      )}
+    >
+      <p>{label}</p>
+      <h3 className="text-4xl">{value}</h3>
     </div>
   );
 };
 
-const StatRow = ({
-  title,
-  stat,
-  className,
-}: {
-  title: string;
-  stat: string | number;
+interface StatRowProps extends HTMLAttributes<HTMLDivElement> {
+  label: string;
+  value: string | number;
   className?: string;
-}) => {
+}
+
+const StatRow = ({ label, value, className }: StatRowProps) => {
   return (
     //cn magic wow (takes last argument over the first wow (wow magic))
     <div
@@ -39,39 +40,43 @@ const StatRow = ({
         className
       )}
     >
-      <p>{title}</p>
-      <p>{stat}</p>
+      <p>{label}</p>
+      <p>{value}</p>
     </div>
   );
 };
 
-export const EndGameScreen = ({ gameData }: { gameData?: GameData | null }) => {
+interface EndGameScreenProps extends HTMLAttributes<HTMLDivElement> {
+  gameData: GameData | null;
+}
+
+export const EndGameScreen = ({ gameData }: EndGameScreenProps) => {
   if (!gameData) {
     return <div>No game data available.</div>; // Handle null case
   }
 
   return (
-    <div className="flex w-[500px] flex-col">
-      <StatRow title={'Score'} stat={'English 5k'} className="px-0" />
+    <div className="flex w-[650px] flex-col text-lg">
+      <StatRow label="Score" value={gameData.mode} className="px-0 text-xl" />
       <StatRow
-        title={'WPM / RAW WPM'}
-        stat={`${gameData.wpm} / ${gameData.rawWpm}`}
+        label="WPM / RAW"
+        value={`${gameData.wpm} / ${gameData.rawWpm}`}
       />
       <StatRow
-        title={'LPM / RAW LPM'}
-        stat={`${gameData.lpm} / ${gameData.rawLpm}`}
+        label="LPM / RAW"
+        value={`${gameData.lpm} / ${gameData.rawLpm}`}
       />
-      <StatRow title={'Accuracy'} stat={gameData.accuracy.toFixed(2) + '%'} />
+      <StatRow label="Accuracy" value={gameData.accuracy.toFixed(1) + '%'} />
       <div className="mt-4 grid grid-cols-4 gap-3">
-        <StatBox title={'Total Clicks'} stat={gameData.totalClick}></StatBox>
-        <StatBox title={'Total Hits'} stat={gameData.totalHit}></StatBox>
-        <StatBox title={'Time'} stat={gameData.totalTime}></StatBox>
-        <StatBox title={'Target Size'} stat={gameData.targetSize}></StatBox>
+        <StatBox label="Total Clicks" value={gameData.totalClick} />
+        <StatBox label="Total Hits" value={gameData.totalHit} />
+        <StatBox label="Time" value={gameData.totalTime} />
+        <StatBox label="Target Size" value={gameData.targetSize} />
       </div>
       <div className="mt-11 flex items-center justify-center gap-16">
         <Crown />
         <RotateCcw />
-        <MoveRight />
+        <ArrowRight />
       </div>
     </div>
   );

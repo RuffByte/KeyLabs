@@ -51,7 +51,7 @@ const Modal = () => {
   return (
     <div
       onClick={handleClose}
-      className="fixed left-0 z-[999] h-dvh w-dvw bg-black/70"
+      className="fixed inset-0 z-[999] h-dvh w-dvw bg-black/70"
     />
   );
 };
