@@ -4,13 +4,7 @@ import { NextResponse } from 'next/server';
 
 export const GET = async () => {
   try {
-    const imagePath = join(
-      process.cwd(),
-      'public',
-      'assets',
-      'images',
-      'og-image.png'
-    );
+    const imagePath = join(process.cwd(), 'public', 'og', 'og-image.png');
     const imageStream = createReadStream(imagePath);
 
     const headers = new Headers();
