@@ -10,6 +10,7 @@ interface LeaderboardEntry {
     name: string;
   } | null;
   wpm: number;
+  lpm: number;
   accuracy: number;
   charsTyped: number;
 }
@@ -39,11 +40,11 @@ export const Leaderboard = () => {
 
   return (
     <>
-      <div className="fixed left-0 top-0 z-[98] h-dvh w-dvw bg-black/50 text-foreground" />
-      <div className="fixed left-1/2 top-1/2 z-[99] rounded-xl bg-background px-9 py-4 text-foreground [translate:-50%_-50%]">
+      {/* <div className="fixed left-0 top-0 z-[98] h-dvh w-dvw text-foreground" /> */}
+      <div className="fixed left-1/2 top-1/2 z-[99] rounded-xl bg-background px-9 py-4 pb-16 text-foreground [translate:-50%_-50%]">
         <div className="flex w-full justify-between whitespace-nowrap text-4xl">
           <p className="w-min">Leaderboards</p>
-          <p className="w-min">English</p>
+          <p className="w-min">English 5k</p>
         </div>
         <div className="my-4 flex w-full justify-between gap-8 whitespace-nowrap text-4xl">
           <div className="flex w-full gap-4">
@@ -56,16 +57,16 @@ export const Leaderboard = () => {
           </div>
         </div>
         <div className="flex gap-8">
-          <div className="w-[400px] even:*:bg-highlight">
+          <div className="w-[500px] even:*:bg-highlight">
             <ScoreRowLabel />
-            {Array.from({ length: 10 }).map((_, i) => (
-              <ScoreRow key={i} />
+            {leaderboardData.map((item, i) => (
+              <ScoreRow key={i} {...item} score={item} />
             ))}
           </div>
-          <div className="w-[400px] even:*:bg-highlight">
+          <div className="w-[500px] even:*:bg-highlight">
             <ScoreRowLabel />
             {Array.from({ length: 10 }).map((_, i) => (
-              <ScoreRow key={i} />
+              <ScoreRowEmpty key={i} />
             ))}
           </div>
         </div>
@@ -85,13 +86,24 @@ const ScoreRowLabel = () => {
   );
 };
 
-const ScoreRow = () => {
+const ScoreRow = ({ score }: { score: LeaderboardEntry }) => {
+  return (
+    <div className="grid h-9 grid-cols-[1fr_80px_80px_80px] items-center justify-end whitespace-nowrap rounded-lg px-2 *:w-min">
+      <p className="justify-self-start">{score.user?.name}</p>
+      <p className="justify-self-end">{score.lpm.toFixed(2)}</p>
+      <p className="justify-self-end">{score.wpm.toFixed(2)}</p>
+      <p className="justify-self-end">NaN</p>
+    </div>
+  );
+};
+
+const ScoreRowEmpty = () => {
   return (
     <div className="grid h-9 grid-cols-[1fr_80px_80px_80px] items-center justify-end rounded-lg px-2 *:w-min">
       <p className="justify-self-start">-</p>
       <p className="justify-self-end">-</p>
       <p className="justify-self-end">-</p>
-      <p className="justify-self-end">-</p>
+      <p className="justify-self-end">NaN</p>
     </div>
   );
 };

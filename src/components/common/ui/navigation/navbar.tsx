@@ -1,8 +1,9 @@
 'use client';
 
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { HTMLMotionProps, motion } from 'framer-motion';
-import { Info, Settings, User } from 'lucide-react';
+import { Crown, Info, Settings, User } from 'lucide-react';
 
 import { useCurrentGame } from '@/app/client-page';
 import { cn } from '@/lib/utils';
@@ -16,6 +17,7 @@ interface NavigationBarProp extends HTMLMotionProps<'div'> {
 
 export const NavigationBar = ({ ...props }: NavigationBarProp) => {
   const { hasStart } = useCurrentGame();
+  const router = useRouter();
   return (
     <motion.div
       {...props}
@@ -30,6 +32,9 @@ export const NavigationBar = ({ ...props }: NavigationBarProp) => {
         animate="animate"
         variants={NavigationOutVariants(hasStart)}
       >
+        <button onClick={() => router.push('/leaderboard')}>
+          <Crown size={20} />
+        </button>
         <Info size={20} />
         <Settings size={20} />
         <Dropdown
