@@ -75,10 +75,7 @@ export const DialogTriggerButton = ({
   return (
     <Button
       onClick={handleToggle}
-      className={cn(
-        'flex w-min items-center gap-2 px-8',
-        open && 'border-secondary'
-      )}
+      className={cn('flex items-center gap-2 px-8', open && 'border-secondary')}
       variant="outline"
     >
       {children}
