@@ -50,6 +50,7 @@ type DevConfigType = {
   DEBUG_QUERY: boolean;
   DEBUG_MENU: boolean;
   DEBUG_FUNCTION: boolean;
+  DISABLE_NOTFOUND: boolean;
 };
 
 const isdev = process.env.ENVIRONMENT === 'DEVELOPMENT';
@@ -60,4 +61,5 @@ export const devConfig: DevConfigType = {
   DEBUG_QUERY: isdev ? true : false,
   DEBUG_MENU: isdev ? true : false,
   DEBUG_FUNCTION: isdev ? true : true,
+  DISABLE_NOTFOUND: isdev ? false : true,
 };
