@@ -3,11 +3,25 @@
 import { prisma } from '@/lib/prisma';
 import { GameData } from './types/gameData';
 
-//need to uml this better because i am not
-
 export async function submitGameData(gameData: GameData) {
+  // First, find the user's id based on the userName
+  const user = await prisma.user.findUnique({
+    where: {
+      name: gameData.userName,
+    },
+    select: {
+      id: true,
+    },
+  });
+
+  if (!user) {
+    throw new Error(`User with username ${gameData.userName} not found`);
+  }
+
+  // Create the game entry using the user's id
   await prisma.gameEntry.create({
     data: {
+      userId: user.id, // Use userId now
       mode: gameData.mode,
       language: gameData.language,
       totalChar: gameData.totalChar,
@@ -18,11 +32,9 @@ export async function submitGameData(gameData: GameData) {
       rawWpm: gameData.rawWpm,
       lpm: gameData.lpm,
       rawLpm: gameData.rawLpm,
-      user: {
-        connect: { name: gameData.userName },
-      },
       targetSize: gameData.targetSize,
     },
   });
-  console.log('score is allg');
+
+  console.log('Score submitted successfully.');
 }

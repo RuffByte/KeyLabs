@@ -5,8 +5,9 @@ import { prisma } from '@/lib/prisma';
 export const GET = async () => {
   try {
     const topScores = await prisma.gameEntry.findMany({
+      distinct: ['userId'],
       orderBy: {
-        wpm: 'desc',
+        lpm: 'desc',
       },
       take: 50,
       include: {
