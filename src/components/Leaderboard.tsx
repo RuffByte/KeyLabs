@@ -1,8 +1,42 @@
-import React from 'react';
+'use client';
+
+import React, { useEffect, useState } from 'react';
 
 import Button from './common/Button';
 
+interface LeaderboardEntry {
+  id: string;
+  user: {
+    name: string;
+  } | null;
+  wpm: number;
+  accuracy: number;
+  charsTyped: number;
+}
+
 export const Leaderboard = () => {
+  const [leaderboardData, setLeaderboardData] = useState<LeaderboardEntry[]>(
+    []
+  );
+
+  useEffect(() => {
+    const fetchLeaderboard = async () => {
+      try {
+        const response = await fetch('/api/data/leaderboard');
+        const data: LeaderboardEntry[] = await response.json();
+        setLeaderboardData(data);
+      } catch (error) {
+        console.error('Error fetching leaderboard data:', error);
+      }
+    };
+
+    fetchLeaderboard();
+  }, []);
+
+  useEffect(() => {
+    console.log(leaderboardData);
+  }, [leaderboardData]);
+
   return (
     <>
       <div className="fixed left-0 top-0 z-[98] h-dvh w-dvw bg-black/50 text-foreground" />
@@ -25,13 +59,13 @@ export const Leaderboard = () => {
           <div className="w-[400px] even:*:bg-highlight">
             <ScoreRowLabel />
             {Array.from({ length: 10 }).map((_, i) => (
-              <ScoreRow />
+              <ScoreRow key={i} />
             ))}
           </div>
           <div className="w-[400px] even:*:bg-highlight">
             <ScoreRowLabel />
             {Array.from({ length: 10 }).map((_, i) => (
-              <ScoreRow />
+              <ScoreRow key={i} />
             ))}
           </div>
         </div>
