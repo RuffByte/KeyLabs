@@ -19,7 +19,7 @@ interface NavigationBarProp extends HTMLMotionProps<'div'> {
 }
 
 export const NavigationBar = ({ ...props }: NavigationBarProp) => {
-  const { hasStart } = useCurrentGame();
+  const { hasStart, hasFinish } = useCurrentGame();
   const { handleRouteChange } = useTransition();
   return (
     <motion.div
@@ -33,7 +33,7 @@ export const NavigationBar = ({ ...props }: NavigationBarProp) => {
       <motion.div
         className="flex items-center justify-center gap-4 p-2 hover:*:stroke-secondary"
         animate="animate"
-        variants={NavigationOutVariants(hasStart)}
+        variants={NavigationOutVariants(hasStart, hasFinish)}
       >
         <Button onClick={() => handleRouteChange('leaderboard')}>
           <Crown size={20} />

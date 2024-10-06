@@ -19,11 +19,14 @@ export const OptionBarOutVariants = (hasStart: boolean): Variants => {
   };
 };
 
-export const NavigationOutVariants = (hasStart: boolean): Variants => {
+export const NavigationOutVariants = (
+  hasStart: boolean,
+  hasFinish: boolean
+): Variants => {
   return {
     animate: {
-      opacity: hasStart ? 0 : 1,
-      y: hasStart ? '-100%' : '0%',
+      opacity: hasStart ? (hasFinish ? 1 : 0) : 1,
+      y: hasStart ? (hasFinish ? '0%' : '-100%') : '0%',
       transition: { ease: 'easeInOut', duration: 0.25 },
     },
   };

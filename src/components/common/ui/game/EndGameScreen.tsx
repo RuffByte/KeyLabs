@@ -19,7 +19,7 @@ const StatBox = ({ label, value, className }: StatBoxProps) => {
   return (
     <div
       className={cn(
-        'flex h-32 w-full flex-col items-center justify-center gap-1 rounded-xl bg-highlight',
+        'flex h-32 w-full flex-col items-center justify-center gap-1 rounded-xl bg-highlight text-background',
         className
       )}
     >
