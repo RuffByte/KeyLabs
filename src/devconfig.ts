@@ -49,6 +49,7 @@ type DevConfigType = {
   VERSION: string;
   DEBUG_QUERY: boolean;
   DEBUG_MENU: boolean;
+  DEBUG_FUNCTION: boolean;
 };
 
 const isdev = process.env.ENVIRONMENT === 'DEVELOPMENT';
@@ -58,4 +59,5 @@ export const devConfig: DevConfigType = {
   VERSION: '0.0.0',
   DEBUG_QUERY: isdev ? true : false,
   DEBUG_MENU: isdev ? true : false,
+  DEBUG_FUNCTION: isdev ? true : false,
 };

@@ -443,11 +443,13 @@ const ClientGamePage = ({ user }: { user: User }) => {
       }}
     >
       {/* otherstuff */}
-      <FunctionDebugger
-        handleRestart={handleRestart}
-        handleBlurToRestart={handleBlurToRestart}
-        handleEndGame={handleFinishGame}
-      />
+      {devConfig.DEBUG_FUNCTION && (
+        <FunctionDebugger
+          handleRestart={handleRestart}
+          handleBlurToRestart={handleBlurToRestart}
+          handleEndGame={handleFinishGame}
+        />
+      )}
       <NavigationBar />
       <OptionsBar
         initial="initial"

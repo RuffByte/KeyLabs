@@ -59,14 +59,14 @@ export const metadata: Metadata = {
     description: 'A website where you click and aim letters',
     card: 'summary_large_image',
     images:
-      'https://keylabs-786232600197.australia-southeast1.run.app/api/images/tsocial',
+      'https://keylabs-786232600197.australia-southeast1.run.app/og/og-twitter.png',
   },
   openGraph: {
     title: 'KeyLabs',
     description: 'A website where you click and aim letters',
     url: 'https://keylabs-786232600197.australia-southeast1.run.app',
     images:
-      'https://keylabs-786232600197.australia-southeast1.run.app/api/images/social',
+      'https://keylabs-786232600197.australia-southeast1.run.app/og/og-image.png',
     siteName: 'KeyLabs',
   },
 };
@@ -84,7 +84,7 @@ export default function RootLayout({
         >
           <Transition>
             <div className="grid h-dvh w-dvw place-items-center overflow-hidden">
-              <div className="box-border flex h-full w-full max-w-screen-desktop flex-col p-4">
+              <div className="flex h-full w-full max-w-screen-desktop flex-col">
                 {children}
               </div>
             </div>
