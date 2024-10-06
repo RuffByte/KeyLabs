@@ -1,5 +1,3 @@
-import { string } from 'zod';
-
 export type GameData = {
   mode: string;
   language: string;

@@ -18,6 +18,7 @@ import Dialog, {
   DialogTriggerButton,
 } from '@/components/common/Dialog';
 import { FunctionDebugger } from '@/components/common/FunctionDebugger';
+import { EndGameScreen } from '@/components/common/ui/game/EndGameScreen';
 import GameBoard from '@/components/common/ui/game/GameBoard';
 import { LanguageSelectionDialog } from '@/components/common/ui/game/LanguageSelectionDialog';
 import { OptionsBar } from '@/components/common/ui/game/OptionsBar';
@@ -451,16 +452,7 @@ const ClientGamePage = ({ user }: { user: User }) => {
           {/* Game */}
           <AnimatePresence mode="wait">
             {hasFinish ? (
-              <div className="text-xl">
-                <p>put score info here</p>
-                <p>totalTime: {totalTime}</p>
-                <p>targetSize: {targetSize}</p>
-                <p>totalClick: {totalClick}</p>
-                <p>totalHit: {totalHit}</p>
-                <p>
-                  WPM: {Math.floor((config.lengthChar / 5) * (60 / totalTime))}
-                </p>
-              </div>
+              <EndGameScreen />
             ) : (
               <motion.div exit={{ opacity: 0 }} key="gameboard">
                 <WordsBar />
