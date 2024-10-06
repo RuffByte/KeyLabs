@@ -8,6 +8,7 @@ import {
   ReactQueryDevtools,
   ReactQueryDevtoolsPanel,
 } from '@tanstack/react-query-devtools';
+import { Toaster } from 'sonner';
 
 import Transition from '@/components/common/ui/transition/Transition';
 import { Leaderboard } from '@/components/Leaderboard';
@@ -84,6 +85,7 @@ export default function RootLayout({
             </div>
           </Transition>
         </body>
+        <Toaster richColors />
         {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       </QueryClientProvider>
     </html>

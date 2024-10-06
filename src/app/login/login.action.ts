@@ -15,14 +15,24 @@ import { signInSchema, signUpSchema } from '@/schemas/zod/schemas';
 export const signUp = async (values: z.infer<typeof signUpSchema>) => {
   try {
     //if user exists, explode
-    const exisitingUser = await prisma.user.findUnique({
+    const existingUserByEmail = await prisma.user.findUnique({
       where: {
-        email: values.email,
+        email: values.email.toLowerCase(),
       },
     });
 
-    if (exisitingUser) {
-      return { error: 'User already exists', success: false };
+    const existingUserByName = await prisma.user.findUnique({
+      where: {
+        name: values.name,
+      },
+    });
+
+    if (existingUserByEmail) {
+      return { error: 'Email already in use', success: false };
+    }
+
+    if (existingUserByName) {
+      return { error: 'Name already in use', success: false };
     }
 
     //hash password with argon2 apparently better than bcrypt (will research later)
