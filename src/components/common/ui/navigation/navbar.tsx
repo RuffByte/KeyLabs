@@ -8,6 +8,7 @@ import { Crown, Info, Settings, User } from 'lucide-react';
 import { useCurrentGame } from '@/app/client-page';
 import { cn } from '@/lib/utils';
 import { NavigationOutVariants } from '@/lib/variants/variants';
+import { useTransition } from '../transition/Transition';
 import { Dropdown, DropdownLinkItem } from '../wrapper/dropdown';
 import { Keylabslogo } from './keylabslogo';
 
@@ -17,7 +18,7 @@ interface NavigationBarProp extends HTMLMotionProps<'div'> {
 
 export const NavigationBar = ({ ...props }: NavigationBarProp) => {
   const { hasStart } = useCurrentGame();
-  const router = useRouter();
+  const { handleRouteChange } = useTransition();
   return (
     <motion.div
       {...props}
@@ -32,7 +33,7 @@ export const NavigationBar = ({ ...props }: NavigationBarProp) => {
         animate="animate"
         variants={NavigationOutVariants(hasStart)}
       >
-        <button onClick={() => router.push('/leaderboard')}>
+        <button onClick={() => handleRouteChange('/leaderboard')}>
           <Crown size={20} />
         </button>
         <Info size={20} />

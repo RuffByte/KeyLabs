@@ -284,11 +284,15 @@ const calculateEndGameData = (
   targetSize: number,
   config: PreGameConfig['config']
 ) => {
-  const accuracy = (totalHit / totalClick) * 100;
-  const rawWpm = Math.floor((totalHit / 5) * (60 / totalTime));
-  const wpm = Math.floor(rawWpm * (accuracy / 100));
-  const rawLpm = Math.floor(totalHit * (60 / totalTime));
-  const lmp = Math.floor(rawLpm * (accuracy / 100));
+  const accuracy: number = parseFloat(
+    ((totalHit / totalClick) * 100).toFixed(2)
+  );
+  const rawWpm: number = parseFloat(
+    ((totalHit / 5) * (60 / totalTime)).toFixed(2)
+  );
+  const wpm: number = parseFloat((rawWpm * (accuracy / 100)).toFixed(2));
+  const rawLpm: number = parseFloat((totalHit * (60 / totalTime)).toFixed(2));
+  const lmp: number = parseFloat((rawLpm * (accuracy / 100)).toFixed(2));
 
   return {
     mode: config.mode,
@@ -324,7 +328,6 @@ const ClientGamePage = ({ user }: { user: User }) => {
     totalTime,
     totalHit,
     InitializeGame,
-    totalChar,
   } = useCurrentGame();
   const { handleGenerate, handleClear } = usePointsStack();
   const [isRestarting, setRestarting] = useState(false);

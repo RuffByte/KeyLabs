@@ -56,10 +56,10 @@ type DevConfigType = {
 const isdev = process.env.ENVIRONMENT === 'DEVELOPMENT';
 
 export const devConfig: DevConfigType = {
-  PAGE_TRANSITION: isdev ? true : true,
   VERSION: '0.0.0',
+  PAGE_TRANSITION: isdev ? true : true,
   DEBUG_QUERY: isdev ? true : false,
   DEBUG_MENU: isdev ? true : false,
-  DEBUG_FUNCTION: isdev ? true : true,
+  DEBUG_FUNCTION: isdev ? true : false,
   DISABLE_NOTFOUND: isdev ? false : true,
 };

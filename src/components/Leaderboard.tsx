@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 
 import Button from './common/Button';
+import { NavigationBar } from './common/ui/navigation/navbar';
 
 interface LeaderboardEntry {
   id: string;
@@ -15,7 +16,7 @@ interface LeaderboardEntry {
   charsTyped: number;
 }
 
-export const Leaderboard = () => {
+export const ClientLeaderboardPage = () => {
   const [leaderboardData, setLeaderboardData] = useState<LeaderboardEntry[]>(
     []
   );
@@ -40,7 +41,7 @@ export const Leaderboard = () => {
 
   return (
     <>
-      {/* <div className="fixed left-0 top-0 z-[98] h-dvh w-dvw text-foreground" /> */}
+      <NavigationBar />
       <div className="fixed left-1/2 top-1/2 z-[99] rounded-xl bg-background px-9 py-4 pb-16 text-foreground [translate:-50%_-50%]">
         <div className="flex w-full justify-between whitespace-nowrap text-4xl">
           <p className="w-min">Leaderboards</p>

@@ -1,8 +1,8 @@
 'use client';
 
-import { Leaderboard } from '@/components/Leaderboard';
+import { ClientLeaderboardPage } from '@/components/Leaderboard';
 
 const LeaderboardPage = () => {
-  return <Leaderboard />;
+  return <ClientLeaderboardPage />;
 };
 export default LeaderboardPage;

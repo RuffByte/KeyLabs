@@ -3,15 +3,9 @@ import localFont from 'next/font/local';
 
 import './globals.css';
 
-import Head from 'next/head';
-import {
-  ReactQueryDevtools,
-  ReactQueryDevtoolsPanel,
-} from '@tanstack/react-query-devtools';
 import { Toaster } from 'sonner';
 
 import Transition from '@/components/common/ui/transition/Transition';
-import { Leaderboard } from '@/components/Leaderboard';
 import QueryClientProvider from '@/components/providers/QueryClientProvider';
 
 const geistSans = localFont({
@@ -54,6 +48,11 @@ const kollektif = localFont({
 export const metadata: Metadata = {
   title: 'KeyLabs',
   description: 'A website where you click and aim letters',
+  icons: {
+    icon: {
+      url: '/favicon.svg',
+    },
+  },
   twitter: {
     title: 'KeyLabs',
     description: 'A website where you click and aim letters',

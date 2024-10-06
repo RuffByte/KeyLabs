@@ -41,19 +41,12 @@ const SheetOutVariants: Variants = {
   animate: { y: '-100%' },
 };
 
-const NothingIn: Variants = {
-  initial: {},
-  animate: {},
-};
-
-const NothingOut: Variants = {
-  initial: {},
-  animate: {},
-};
-
 const Transition = ({ children }: TransitionProps) => {
   const router = useRouter();
+  const pathname = usePathname();
+
   const handleRouteChange = (path = '/') => {
+    if (pathname === path) return;
     if (!devConfig.PAGE_TRANSITION) {
       router.push(path);
     }
@@ -68,7 +61,6 @@ const Transition = ({ children }: TransitionProps) => {
     setTransitioning(false);
     router.push(path);
   };
-
   const [isTransitioning, setTransitioning] = useState(false);
   const [path, setPath] = useState('/');
 
