@@ -103,8 +103,8 @@ pnpm run dev
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result!
 
 ---
+
 <br/>
 <div align="center">
-  <img src="https://github.com/user-attachments/assets/fbe90ece-0e86-41e5-93cd-fc12bec30ab9"/>
+  <img src="public\assets\images\icon-image.png"/>
 </div>
-
