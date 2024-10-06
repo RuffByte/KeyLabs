@@ -4,10 +4,12 @@ import React from 'react';
 import { useRouter } from 'next/navigation';
 import { HTMLMotionProps, motion } from 'framer-motion';
 import { Crown, Info, Settings, User } from 'lucide-react';
+import { toast } from 'sonner';
 
 import { useCurrentGame } from '@/app/client-page';
 import { cn } from '@/lib/utils';
 import { NavigationOutVariants } from '@/lib/variants/variants';
+import Button from '../../Button';
 import { useTransition } from '../transition/Transition';
 import { Dropdown, DropdownLinkItem } from '../wrapper/dropdown';
 import { Keylabslogo } from './keylabslogo';
@@ -33,11 +35,15 @@ export const NavigationBar = ({ ...props }: NavigationBarProp) => {
         animate="animate"
         variants={NavigationOutVariants(hasStart)}
       >
-        <button onClick={() => handleRouteChange('/leaderboard')}>
+        <Button onClick={() => handleRouteChange('leaderboard')}>
           <Crown size={20} />
-        </button>
-        <Info size={20} />
-        <Settings size={20} />
+        </Button>
+        <Button onClick={() => toast.warning('Not implemented...')}>
+          <Info size={20} />
+        </Button>
+        <Button onClick={() => toast.warning('Not implemented...')}>
+          <Settings size={20} />
+        </Button>
         <Dropdown
           dropdownDisplay={<User size={20} />}
           dropdownItems={

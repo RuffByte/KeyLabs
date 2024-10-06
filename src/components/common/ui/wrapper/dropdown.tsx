@@ -1,5 +1,6 @@
 import React, { AnchorHTMLAttributes } from 'react';
 
+import Button from '../../Button';
 import TLink from '../transition/TLink';
 
 interface DropdownProp extends React.HTMLAttributes<HTMLDivElement> {
@@ -15,9 +16,9 @@ export const Dropdown = ({
 }: DropdownProp) => {
   return (
     <div {...props} className="relative select-none">
-      <div className="peer">{dropdownDisplay}</div>
+      <Button className="peer">{dropdownDisplay}</Button>
       <div className="absolute right-0 hidden w-40 pt-2 hover:flex peer-hover:flex">
-        <div className="w-full rounded bg-input text-foreground outline outline-4 outline-background">
+        <div className="w-full rounded bg-highlight text-foreground outline outline-4 outline-background">
           {dropdownItems}
         </div>
       </div>
@@ -40,7 +41,7 @@ export const DropdownLinkItem = ({
       {dropdownItem.map((item, i) => (
         <div
           key={i}
-          className="flex w-full items-center justify-center py-1 hover:bg-hover hover:text-background hover:shadow-md"
+          className="flex w-full items-center justify-center px-4 py-2 text-background hover:bg-hover hover:text-background hover:shadow-md"
         >
           {item}
         </div>

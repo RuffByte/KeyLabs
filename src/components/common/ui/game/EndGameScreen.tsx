@@ -1,8 +1,12 @@
 import React, { HTMLAttributes } from 'react';
 import { ArrowRight, Crown, MoveRight, RotateCcw } from 'lucide-react';
+import { toast } from 'sonner';
 
+import { useGameContext } from '@/app/client-page';
 import { GameData } from '@/app/types/gameData';
 import { cn } from '@/lib/utils';
+import Button from '../../Button';
+import { useTransition } from '../transition/Transition';
 
 interface StatBoxProps extends HTMLAttributes<HTMLDivElement> {
   label: string;
@@ -51,6 +55,8 @@ interface EndGameScreenProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export const EndGameScreen = ({ gameData }: EndGameScreenProps) => {
+  const { handleRouteChange } = useTransition();
+  const { handleResetGame } = useGameContext();
   if (!gameData) {
     return <div>No game data available.</div>; // Handle null case
   }
@@ -74,9 +80,15 @@ export const EndGameScreen = ({ gameData }: EndGameScreenProps) => {
         <StatBox label="Target Size" value={gameData.targetSize} />
       </div>
       <div className="mt-11 flex items-center justify-center gap-16">
-        <Crown />
-        <RotateCcw />
-        <ArrowRight />
+        <Button onClick={() => handleRouteChange('leaderboard')}>
+          <Crown />
+        </Button>
+        <Button onClick={() => toast.warning('Not implemented...')}>
+          <RotateCcw />
+        </Button>
+        <Button>
+          <ArrowRight onClick={() => handleResetGame()} />
+        </Button>
       </div>
     </div>
   );

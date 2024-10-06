@@ -42,29 +42,29 @@ export const ClientLeaderboardPage = () => {
   return (
     <>
       <NavigationBar />
-      <div className="fixed left-1/2 top-1/2 z-[99] rounded-xl bg-background px-9 py-4 pb-16 text-foreground [translate:-50%_-50%]">
+      <div className="fixed left-1/2 top-1/2 z-[99] rounded-xl bg-background px-9 py-4 pb-16 [translate:-50%_-50%]">
         <div className="flex w-full justify-between whitespace-nowrap text-4xl">
           <p className="w-min">Leaderboards</p>
           <p className="w-min">English 5k</p>
         </div>
         <div className="my-4 flex w-full justify-between gap-8 whitespace-nowrap text-4xl">
-          <div className="flex w-full gap-4">
+          <div className="flex w-full gap-4 text-white">
             <Button className="w-full">Characters</Button>
             <Button className="w-full">Time</Button>
           </div>
-          <div className="flex w-full gap-4">
+          <div className="flex w-full gap-4 text-white">
             <div className="w-full"></div>
             <Button className="w-full">All Time</Button>
           </div>
         </div>
         <div className="flex gap-8">
-          <div className="w-[500px] even:*:bg-highlight">
+          <div className="w-[500px] even:*:bg-highlight/30">
             <ScoreRowLabel />
             {leaderboardData.map((item, i) => (
               <ScoreRow key={i} {...item} score={item} />
             ))}
           </div>
-          <div className="w-[500px] even:*:bg-highlight">
+          <div className="w-[500px] even:*:bg-highlight/30">
             <ScoreRowLabel />
             {Array.from({ length: 10 }).map((_, i) => (
               <ScoreRowEmpty key={i} />

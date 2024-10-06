@@ -5,6 +5,7 @@ import { HTMLMotionProps, motion } from 'framer-motion';
 import { CaseSensitive, Timer } from 'lucide-react';
 
 import { usePreConfig } from '@/app/client-page';
+import { devConfig } from '@/devconfig';
 import { cn } from '@/lib/utils';
 
 export const OptionsBar = ({ ...props }: HTMLMotionProps<'div'>) => {
@@ -53,11 +54,13 @@ export const OptionsBar = ({ ...props }: HTMLMotionProps<'div'>) => {
         </Option>
         {config.mode === 'characters' && (
           <Option label={<CaseSensitive />} hasLabel>
-            <OptionItem
-              value="5"
-              name="character"
-              onChange={() => handleSetChar(5)}
-            />
+            {devConfig.ENABLE_DEBUG_GAMEMODE_OPTION && (
+              <OptionItem
+                value="5"
+                name="character"
+                onChange={() => handleSetChar(5)}
+              />
+            )}
             <OptionItem
               value="25"
               name="character"
@@ -83,21 +86,23 @@ export const OptionsBar = ({ ...props }: HTMLMotionProps<'div'>) => {
         )}
         {config.mode === 'time' && (
           <Option label={<Timer />} hasLabel>
-            <OptionItem
-              value="5"
-              name="time"
-              onChange={() => handleSetTime(5)}
-            />
+            {devConfig.ENABLE_DEBUG_GAMEMODE_OPTION && (
+              <OptionItem
+                value="5"
+                name="time"
+                onChange={() => handleSetTime(5)}
+              />
+            )}
             <OptionItem
               value="15"
               name="time"
               onChange={() => handleSetTime(15)}
+              defaultChecked
             />
             <OptionItem
               value="30"
               name="time"
               onChange={() => handleSetTime(30)}
-              defaultChecked
             />
             <OptionItem
               value="60"
