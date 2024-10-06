@@ -1,6 +1,7 @@
 import React from 'react';
 import { Crown, MoveRight, RotateCcw } from 'lucide-react';
 
+import { GameData } from '@/app/types/gameData';
 import { cn } from '@/lib/utils';
 
 //welcome back to anton front end (rip)
@@ -10,7 +11,7 @@ const StatBox = ({
   className,
 }: {
   title: string;
-  stat: string;
+  stat: string | number;
   className?: string;
 }) => {
   return (
@@ -27,7 +28,7 @@ const StatRow = ({
   className,
 }: {
   title: string;
-  stat: string;
+  stat: string | number;
   className?: string;
 }) => {
   return (
@@ -44,18 +45,28 @@ const StatRow = ({
   );
 };
 
-export const EndGameScreen = () => {
+export const EndGameScreen = ({ gameData }: { gameData?: GameData | null }) => {
+  if (!gameData) {
+    return <div>No game data available.</div>; // Handle null case
+  }
+
   return (
     <div className="flex w-[500px] flex-col">
       <StatRow title={'Score'} stat={'English 5k'} className="px-0" />
-      <StatRow title={'Score'} stat={'English 5k'} />
-      <StatRow title={'Score'} stat={'English 5k'} />
-      <StatRow title={'Score'} stat={'English 5k'} />
+      <StatRow
+        title={'WPM / RAW WPM'}
+        stat={`${gameData.wpm} / ${gameData.rawWpm}`}
+      />
+      <StatRow
+        title={'LPM / RAW LPM'}
+        stat={`${gameData.lpm} / ${gameData.rawLpm}`}
+      />
+      <StatRow title={'Accuracy'} stat={gameData.accuracy.toFixed(2) + '%'} />
       <div className="mt-4 grid grid-cols-4 gap-3">
-        <StatBox title={'Total Clicks'} stat={'46'}></StatBox>
-        <StatBox title={'Total Clicks'} stat={'46'}></StatBox>
-        <StatBox title={'Total Clicks'} stat={'46'}></StatBox>
-        <StatBox title={'Total Clicks'} stat={'46'}></StatBox>
+        <StatBox title={'Total Clicks'} stat={gameData.totalClick}></StatBox>
+        <StatBox title={'Total Hits'} stat={gameData.totalHit}></StatBox>
+        <StatBox title={'Time'} stat={gameData.totalTime}></StatBox>
+        <StatBox title={'Target Size'} stat={gameData.targetSize}></StatBox>
       </div>
       <div className="mt-11 flex items-center justify-center gap-16">
         <Crown />

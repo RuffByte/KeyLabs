@@ -277,6 +277,35 @@ const saveToLocalStorage = (gameData: GameData) => {
 // *===================================================================================================
 // *===================================================================================================
 
+const calculateEndGameData = (
+  totalHit: number,
+  totalClick: number,
+  totalTime: number,
+  targetSize: number,
+  config: PreGameConfig['config']
+) => {
+  const accuracy = (totalHit / totalClick) * 100;
+  const rawWpm = Math.floor((totalHit / 5) * (60 / totalTime));
+  const wpm = Math.floor(rawWpm * (accuracy / 100));
+  const rawLpm = Math.floor(totalHit * (60 / totalTime));
+  const lmp = Math.floor(rawLpm * (accuracy / 100));
+
+  return {
+    mode: config.mode,
+    language: config.language,
+    totalTime: totalTime,
+    totalChar: totalHit,
+    totalClick: totalClick,
+    totalHit: totalHit,
+    targetSize: targetSize,
+    wpm: wpm,
+    rawWpm: rawWpm,
+    lpm: lmp,
+    rawLpm: rawLpm,
+    accuracy: accuracy,
+  };
+};
+
 let allowReset = false;
 
 const ClientGamePage = ({ user }: { user: User }) => {
@@ -300,6 +329,7 @@ const ClientGamePage = ({ user }: { user: User }) => {
   const { handleGenerate, handleClear } = usePointsStack();
   const [isRestarting, setRestarting] = useState(false);
   const queryClient = useQueryClient();
+  const [endGameData, setEndGameData] = useState<GameData | null>(null); // Add state for end game data
 
   // * inital fetching
   const { data } = useGenerateWords(config.language);
@@ -339,28 +369,16 @@ const ClientGamePage = ({ user }: { user: User }) => {
     finishGame();
   };
 
-  //submit logic im so sorry
+  // * Logic for submitting game data
   const handleSubmitGameData = () => {
-    const accuracy = (totalHit / totalClick) * 100;
-    const rawWpm = Math.floor((totalHit / 5) * (60 / totalTime));
-    const wpm = Math.floor(rawWpm * (accuracy / 100));
-    const rawLpm = Math.floor(totalHit * (60 / totalTime));
-    const lmp = Math.floor(rawLpm * (accuracy / 100));
-
-    const gameData: GameData = {
-      mode: config.mode,
-      language: config.language,
-      totalTime: totalTime,
-      totalChar: totalHit,
-      totalClick: totalClick,
-      totalHit: totalHit,
-      targetSize: targetSize,
-      wpm: wpm,
-      rawWpm: rawWpm,
-      lpm: lmp,
-      rawLpm: rawLpm,
-      accuracy: accuracy,
-    };
+    const gameData = calculateEndGameData(
+      totalHit,
+      totalClick,
+      totalTime,
+      targetSize,
+      config
+    );
+    setEndGameData(gameData); // Store game data for the EndGameScreen
 
     if (user) {
       submitGameData({
@@ -368,12 +386,12 @@ const ClientGamePage = ({ user }: { user: User }) => {
         userName: user.name,
       });
     } else {
-      saveToLocalStorage({ ...gameData, wpm });
+      saveToLocalStorage({ ...gameData, wpm: gameData.wpm });
     }
   };
 
   useEffect(() => {
-    // workaround as wordbar sets hasFInished to true on load fml
+    // workaround as wordbar sets hasFinish to true on load fml
     if (hasFinish && totalClick > 0) {
       handleSubmitGameData();
     }
@@ -425,8 +443,6 @@ const ClientGamePage = ({ user }: { user: User }) => {
       }}
     >
       {/* otherstuff */}
-      {/* {devConfig.DEBUG_MENU && <Debugger />} */}
-      {/* DEBUG */}
       <FunctionDebugger
         handleRestart={handleRestart}
         handleBlurToRestart={handleBlurToRestart}
@@ -452,7 +468,7 @@ const ClientGamePage = ({ user }: { user: User }) => {
           {/* Game */}
           <AnimatePresence mode="wait">
             {hasFinish ? (
-              <EndGameScreen />
+              <EndGameScreen gameData={endGameData} /> // Pass the game data to the EndGameScreen component
             ) : (
               <motion.div exit={{ opacity: 0 }} key="gameboard">
                 <WordsBar />
