@@ -338,10 +338,13 @@ const ClientGamePage = ({ user }: { user: User }) => {
     finishGame();
   };
 
+  //submit logic im so sorry
   const handleSubmitGameData = () => {
-    const rawWpm = Math.floor((totalHit / 5) * (60 / totalTime));
     const accuracy = (totalHit / totalClick) * 100;
+    const rawWpm = Math.floor((totalHit / 5) * (60 / totalTime));
     const wpm = Math.floor(rawWpm * (accuracy / 100));
+    const rawLpm = Math.floor(totalHit * (60 / totalTime));
+    const lmp = Math.floor(rawLpm * (accuracy / 100));
 
     const gameData: GameData = {
       mode: config.mode,
@@ -352,8 +355,10 @@ const ClientGamePage = ({ user }: { user: User }) => {
       totalHit: totalHit,
       targetSize: targetSize,
       wpm: wpm,
-      accuracy: accuracy,
       rawWpm: rawWpm,
+      lpm: lmp,
+      rawLpm: rawLpm,
+      accuracy: accuracy,
     };
 
     if (user) {

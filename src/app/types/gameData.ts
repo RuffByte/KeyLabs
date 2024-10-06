@@ -10,6 +10,8 @@ export type GameData = {
   targetSize: number;
   wpm: number;
   rawWpm: number;
+  lpm: number;
+  rawLpm: number;
   accuracy: number;
   userName?: string;
 };

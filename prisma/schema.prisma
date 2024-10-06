@@ -49,10 +49,13 @@ model GameEntry {
   language    String
   wpm         Int
   rawWpm      Int
+  lpm         Int
+  rawLpm      Int
   totalChar   Int
   totalClicks Int
   totalTime   Float
   accuracy    Float
   createdAt   DateTime @default(now())
+  targetSize  Int
   user        User     @relation(fields: [userName], references: [name])
 }

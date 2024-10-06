@@ -10,15 +10,18 @@ export async function submitGameData(gameData: GameData) {
     data: {
       mode: gameData.mode,
       language: gameData.language,
-      wpm: gameData.wpm,
       totalChar: gameData.totalChar,
       totalClicks: gameData.totalClick,
       totalTime: gameData.totalTime,
       accuracy: gameData.accuracy,
+      wpm: gameData.wpm,
       rawWpm: gameData.rawWpm,
+      lpm: gameData.lpm,
+      rawLpm: gameData.rawLpm,
       user: {
         connect: { name: gameData.userName },
       },
+      targetSize: gameData.targetSize,
     },
   });
   console.log('score is allg');
