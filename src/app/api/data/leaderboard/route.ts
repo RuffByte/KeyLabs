@@ -2,9 +2,22 @@ import { NextResponse } from 'next/server';
 
 import { prisma } from '@/lib/prisma';
 
-export const GET = async () => {
+export const GET = async (req: Request) => {
   try {
+    const url = new URL(req.url);
+    const mode = url.searchParams.get('mode');
+    const subMode = url.searchParams.get('subMode');
+
+    let whereClause = {};
+
+    if (mode === 'time') {
+      whereClause = { totalTime: Number(subMode) };
+    } else if (mode === 'characters') {
+      whereClause = { totalChar: Number(subMode) };
+    }
+
     const topScores = await prisma.gameEntry.findMany({
+      where: whereClause,
       distinct: ['userId'],
       orderBy: {
         lpm: 'desc',

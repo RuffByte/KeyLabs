@@ -20,11 +20,15 @@ export const ClientLeaderboardPage = () => {
   const [leaderboardData, setLeaderboardData] = useState<LeaderboardEntry[]>(
     []
   );
+  const [currentMode, setCurrentMode] = useState('time');
+  const [currentSubMode, setCurrentSubMode] = useState(5);
 
   useEffect(() => {
     const fetchLeaderboard = async () => {
       try {
-        const response = await fetch('/api/data/leaderboard');
+        const response = await fetch(
+          `/api/data/leaderboard?mode=${currentMode}&subMode=${currentSubMode}`
+        );
         const data: LeaderboardEntry[] = await response.json();
         setLeaderboardData(data);
       } catch (error) {
@@ -33,11 +37,20 @@ export const ClientLeaderboardPage = () => {
     };
 
     fetchLeaderboard();
-  }, []);
+  }, [currentMode, currentSubMode]);
 
   useEffect(() => {
     console.log(leaderboardData);
   }, [leaderboardData]);
+
+  const handleModeChange = (mode: string) => {
+    setCurrentMode(mode);
+    setCurrentSubMode(mode === 'time' ? 5 : 25);
+  };
+
+  const handleSubModeChange = (subMode: number) => {
+    setCurrentSubMode(subMode);
+  };
 
   return (
     <>
@@ -49,13 +62,46 @@ export const ClientLeaderboardPage = () => {
         </div>
         <div className="my-4 flex w-full justify-between gap-8 whitespace-nowrap text-4xl">
           <div className="flex w-full gap-4 text-white">
-            <Button className="w-full">Characters</Button>
-            <Button className="w-full">Time</Button>
+            <Button
+              className="w-full"
+              onClick={() => handleModeChange('characters')}
+            >
+              Characters
+            </Button>
+            <Button className="w-full" onClick={() => handleModeChange('time')}>
+              Time
+            </Button>
           </div>
           <div className="flex w-full gap-4 text-white">
             <div className="w-full"></div>
             <Button className="w-full">All Time</Button>
           </div>
+        </div>
+        <div className="my-4 flex w-full gap-4 text-white">
+          {currentMode === 'time' ? (
+            <select
+              value={currentSubMode}
+              onChange={(e) => handleSubModeChange(Number(e.target.value))}
+              className="text-black"
+            >
+              <option value={5}>5 seconds</option>
+              <option value={15}>15 seconds</option>
+              <option value={30}>30 seconds</option>
+              <option value={60}>60 seconds</option>
+            </select>
+          ) : (
+            <select
+              value={currentSubMode}
+              onChange={(e) => handleSubModeChange(Number(e.target.value))}
+              className="text-black"
+            >
+              <option value={25}>25 characters</option>
+              <option value={30}>30 characters</option>
+              <option value={50}>50 characters</option>
+              <option value={100}>100 characters</option>
+              <option value={150}>150 characters</option>
+            </select>
+          )}
         </div>
         <div className="flex gap-8">
           <div className="w-[500px] even:*:bg-highlight/30">
@@ -93,7 +139,7 @@ const ScoreRow = ({ score }: { score: LeaderboardEntry }) => {
       <p className="justify-self-start">{score.user?.name}</p>
       <p className="justify-self-end">{score.lpm.toFixed(2)}</p>
       <p className="justify-self-end">{score.wpm.toFixed(2)}</p>
-      <p className="justify-self-end">NaN</p>
+      <p className="justify-self-end">NaN</p> {/* Replace with actual date */}
     </div>
   );
 };
