@@ -15,7 +15,6 @@ const config: Config = {
         tertiary: 'hsl(var(--tertiary))',
         input: 'hsl(var(--tertiary))',
         hover: 'hsl(var(--hover))',
-        highlight: 'hsl(var(--highlight))',
       },
       fontFamily: {
         kollektif: ['var(--font-kollektic)'],

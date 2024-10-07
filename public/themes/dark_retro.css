@@ -1,0 +1,17 @@
+:root {
+  --background: 318 45% 6%;
+  --secondary: 68 100% 88%;
+  --foreground: 68 100% 53%;
+  --tertiary: 0 0% 71%;
+  --hover: 0 0% 100%;
+}
+
+/* 
+:root {
+  --background: #150811;
+  --secondary: #f7ffc3;
+  --foreground: #DFFF11;
+  --tertiary: #b4b4b4;
+  --hover: #ffffff;
+}
+ */
