@@ -1,12 +1,16 @@
 'use client';
 
 import React from 'react';
+import { useRouter } from 'next/navigation';
 import { HTMLMotionProps, motion } from 'framer-motion';
-import { Info, Settings, User } from 'lucide-react';
+import { Crown, Info, Settings, User } from 'lucide-react';
+import { toast } from 'sonner';
 
 import { useCurrentGame } from '@/app/client-page';
 import { cn } from '@/lib/utils';
 import { NavigationOutVariants } from '@/lib/variants/variants';
+import Button from '../../Button';
+import { useTransition } from '../transition/Transition';
 import { Dropdown, DropdownLinkItem } from '../wrapper/dropdown';
 import { Keylabslogo } from './keylabslogo';
 
@@ -15,7 +19,8 @@ interface NavigationBarProp extends HTMLMotionProps<'div'> {
 }
 
 export const NavigationBar = ({ ...props }: NavigationBarProp) => {
-  const { hasStart } = useCurrentGame();
+  const { hasStart, hasFinish } = useCurrentGame();
+  const { handleRouteChange } = useTransition();
   return (
     <motion.div
       {...props}
@@ -28,10 +33,17 @@ export const NavigationBar = ({ ...props }: NavigationBarProp) => {
       <motion.div
         className="flex items-center justify-center gap-4 p-2 hover:*:stroke-secondary"
         animate="animate"
-        variants={NavigationOutVariants(hasStart)}
+        variants={NavigationOutVariants(hasStart, hasFinish)}
       >
-        <Info size={20} />
-        <Settings size={20} />
+        <Button onClick={() => handleRouteChange('leaderboard')}>
+          <Crown size={20} />
+        </Button>
+        <Button onClick={() => toast.warning('Not implemented...')}>
+          <Info size={20} />
+        </Button>
+        <Button onClick={() => toast.warning('Not implemented...')}>
+          <Settings size={20} />
+        </Button>
         <Dropdown
           dropdownDisplay={<User size={20} />}
           dropdownItems={

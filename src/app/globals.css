@@ -12,38 +12,13 @@ html {
 }
 
 :root {
-  --background: 0 0% 96%;
-  --secondary: 0 0% 31%;
-  --foreground: 0 0% 12%;
-  --tertiary: 0 0% 88%;
-  --hover: 0 0% 5%;
-
-  /* used in statbox  */
-  --highlight: 39 35% 80%
-    /* --main-color: #363636;
-  --error-color: #ff0008;
-  --colorful-error-color: #ff0008; */
-    /*  --bg-color: #f5f5f5;
-  --main-color: #363636;
-  --caret-color: #0d0d0d;
-  --sub-color: #4f4f4f;
-  --sub-alt-color: #e0e0e0;
-  --text-color: #1f1f1f;
-  --error-color: #ff0008;
-  --colorful-error-color: #ff0008; */;
+  --background: 0 0% 96%; /* hsl(0, 0%, 96%) */
+  --secondary: 0 0% 31%; /* hsl(0, 0%, 31%) */
+  --foreground: 0 0% 12%; /* hsl(0, 0%, 12%) */
+  --tertiary: 0 0% 88%; /* hsl(0, 0%, 88%) */
+  --hover: 0 0% 5%; /* hsl(0, 0%, 5%) */
+  --highlight: 0 0% 31%; /* hsl(0 0% 31%) */
 }
-
-/* :root {
-  --background: 68, 100%, 53%;
-  --secondary: 0, 0%, 31%;
-  --foreground: 0, 0%, 12%;
-  --tertiary: 0, 0%, 88%;
-  --hover: 0, 0%, 5%;
-  /* --main-color: #363636;
-  --error-color: #ff0008;
-  --colorful-error-color: #ff0008; */
-
-/*} */
 
 .grid-72 {
   mask-image: url('../../public/assets/images/grid72.png');

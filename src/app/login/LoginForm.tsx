@@ -67,7 +67,7 @@ const LoginForm = () => {
           <Button type="submit">Login</Button>
         </form>
         <TLink href="/login/forgot-password">
-          <Button>Forgot Password</Button>
+          <Button className="w-full">Forgot Password</Button>
         </TLink>
       </div>
     </div>

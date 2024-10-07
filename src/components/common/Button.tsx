@@ -9,11 +9,11 @@ interface ButtonProps
 }
 
 const button = tv({
-  base: 'hover:text-tetrary flex h-input select-none rounded-input bg-foreground bg-input p-2 px-8 text-sm text-background transition-colors hover:bg-secondary',
+  base: 'flex items-center justify-center rounded-md bg-highlight p-2 px-8 text-sm text-background transition-colors *:stroke-background hover:bg-black',
   variants: {
     variant: {
       outline:
-        'border-accent hover:bg-accent border bg-background text-foreground hover:border-secondary',
+        'hover:bg-accent border border-secondary/70 bg-background text-foreground *:stroke-foreground hover:border-foreground',
     },
   },
 });

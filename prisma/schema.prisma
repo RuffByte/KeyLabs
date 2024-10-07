@@ -44,7 +44,7 @@ model PasswordResetToken {
 
 model GameEntry {
   id          String   @id @default(cuid())
-  userName    String
+  userId      String
   mode        String
   language    String
   wpm         Int
@@ -57,5 +57,7 @@ model GameEntry {
   accuracy    Float
   createdAt   DateTime @default(now())
   targetSize  Int
-  user        User     @relation(fields: [userName], references: [name])
+  user        User     @relation(fields: [userId], references: [id])
+
+  @@index([lpm, userId])
 }

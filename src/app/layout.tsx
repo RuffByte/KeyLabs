@@ -3,15 +3,9 @@ import localFont from 'next/font/local';
 
 import './globals.css';
 
-import Head from 'next/head';
-import {
-  ReactQueryDevtools,
-  ReactQueryDevtoolsPanel,
-} from '@tanstack/react-query-devtools';
 import { Toaster } from 'sonner';
 
 import Transition from '@/components/common/ui/transition/Transition';
-import { Leaderboard } from '@/components/Leaderboard';
 import QueryClientProvider from '@/components/providers/QueryClientProvider';
 
 const geistSans = localFont({
@@ -54,6 +48,26 @@ const kollektif = localFont({
 export const metadata: Metadata = {
   title: 'KeyLabs',
   description: 'A website where you click and aim letters',
+  icons: {
+    icon: {
+      url: '/favicon.svg',
+    },
+  },
+  twitter: {
+    title: 'KeyLabs',
+    description: 'A website where you click and aim letters',
+    card: 'summary_large_image',
+    images:
+      'https://keylabs-786232600197.australia-southeast1.run.app/og/og-twitter.png',
+  },
+  openGraph: {
+    title: 'KeyLabs',
+    description: 'A website where you click and aim letters',
+    url: 'https://keylabs-786232600197.australia-southeast1.run.app',
+    images:
+      'https://keylabs-786232600197.australia-southeast1.run.app/og/og-image.png',
+    siteName: 'KeyLabs',
+  },
 };
 
 export default function RootLayout({
@@ -63,53 +77,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="bg-background">
-      <Head>
-        <meta
-          name="description"
-          content="A website where you click and aim letters"
-        />
-
-        <meta
-          property="og:url"
-          content="https://keylabs-786232600197.australia-southeast1.run.app"
-        />
-        <meta property="og:type" content="website" />
-        <meta property="og:title" content="KeyLabs" />
-        <meta
-          property="og:description"
-          content="A website where you click and aim letters"
-        />
-        <meta
-          property="og:image"
-          content="https://opengraph.b-cdn.net/production/images/93a2cf31-a32b-495a-8e2c-d03816b5db51.png?token=xHeF-33nhDGk-mrHb6g_O7NpSezmqzJSYbjj4GPcnk4&height=512&width=1024&expires=33264205101"
-        />
-
-        <meta name="twitter:card" content="summary_large_image" />
-        <meta
-          property="twitter:domain"
-          content="keylabs-786232600197.australia-southeast1.run.app"
-        />
-        <meta
-          property="twitter:url"
-          content="https://keylabs-786232600197.australia-southeast1.run.app"
-        />
-        <meta name="twitter:title" content="KeyLabs" />
-        <meta
-          name="twitter:description"
-          content="A website where you click and aim letters"
-        />
-        <meta
-          name="twitter:image"
-          content="https://opengraph.b-cdn.net/production/images/93a2cf31-a32b-495a-8e2c-d03816b5db51.png?token=xHeF-33nhDGk-mrHb6g_O7NpSezmqzJSYbjj4GPcnk4&height=512&width=1024&expires=33264205101"
-        />
-      </Head>
       <QueryClientProvider>
         <body
           className={`${kollektif.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
         >
           <Transition>
             <div className="grid h-dvh w-dvw place-items-center overflow-hidden">
-              <div className="box-border flex h-full w-full max-w-screen-desktop flex-col p-4">
+              <div className="flex h-full w-full max-w-screen-desktop flex-col">
                 {children}
               </div>
             </div>

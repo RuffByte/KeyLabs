@@ -49,13 +49,19 @@ type DevConfigType = {
   VERSION: string;
   DEBUG_QUERY: boolean;
   DEBUG_MENU: boolean;
+  DEBUG_FUNCTION: boolean;
+  DISABLE_NOTFOUND: boolean;
+  ENABLE_DEBUG_GAMEMODE_OPTION: boolean;
 };
 
 const isdev = process.env.ENVIRONMENT === 'DEVELOPMENT';
 
 export const devConfig: DevConfigType = {
-  PAGE_TRANSITION: isdev ? true : true,
   VERSION: '0.0.0',
+  PAGE_TRANSITION: isdev ? true : true,
   DEBUG_QUERY: isdev ? true : false,
   DEBUG_MENU: isdev ? true : false,
+  DEBUG_FUNCTION: isdev ? false : false,
+  DISABLE_NOTFOUND: isdev ? false : true,
+  ENABLE_DEBUG_GAMEMODE_OPTION: isdev ? false : true,
 };
