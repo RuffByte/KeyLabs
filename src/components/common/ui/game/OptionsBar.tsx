@@ -128,7 +128,7 @@ const Option = ({ label, children, hasLabel = false }: OptionProps) => {
     >
       {hasLabel && (
         <>
-          <div className="border-r pr-4">{label}</div>
+          <div className="border-r border-background pr-4">{label}</div>
         </>
       )}
       <div className="flex w-min items-center justify-center !p-0.5">

@@ -1,8 +1,5 @@
 import React, { useRef, useState } from 'react';
-import {
-  motion,
-  useIsomorphicLayoutEffect,
-} from 'framer-motion';
+import { motion, useIsomorphicLayoutEffect } from 'framer-motion';
 import { CaseSensitive } from 'lucide-react';
 
 import {
@@ -153,7 +150,7 @@ const WordsView = ({ words, index, letterIndex }: WordViewProps) => {
 
   return (
     <motion.div
-      className="absolute left-1/2 flex gap-2 whitespace-pre text-3xl text-input"
+      className="absolute left-1/2 flex gap-2 whitespace-pre text-3xl text-foreground/40"
       animate={{ x: -currentOffset }}
       transition={{ duration: 0.5, ease: 'easeInOut' }}
     >
@@ -174,7 +171,9 @@ const WordsView = ({ words, index, letterIndex }: WordViewProps) => {
               </span>
             ))
           ) : (
-            <span className={cn(index > i && 'text-foreground')}>{word}</span>
+            <span className={cn(index > i && 'text-foreground/70')}>
+              {word}
+            </span>
           )}
         </p>
       ))}

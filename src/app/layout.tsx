@@ -3,10 +3,11 @@ import localFont from 'next/font/local';
 
 import './globals.css';
 
+import Head from 'next/head';
 import { Toaster } from 'sonner';
 
 import Transition from '@/components/common/ui/transition/Transition';
-import ThemeWrapper from '@/components/common/ui/wrapper/ThemeWrapper';
+import ThemeWrapper from '@/components/common/ui/wrapper/ThemeProvider';
 import QueryClientProvider from '@/components/providers/QueryClientProvider';
 
 const geistSans = localFont({

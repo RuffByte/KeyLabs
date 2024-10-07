@@ -15,7 +15,7 @@ const ClientLimitScreenSize = ({ children }: { children: React.ReactNode }) => {
 
   if (!isDesktop) {
     return (
-      <div className="fixed left-0 flex h-dvh w-dvw flex-col items-center justify-center text-center">
+      <div className="fixed left-0 flex h-dvh w-dvw flex-col items-center justify-center text-center text-foreground">
         <p>Your screen size is currently not supported.</p>
         <p className="rounded bg-foreground p-1 px-4 font-bold text-background">
           min width {W_MIN}px, min height: {H_MIN}px

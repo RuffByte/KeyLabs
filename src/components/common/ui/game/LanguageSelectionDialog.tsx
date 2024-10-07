@@ -8,7 +8,7 @@ export const LanguageSelectionDialog = () => {
   const { handleResetGame } = useGameContext();
   const { config, setConfig } = usePreConfig();
   return (
-    <div className="min-w-[600px] pb-8">
+    <div className="min-w-[600px] pb-8 text-foreground">
       <div className="flex items-center justify-between border-b p-4">
         <h3 className="text-2xl">Languages set</h3>
       </div>

@@ -3,7 +3,7 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import { HTMLMotionProps, motion } from 'framer-motion';
-import { Crown, Info, Settings, User } from 'lucide-react';
+import { Brush, Crown, Info, Settings, User } from 'lucide-react';
 import { toast } from 'sonner';
 
 import { useCurrentGame } from '@/app/client-page';
@@ -38,12 +38,12 @@ export const NavigationBar = ({ ...props }: NavigationBarProp) => {
           animate="animate"
           variants={NavigationOutVariants(hasStart, hasFinish)}
         >
+          <DialogTriggerButton>
+            <Brush size={20} />
+          </DialogTriggerButton>
           <Button onClick={() => handleRouteChange('leaderboard')}>
             <Crown size={20} />
           </Button>
-          <DialogTriggerButton>
-            <Crown size={20} />
-          </DialogTriggerButton>
           <Button onClick={() => toast.warning('Not implemented...')}>
             <Info size={20} />
           </Button>
