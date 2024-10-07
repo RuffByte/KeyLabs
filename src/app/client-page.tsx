@@ -99,7 +99,7 @@ export type Point = {
   value: string;
   x: number;
   y: number;
-  key: number;
+  key: string;
 };
 
 export const usePointsStack = create<PointStack>()((set) => ({
@@ -422,7 +422,7 @@ const ClientGamePage = ({ user }: { user: User }) => {
     }
     if (!allowReset) return;
     // key r
-    if (event.key === 'r') {
+    if (event.key.toLocaleLowerCase() === 'r') {
       if (isRestarting) return;
       setRestarting(true);
     }
