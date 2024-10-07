@@ -39,7 +39,7 @@ const ThemeItem = ({ name, currentLang, onClick }: ThemeItemProps) => {
       className="flex w-full cursor-pointer select-none items-center py-2 hover:bg-foreground hover:text-background"
     >
       <div className="mx-4 min-w-5">
-        {name.toLowerCase() == currentLang.toLowerCase() ? (
+        {name.toLowerCase() == (currentLang?.toLowerCase() ?? 'default') ? (
           <Check size={20} />
         ) : null}
       </div>
