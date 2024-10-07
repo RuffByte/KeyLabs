@@ -14,18 +14,6 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model User {
-  id             String               @id @default(cuid())
-  email          String               @unique
-  name           String               @unique
-  role           String?
-  hashedPassword String?
-  picture        String?
-  session        Session[]
-  resetTokens    PasswordResetToken[]
-  GameEntry      GameEntry[]
-}
-
 model Session {
   id        String   @id
   userId    String
@@ -42,15 +30,43 @@ model PasswordResetToken {
   user      User     @relation(fields: [userId], references: [id])
 }
 
+model User {
+  id             String               @id @default(cuid())
+  email          String               @unique
+  name           String               @unique
+  role           String?
+  hashedPassword String?
+  picture        String?
+  session        Session[]
+  resetTokens    PasswordResetToken[]
+  GameEntry      GameEntry[]
+  userStats      UserStats[]
+}
+
+//super duper mega scalable :) (im lying)
+model UserStats {
+  id          String @id @default(cuid())
+  userId      String
+  mode        String
+  category    String
+  avgLpm      Float  @default(0.0)
+  avgAccuracy Float  @default(0.0)
+  totalGames  Int    @default(0)
+  totalTime   Float  @default(0.0)
+  user        User   @relation(fields: [userId], references: [id])
+
+  @@unique([userId, mode, category])
+}
+
 model GameEntry {
   id          String   @id @default(cuid())
   userId      String
   mode        String
   language    String
-  wpm         Int
-  rawWpm      Int
-  lpm         Int
-  rawLpm      Int
+  wpm         Float
+  rawWpm      Float
+  lpm         Float
+  rawLpm      Float
   totalChar   Int
   totalClicks Int
   totalTime   Float
