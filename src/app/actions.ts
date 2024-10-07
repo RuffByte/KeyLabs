@@ -4,7 +4,6 @@ import { prisma } from '@/lib/prisma';
 import { GameData } from './types/gameData';
 
 export async function submitGameData(gameData: GameData) {
-  // First, find the user's id based on the userName
   const user = await prisma.user.findUnique({
     where: {
       name: gameData.userName,
@@ -18,10 +17,10 @@ export async function submitGameData(gameData: GameData) {
     throw new Error(`User with username ${gameData.userName} not found`);
   }
 
-  // Create the game entry using the user's id
+  // create game entry
   await prisma.gameEntry.create({
     data: {
-      userId: user.id, // Use userId now
+      userId: user.id,
       mode: gameData.mode,
       language: gameData.language,
       totalChar: gameData.totalChar,
@@ -33,6 +32,69 @@ export async function submitGameData(gameData: GameData) {
       lpm: gameData.lpm,
       rawLpm: gameData.rawLpm,
       targetSize: gameData.targetSize,
+    },
+  });
+  console.log(gameData.totalTime);
+  // update user total games
+  await prisma.user.update({
+    where: { id: user.id },
+    data: {
+      totalGames: { increment: 1 },
+      totalTime: { increment: gameData.totalTime },
+    },
+  });
+
+  // get gamemode
+  const category =
+    gameData.mode === 'time'
+      ? `${gameData.totalTime}s`
+      : `${gameData.totalChar}c`;
+
+  //get cur stats to update
+  const currentStats = await prisma.userStats.findUnique({
+    where: {
+      userId_mode_category: {
+        userId: user.id,
+        mode: gameData.mode,
+        category: category,
+      },
+    },
+  });
+
+  //calculate new avg acc and lpm
+  const newTotalGames = (currentStats?.totalGames || 0) + 1;
+  const newTotalLpm =
+    (currentStats?.avgLpm || 0) * (currentStats?.totalGames || 0) +
+    gameData.lpm;
+  const newTotalAccuracy =
+    (currentStats?.avgAccuracy || 0) * (currentStats?.totalGames || 0) +
+    gameData.accuracy;
+
+  const newAvgLpm = newTotalLpm / newTotalGames;
+  const newAvgAccuracy = newTotalAccuracy / newTotalGames;
+
+  await prisma.userStats.upsert({
+    where: {
+      userId_mode_category: {
+        userId: user.id,
+        mode: gameData.mode,
+        category: category,
+      },
+    },
+    update: {
+      avgLpm: newAvgLpm,
+      avgAccuracy: newAvgAccuracy,
+      totalGames: { increment: 1 },
+      totalTime: { increment: gameData.totalTime },
+    },
+    create: {
+      userId: user.id,
+      mode: gameData.mode,
+      category: category,
+      avgLpm: gameData.lpm,
+      avgAccuracy: gameData.accuracy,
+      totalGames: 1,
+      totalTime: gameData.totalTime,
     },
   });
 
