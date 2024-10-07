@@ -33,7 +33,7 @@ const colours = {
   },
 };
 
-if (process.env.ENVIRONMENT === 'DEVELOPMENT') {
+if (process.env.NODE_ENV === 'development') {
   console.log(
     `${colours.bg.green}\n`,
     '\n',
@@ -54,7 +54,7 @@ type DevConfigType = {
   ENABLE_DEBUG_GAMEMODE_OPTION: boolean;
 };
 
-const isdev = process.env.ENVIRONMENT === 'DEVELOPMENT';
+const isdev = process.env.NODE_ENV === 'development';
 
 export const devConfig: DevConfigType = {
   VERSION: '0.0.0',
@@ -63,5 +63,5 @@ export const devConfig: DevConfigType = {
   DEBUG_MENU: isdev ? true : false,
   DEBUG_FUNCTION: isdev ? false : false,
   DISABLE_NOTFOUND: isdev ? false : true,
-  ENABLE_DEBUG_GAMEMODE_OPTION: isdev ? false : false,
+  ENABLE_DEBUG_GAMEMODE_OPTION: isdev ? true : false,
 };

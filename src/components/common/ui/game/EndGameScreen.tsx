@@ -40,7 +40,7 @@ const StatRow = ({ label, value, className }: StatRowProps) => {
     //cn magic wow (takes last argument over the first wow (wow magic))
     <div
       className={cn(
-        'flex justify-between border-b-2 border-dashed border-b-black px-4 py-3',
+        'flex justify-between border-b-2 border-dashed border-b-foreground px-4 py-3',
         className
       )}
     >
@@ -62,7 +62,7 @@ export const EndGameScreen = ({ gameData }: EndGameScreenProps) => {
   }
 
   return (
-    <div className="flex w-[650px] flex-col text-lg">
+    <div className="flex w-[650px] flex-col text-lg text-foreground">
       <StatRow label="Score" value={gameData.mode} className="px-0 text-xl" />
       <StatRow
         label="WPM / RAW"
