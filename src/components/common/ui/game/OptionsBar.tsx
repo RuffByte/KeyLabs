@@ -62,9 +62,9 @@ export const OptionsBar = ({ ...props }: HTMLMotionProps<'div'>) => {
               />
             )}
             <OptionItem
-              value="25"
+              value="30"
               name="character"
-              onChange={() => handleSetChar(25)}
+              onChange={() => handleSetChar(30)}
               defaultChecked
             />
             <OptionItem
@@ -76,11 +76,6 @@ export const OptionsBar = ({ ...props }: HTMLMotionProps<'div'>) => {
               value="100"
               name="character"
               onChange={() => handleSetChar(100)}
-            />
-            <OptionItem
-              value="150"
-              name="character"
-              onChange={() => handleSetChar(150)}
             />
           </Option>
         )}
