@@ -1,20 +1,16 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import { GameEntry } from '@prisma/client';
 
 import Button from './common/Button';
 import { Select, SelectContent, SelectItem } from './common/Select';
 import { NavigationBar } from './common/ui/navigation/navbar';
 
-interface LeaderboardEntry {
-  id: string;
+interface LeaderboardEntry extends GameEntry {
   user: {
     name: string;
-  } | null;
-  wpm: number;
-  lpm: number;
-  accuracy: number;
-  charsTyped: number;
+  };
 }
 
 export const ClientLeaderboardPage = () => {
@@ -69,7 +65,7 @@ export const ClientLeaderboardPage = () => {
                 <SelectItem value="time" />
               </SelectContent>
             </Select>
-            <div className="flex w-[250px] gap-2 *:grow">
+            <div className="flex w-min gap-2 *:grow">
               {currentMode === 'time' && (
                 <>
                   <Button onClick={() => handleSubModeChange(15)}>15s</Button>
@@ -104,8 +100,9 @@ export const ClientLeaderboardPage = () => {
 
 const ScoreRowLabel = () => {
   return (
-    <div className="grid grid-cols-[1fr_80px_80px_80px] justify-end px-2 *:w-min">
+    <div className="grid grid-cols-[1fr_80px_80px_80px_120px] justify-end px-2 *:w-min">
       <p className="justify-self-start">name</p>
+      <p className="justify-self-end">accuracy</p>
       <p className="justify-self-end">lpm</p>
       <p className="justify-self-end">wpm</p>
       <p className="justify-self-end">date</p>
@@ -115,22 +112,15 @@ const ScoreRowLabel = () => {
 
 const ScoreRow = ({ score }: { score: LeaderboardEntry }) => {
   return (
-    <div className="grid h-9 grid-cols-[1fr_80px_80px_80px] items-center justify-end whitespace-nowrap rounded-lg px-2 *:w-min">
+    <div className="grid h-9 grid-cols-[1fr_80px_80px_80px_120px] items-center justify-end whitespace-nowrap rounded-lg px-2 *:w-min">
       <p className="justify-self-start">{score.user?.name}</p>
+      <p className="justify-self-end">{score.accuracy.toFixed(2)}</p>
       <p className="justify-self-end">{score.lpm.toFixed(2)}</p>
       <p className="justify-self-end">{score.wpm.toFixed(2)}</p>
-      <p className="justify-self-end">NaN</p> {/* Replace with actual date */}
-    </div>
-  );
-};
-
-const ScoreRowEmpty = () => {
-  return (
-    <div className="grid h-9 grid-cols-[1fr_80px_80px_80px] items-center justify-end rounded-lg px-2 *:w-min">
-      <p className="justify-self-start">-</p>
-      <p className="justify-self-end">-</p>
-      <p className="justify-self-end">-</p>
-      <p className="justify-self-end">NaN</p>
+      <p className="justify-self-end">
+        {new Date(score.createdAt).toLocaleDateString()}
+      </p>
+      {/* Replace with actual date */}
     </div>
   );
 };
