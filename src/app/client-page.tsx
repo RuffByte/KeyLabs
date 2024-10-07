@@ -4,7 +4,6 @@ import React, {
   createContext,
   useContext,
   useEffect,
-  useLayoutEffect,
   useState,
 } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
