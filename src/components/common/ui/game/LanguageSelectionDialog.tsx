@@ -2,13 +2,13 @@ import React from 'react';
 import { Check } from 'lucide-react';
 
 import { useGameContext, usePreConfig } from '@/app/client-page';
-import languages from '../../../../app/static/language/_list.json';
+import languages from '@/static/language/_list.json';
 
 export const LanguageSelectionDialog = () => {
   const { handleResetGame } = useGameContext();
   const { config, setConfig } = usePreConfig();
   return (
-    <div className="min-w-[600px] pb-8">
+    <div className="min-w-[600px] pb-8 text-foreground">
       <div className="flex items-center justify-between border-b p-4">
         <h3 className="text-2xl">Languages set</h3>
       </div>

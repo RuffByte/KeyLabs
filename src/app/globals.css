@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 * {
-  /* @apply border border-black; */
+  @apply transition-colors;
   font-family: var(--font-kollektic);
 }
 

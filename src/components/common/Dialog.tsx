@@ -57,7 +57,7 @@ const Modal = () => {
         exit={{ opacity: 0 }}
         transition={{ ease: 'easeInOut', duration: 0.2 }}
         onClick={handleClose}
-        className="fixed inset-0 z-[999] h-dvh w-dvw bg-black/70"
+        className="fixed inset-0 z-[1000] h-dvh w-dvw bg-black/70"
       />
     </AnimatePresence>
   );

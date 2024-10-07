@@ -26,7 +26,7 @@ export const SelectItem = ({ value }: { value: string }) => {
         'flex h-8 w-full items-center justify-between px-8 py-2 text-foreground',
         String(value) === String(current)
           ? 'bg-foreground text-background'
-          : 'hover:bg-highlight/10'
+          : 'hover:bg-secondary/10'
       )}
       onClick={() => {
         handleClose();
@@ -105,7 +105,7 @@ export const SelectContent = ({
       <button
         {...props}
         className={cn(
-          'hover:bg-accent relative flex items-center justify-between rounded-md border border-secondary/70 p-2 px-8 text-base text-foreground *:stroke-foreground hover:bg-highlight/10',
+          'hover:bg-accent relative flex items-center justify-between rounded-md border border-secondary/70 p-2 px-8 text-base text-foreground *:stroke-foreground hover:bg-secondary/10',
           className
         )}
         onClick={handleToggle}

@@ -18,7 +18,7 @@ export const Dropdown = ({
     <div {...props} className="relative select-none">
       <Button className="peer">{dropdownDisplay}</Button>
       <div className="absolute right-0 hidden w-40 pt-2 hover:flex peer-hover:flex">
-        <div className="w-full rounded bg-highlight text-foreground outline outline-4 outline-background">
+        <div className="w-full rounded bg-secondary text-foreground outline outline-4 outline-background">
           {dropdownItems}
         </div>
       </div>
