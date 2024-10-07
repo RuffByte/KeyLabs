@@ -30,7 +30,6 @@ model PasswordResetToken {
   user      User     @relation(fields: [userId], references: [id])
 }
 
-//super duper mega scalable :) (im lying)
 model User {
   id             String               @id @default(cuid())
   email          String               @unique
@@ -41,11 +40,13 @@ model User {
   session        Session[]
   resetTokens    PasswordResetToken[]
   GameEntry      GameEntry[]
-  userStats      UserStats[] // Relation to UserStats
+  userStats      UserStats[]
   totalGames     Int                  @default(0) // Total games played across all modes
   totalTime      Float                @default(0.0) // Total time spent across all modes
+  joinedAt       DateTime             @default(now()) // Timestamp of when the user joined
 }
 
+//super duper mega scalable :) (im lying)
 model UserStats {
   id          String @id @default(cuid())
   userId      String
