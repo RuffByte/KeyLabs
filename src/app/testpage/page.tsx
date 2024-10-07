@@ -1,4 +1,4 @@
-import { ClientLeaderboardPage } from '@/components/Leaderboard';
+import { ClientLeaderboardPage } from '@/components/ClientLeaderboardPage';
 
 const Testpage = () => {
   return (

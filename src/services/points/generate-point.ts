@@ -35,7 +35,8 @@ export const generatePoint = (
       index = 0;
       retry++;
       baseDistMultiplier -= 0.2;
-      console.log(baseDistMultiplier);
+      // console.log(baseDistMultiplier);
+      console.log('lowering base dist multiplier, curr:', baseDistMultiplier);
     }
 
     if (stack.length === letters.length) {
