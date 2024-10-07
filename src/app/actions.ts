@@ -3,6 +3,7 @@
 import { prisma } from '@/lib/prisma';
 import { GameData } from './types/gameData';
 
+//maybe i shouldn't have everything in one action - anton
 export async function submitGameData(gameData: GameData) {
   const user = await prisma.user.findUnique({
     where: {

@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - master
-      - KL-16-Leaderboards-UI
+      - KL-UserStats
 
 jobs:
   deploy:
