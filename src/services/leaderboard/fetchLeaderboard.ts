@@ -14,5 +14,6 @@ export const fetchLeaderboard = async (
     `/api/data/leaderboard?mode=${currentMode}&subMode=${currentSubMode}`
   );
   const data: LeaderboardEntry[] = await response.json();
+  console.log(data);
   return data;
 };

@@ -67,6 +67,7 @@ export type PreGameConfig = {
 
 export const usePreConfig = create<PreGameConfig>()((set) => ({
   config: {
+    theme: 'default',
     mode: 'characters',
     language: 'english_5k',
     time: 0,

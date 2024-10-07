@@ -1,11 +1,9 @@
 import React, { useRef, useState } from 'react';
 import {
-  animate,
-  cancelFrame,
   motion,
   useIsomorphicLayoutEffect,
 } from 'framer-motion';
-import { CaseSensitive, Timer } from 'lucide-react';
+import { CaseSensitive } from 'lucide-react';
 
 import {
   GameDataProps,

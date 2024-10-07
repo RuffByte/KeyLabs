@@ -6,6 +6,7 @@ import './globals.css';
 import { Toaster } from 'sonner';
 
 import Transition from '@/components/common/ui/transition/Transition';
+import ThemeWrapper from '@/components/common/ui/wrapper/ThemeWrapper';
 import QueryClientProvider from '@/components/providers/QueryClientProvider';
 
 const geistSans = localFont({
@@ -78,18 +79,20 @@ export default function RootLayout({
   return (
     <html lang="en" className="bg-background">
       <QueryClientProvider>
-        <body
-          className={`${kollektif.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
-        >
-          <Transition>
-            <div className="grid h-dvh w-dvw place-items-center overflow-hidden">
-              <div className="flex h-full w-full max-w-screen-desktop flex-col">
-                {children}
+        <ThemeWrapper>
+          <body
+            className={`${kollektif.variable} ${geistSans.variable} ${geistMono.variable} antialiased`}
+          >
+            <Transition>
+              <div className="grid h-dvh w-dvw place-items-center overflow-hidden">
+                <div className="flex h-full w-full max-w-screen-desktop flex-col">
+                  {children}
+                </div>
               </div>
-            </div>
-          </Transition>
-        </body>
-        <Toaster richColors />
+            </Transition>
+          </body>
+          <Toaster richColors />
+        </ThemeWrapper>
         {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       </QueryClientProvider>
     </html>

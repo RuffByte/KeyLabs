@@ -8,11 +8,9 @@ export type wordSet = {
 const getWordSet = async (wordSetName: string): Promise<wordSet> => {
   let fetchPromise;
   try {
-    fetchPromise = await require(
-      `../../app/static/language/${wordSetName}.json`
-    );
+    fetchPromise = require(`@/static/language/${wordSetName}.json`);
   } catch {
-    fetchPromise = await require(`../../app/static/language/english.json`);
+    fetchPromise = require(`@/static/language/english.json`);
   }
   return await fetchPromise;
 };

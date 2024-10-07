@@ -1,0 +1,8 @@
+:root {
+  --background: 0 0% 96%; /* hsl(0, 0%, 96%) */
+  --secondary: 0 0% 31%; /* hsl(0, 0%, 31%) */
+  --foreground: 0 0% 12%; /* hsl(0, 0%, 12%) */
+  --tertiary: 0 0% 88%; /* hsl(0, 0%, 88%) */
+  --hover: 0 0% 5%; /* hsl(0, 0%, 5%) */
+  --highlight: 0 0% 31%; /* hsl(0 0% 31%) */
+}
