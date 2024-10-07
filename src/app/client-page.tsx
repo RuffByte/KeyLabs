@@ -4,7 +4,6 @@ import React, {
   createContext,
   useContext,
   useEffect,
-  useLayoutEffect,
   useState,
 } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
@@ -67,6 +66,7 @@ export type PreGameConfig = {
 
 export const usePreConfig = create<PreGameConfig>()((set) => ({
   config: {
+    theme: 'default',
     mode: 'characters',
     language: 'english_5k',
     time: 0,

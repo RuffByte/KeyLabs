@@ -63,5 +63,5 @@ export const devConfig: DevConfigType = {
   DEBUG_MENU: isdev ? true : false,
   DEBUG_FUNCTION: isdev ? false : false,
   DISABLE_NOTFOUND: isdev ? false : true,
-  ENABLE_DEBUG_GAMEMODE_OPTION: isdev ? false : true,
+  ENABLE_DEBUG_GAMEMODE_OPTION: isdev ? false : false,
 };

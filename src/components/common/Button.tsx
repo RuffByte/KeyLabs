@@ -9,7 +9,7 @@ interface ButtonProps
 }
 
 const button = tv({
-  base: 'flex items-center justify-center rounded-md bg-highlight p-2 px-8 text-sm text-background transition-colors *:stroke-background hover:bg-black',
+  base: 'flex items-center justify-center rounded-md bg-secondary p-2 px-8 text-sm text-background transition-colors *:stroke-background hover:bg-hover',
   variants: {
     variant: {
       outline:

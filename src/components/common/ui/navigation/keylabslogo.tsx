@@ -8,8 +8,8 @@ export const Keylabslogo = () => {
   return (
     <TLink href="/">
       <div className="flex items-center gap-4 p-2 font-kollektif">
-        <KeyLabsLogo className="size-8 stroke-black" />
-        <h1 className="select-none text-3xl">KeyLabs</h1>
+        <KeyLabsLogo className="size-8 stroke-foreground" />
+        <h1 className="select-none text-3xl text-foreground">KeyLabs</h1>
       </div>
     </TLink>
   );

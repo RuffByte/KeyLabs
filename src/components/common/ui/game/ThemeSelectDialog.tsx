@@ -1,25 +1,25 @@
+'use client';
+
 import React from 'react';
 import { Check } from 'lucide-react';
 
-import { useGameContext, usePreConfig } from '@/app/client-page';
-import languages from '@/static/language/_list.json';
+import themes from '@/static/themes/_list.json';
+import { useTheme } from '../wrapper/ThemeProvider';
 
-export const LanguageSelectionDialog = () => {
-  const { handleResetGame } = useGameContext();
-  const { config, setConfig } = usePreConfig();
+export const ThemeSelectionDialog = () => {
+  const { theme: currentTheme, handleSetTheme } = useTheme();
   return (
     <div className="min-w-[600px] pb-8 text-foreground">
       <div className="flex items-center justify-between border-b p-4">
-        <h3 className="text-2xl">Languages set</h3>
+        <h3 className="text-2xl">Themes</h3>
       </div>
-      {(languages as string[]).map((language) => (
-        <LanguageItem
-          key={language}
-          name={language}
-          currentLang={config.language}
+      {(themes as string[]).map((theme) => (
+        <ThemeItem
+          key={theme}
+          name={theme}
+          currentLang={currentTheme}
           onClick={() => {
-            setConfig({ ...config, language: language });
-            handleResetGame();
+            handleSetTheme(theme);
           }}
         />
       ))}
@@ -27,12 +27,12 @@ export const LanguageSelectionDialog = () => {
   );
 };
 
-type LanguageItemProps = {
+type ThemeItemProps = {
   name: string;
   currentLang: string;
   onClick: () => void;
 };
-const LanguageItem = ({ name, currentLang, onClick }: LanguageItemProps) => {
+const ThemeItem = ({ name, currentLang, onClick }: ThemeItemProps) => {
   return (
     <button
       onClick={onClick}

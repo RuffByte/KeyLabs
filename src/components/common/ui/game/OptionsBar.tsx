@@ -14,7 +14,7 @@ export const OptionsBar = ({ ...props }: HTMLMotionProps<'div'>) => {
   const handleChangeMode = (mode: string) => {
     if (config.mode === 'characters')
       setConfig({ ...config, mode: mode, lengthChar: 0, time: 30 });
-    else setConfig({ ...config, mode: mode, lengthChar: 25, time: 0 });
+    else setConfig({ ...config, mode: mode, lengthChar: 30, time: 0 });
   };
 
   const handleSetTime = (time: number) => {
@@ -128,7 +128,7 @@ const Option = ({ label, children, hasLabel = false }: OptionProps) => {
     >
       {hasLabel && (
         <>
-          <div className="border-r pr-4">{label}</div>
+          <div className="border-r border-background pr-4">{label}</div>
         </>
       )}
       <div className="flex w-min items-center justify-center !p-0.5">

@@ -21,7 +21,7 @@ export const ClientLeaderboardPage = () => {
   const [currentMode, setCurrentMode] = useState('characters');
   const [currentSubMode, setCurrentSubMode] = useState(30);
 
-  const { data, isLoading } = useLeaderboardScore(currentMode, currentSubMode);
+  const { data } = useLeaderboardScore(currentMode, currentSubMode);
 
   useEffect(() => {
     queryClient.resetQueries({
@@ -45,7 +45,7 @@ export const ClientLeaderboardPage = () => {
   return (
     <>
       <NavigationBar />
-      <div className="absolute left-1/2 z-[99] mt-32 w-min -translate-x-1/2 rounded-xl border bg-background px-9 py-4 pb-16">
+      <div className="absolute left-1/2 z-[49] mt-32 w-min -translate-x-1/2 rounded-xl border bg-background px-9 py-4 pb-16 text-foreground">
         <div className="flex w-full justify-between whitespace-nowrap text-4xl">
           <p className="w-min">Leaderboards</p>
           <p className="w-min">English 5k</p>
@@ -80,7 +80,7 @@ export const ClientLeaderboardPage = () => {
           </div>
         </div>
 
-        <div className="flex w-[800px] flex-col gap-2 even:*:bg-highlight/30">
+        <div className="flex w-[800px] flex-col gap-2 even:*:bg-secondary/30">
           <ScoreRowLabel />
           {data ? (
             <>
