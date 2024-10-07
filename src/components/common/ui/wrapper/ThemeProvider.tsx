@@ -9,10 +9,13 @@ export type ThemeType = {
 };
 
 export const useTheme = create<ThemeType>()((set) => ({
-  theme: localStorage.getItem('theme') || 'default',
+  theme:
+    typeof window !== 'undefined' ? localStorage.getItem('theme')! : 'default',
   handleSetTheme: (theme: string) =>
     set(() => {
-      localStorage.setItem('theme', theme);
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('theme', theme);
+      }
       return { theme };
     }),
 }));
