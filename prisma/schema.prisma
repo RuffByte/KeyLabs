@@ -14,18 +14,6 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model User {
-  id             String               @id @default(cuid())
-  email          String               @unique
-  name           String               @unique
-  role           String?
-  hashedPassword String?
-  picture        String?
-  session        Session[]
-  resetTokens    PasswordResetToken[]
-  GameEntry      GameEntry[]
-}
-
 model Session {
   id        String   @id
   userId    String
@@ -42,22 +30,56 @@ model PasswordResetToken {
   user      User     @relation(fields: [userId], references: [id])
 }
 
+model User {
+  id             String               @id @default(cuid())
+  email          String               @unique
+  name           String               @unique
+  role           String?
+  hashedPassword String?
+  picture        String?
+  session        Session[]
+  resetTokens    PasswordResetToken[]
+  GameEntry      GameEntry[]
+  userStats      UserStats[]
+  totalGames     Int                  @default(0) // Total games played across all modes
+  totalTime      Float                @default(0.0) // Total time spent across all modes
+  joinedAt       DateTime             @default(now()) // Timestamp of when the user joined
+}
+
+//super duper mega scalable :) (im lying)
+model UserStats {
+  id              String     @id @default(cuid())
+  userId          String
+  mode            String
+  category        String
+  avgLpm          Float      @default(0.0)
+  avgAccuracy     Float      @default(0.0)
+  totalGames      Int        @default(0)
+  totalTime       Float      @default(0.0)
+  bestGameEntryId String?
+  bestGameEntry   GameEntry? @relation(fields: [bestGameEntryId], references: [id])
+  user            User       @relation(fields: [userId], references: [id])
+
+  @@unique([userId, mode, category])
+}
+
 model GameEntry {
-  id          String   @id @default(cuid())
+  id          String      @id @default(cuid())
   userId      String
   mode        String
   language    String
-  wpm         Int
-  rawWpm      Int
-  lpm         Int
-  rawLpm      Int
+  wpm         Float
+  rawWpm      Float
+  lpm         Float
+  rawLpm      Float
   totalChar   Int
   totalClicks Int
   totalTime   Float
   accuracy    Float
-  createdAt   DateTime @default(now())
+  createdAt   DateTime    @default(now())
   targetSize  Int
-  user        User     @relation(fields: [userId], references: [id])
+  user        User        @relation(fields: [userId], references: [id])
+  UserStats   UserStats[]
 
   @@index([lpm, userId])
 }

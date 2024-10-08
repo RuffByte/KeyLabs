@@ -1,0 +1,7 @@
+:root {
+  --background: 233 18% 18%; /* catppuccin clone */
+  --secondary: 274 71% 77%;
+  --foreground: 317 76% 84%;
+  --tertiary: #000;
+  --hover: 0 0% 100%;
+}

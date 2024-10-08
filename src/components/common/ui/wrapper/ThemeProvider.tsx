@@ -22,12 +22,22 @@ export const useTheme = create<ThemeType>()((set) => ({
 
 const ThemeWrapper = ({ children }: { children: React.ReactNode }) => {
   const { theme } = useTheme();
+
   useInsertionEffect(() => {
-    let link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.type = 'text/css';
+    const existingLink = document.querySelector('link[data-theme="dynamic"]');
+    let link: HTMLLinkElement;
+
+    if (existingLink) {
+      link = existingLink as HTMLLinkElement;
+    } else {
+      link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.setAttribute('data-theme', 'dynamic');
+      document.head.appendChild(link);
+    }
+
     link.href = `/themes/${theme}.css`;
-    document.head.appendChild(link);
   }, [theme]);
 
   return <>{children}</>;

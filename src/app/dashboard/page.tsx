@@ -1,25 +1,30 @@
+'use server';
+
 import React from 'react';
 import { redirect } from 'next/navigation';
 
-import SignOutButton from '@/components/authentication/SignOutButton';
-import { AccountDetails } from '@/components/common/ui/dashboard/AccountDetails/AccountDetails';
-import { NavigationBar } from '@/components/common/ui/navigation/navbar';
+import AccountPage from '@/components/common/ui/dashboard/DashBoard';
 import { getUser } from '@/lib/lucia';
 
-const page = async () => {
-  const user = await getUser();
-  if (!user) {
+const Page = async () => {
+  //check for login its called userCheck cause user got taken below so sad
+  const userCheck = await getUser();
+  if (!userCheck) {
     redirect('/login');
   }
-
-  return (
-    <div className="flex h-full flex-col items-center justify-center">
-      <NavigationBar />
-      <AccountDetails />
-      <div className="text-white">you are logged in as {user.name}</div>
-      <SignOutButton>Sign Out</SignOutButton>
-    </div>
+  //api route is like this so we can have public api route i guess for querying later. (maybe idk)
+  const response = await fetch(
+    `${process.env.NEXT_PUBLIC_URL}/api/data/user?name=${userCheck.name}`
   );
+
+  const bestResponse = await fetch(
+    `${process.env.NEXT_PUBLIC_URL}/api/data/userBest?name=${userCheck.name}`
+  );
+
+  const bestScores = await bestResponse.json();
+  const { user, stats } = await response.json();
+
+  return <AccountPage user={user} userStats={stats} bestScores={bestScores} />;
 };
 
-export default page;
+export default Page;

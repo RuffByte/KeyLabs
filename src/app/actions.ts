@@ -4,7 +4,6 @@ import { prisma } from '@/lib/prisma';
 import { GameData } from './types/gameData';
 
 export async function submitGameData(gameData: GameData) {
-  // First, find the user's id based on the userName
   const user = await prisma.user.findUnique({
     where: {
       name: gameData.userName,
@@ -18,10 +17,10 @@ export async function submitGameData(gameData: GameData) {
     throw new Error(`User with username ${gameData.userName} not found`);
   }
 
-  // Create the game entry using the user's id
-  await prisma.gameEntry.create({
+  // Create game entry
+  const gameEntry = await prisma.gameEntry.create({
     data: {
-      userId: user.id, // Use userId now
+      userId: user.id,
       mode: gameData.mode,
       language: gameData.language,
       totalChar: gameData.totalChar,
@@ -33,6 +32,83 @@ export async function submitGameData(gameData: GameData) {
       lpm: gameData.lpm,
       rawLpm: gameData.rawLpm,
       targetSize: gameData.targetSize,
+    },
+  });
+
+  // Update user's total games and total time
+  await prisma.user.update({
+    where: { id: user.id },
+    data: {
+      totalGames: { increment: 1 },
+      totalTime: { increment: gameData.totalTime },
+    },
+  });
+
+  // Determine the category (time or characters)
+  const category =
+    gameData.mode === 'time'
+      ? `${gameData.totalTime}s`
+      : `${gameData.totalChar}c`;
+
+  // Get current user stats
+  const currentStats = await prisma.userStats.findUnique({
+    where: {
+      userId_mode_category: {
+        userId: user.id,
+        mode: gameData.mode,
+        category: category,
+      },
+    },
+    include: {
+      bestGameEntry: true, // Fetch the current best game entry
+    },
+  });
+
+  // Calculate new average LPM and accuracy
+  const newTotalGames = (currentStats?.totalGames || 0) + 1;
+  const newTotalLpm =
+    (currentStats?.avgLpm || 0) * (currentStats?.totalGames || 0) +
+    gameData.lpm;
+  const newTotalAccuracy =
+    (currentStats?.avgAccuracy || 0) * (currentStats?.totalGames || 0) +
+    gameData.accuracy;
+
+  const newAvgLpm = newTotalLpm / newTotalGames;
+  const newAvgAccuracy = newTotalAccuracy / newTotalGames;
+
+  // Check if the current game entry is the best (highest lpm)
+  const isBestEntry =
+    !currentStats?.bestGameEntry ||
+    gameData.lpm > currentStats.bestGameEntry.lpm;
+
+  // Upsert (create or update) user stats
+  await prisma.userStats.upsert({
+    where: {
+      userId_mode_category: {
+        userId: user.id,
+        mode: gameData.mode,
+        category: category,
+      },
+    },
+    update: {
+      avgLpm: newAvgLpm,
+      avgAccuracy: newAvgAccuracy,
+      totalGames: { increment: 1 },
+      totalTime: { increment: gameData.totalTime },
+      // Update best game entry if this one is better
+      bestGameEntryId: isBestEntry
+        ? gameEntry.id
+        : currentStats.bestGameEntryId,
+    },
+    create: {
+      userId: user.id,
+      mode: gameData.mode,
+      category: category,
+      avgLpm: gameData.lpm,
+      avgAccuracy: gameData.accuracy,
+      totalGames: 1,
+      totalTime: gameData.totalTime,
+      bestGameEntryId: gameEntry.id, // Set the current game entry as the best one initially
     },
   });
 
