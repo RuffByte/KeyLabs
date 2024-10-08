@@ -1,12 +1,14 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { UserStats } from '@prisma/client';
+import { User, UserStats } from '@prisma/client';
 
-import { User } from '@/app/types/user';
+// Adjust import to match your app structure
 import { getUser } from '@/lib/lucia';
 import { prisma } from '@/lib/prisma';
 
+type SafeUser = Omit<User, 'hashedPassword'>;
+
 interface UserContextType {
-  user: User | null;
+  user: SafeUser | null;
   userStats: UserStats[] | null;
 }
 
@@ -15,31 +17,39 @@ const UserContext = createContext<UserContextType | undefined>(undefined);
 export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<SafeUser | null>(null);
   const [userStats, setUserStats] = useState<UserStats[] | null>(null);
 
+  //some like go through 10 rings typa beat to get the full user table
   useEffect(() => {
     const fetchUserData = async () => {
       const userResponse = await getUser();
-      setUser(userResponse);
-
       if (userResponse) {
-        const userIdResponse = await prisma.user.findUnique({
+        const fullUser = await prisma.user.findUnique({
           where: {
-            name: userResponse.name,
+            email: userResponse.email,
           },
           select: {
             id: true,
+            email: true,
+            name: true,
+            role: true,
+            picture: true,
+            totalGames: true,
+            totalTime: true,
+            joinedAt: true,
+            userStats: true,
+            //reason why im selecting so much is to not include password (idk maybe it's bad to query it so i got rid of it)
           },
         });
 
-        if (userIdResponse) {
-          // Now fetch user stats using the fetched userId
-          const statsResponse = await prisma.userStats.findMany({
-            where: { userId: userIdResponse.id },
-          });
+        if (fullUser) {
+          setUser(fullUser);
 
-          setUserStats(statsResponse); // Directly set the array of UserStats
+          const statsResponse = await prisma.userStats.findMany({
+            where: { userId: fullUser.id },
+          });
+          setUserStats(statsResponse);
         }
       }
     };
@@ -54,6 +64,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
   );
 };
 
+//react magic im still learning - anton
 export const useUserContext = () => {
   const context = useContext(UserContext);
   if (context === undefined) {

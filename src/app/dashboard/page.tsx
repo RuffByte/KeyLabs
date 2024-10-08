@@ -1,9 +1,7 @@
 import React from 'react';
 import { redirect } from 'next/navigation';
 
-import SignOutButton from '@/components/authentication/SignOutButton';
-import { AccountDetails } from '@/components/common/ui/dashboard/AccountDetails/AccountDetails';
-import { NavigationBar } from '@/components/common/ui/navigation/navbar';
+import AccountPage from '@/components/common/ui/dashboard/AccountDetails/AccountPage';
 import { getUser } from '@/lib/lucia';
 
 const page = async () => {
@@ -12,14 +10,7 @@ const page = async () => {
     redirect('/login');
   }
 
-  return (
-    <div className="flex h-full flex-col items-center justify-center">
-      <NavigationBar />
-      <AccountDetails />
-      <div className="text-white">you are logged in as {user.name}</div>
-      <SignOutButton>Sign Out</SignOutButton>
-    </div>
-  );
+  return <AccountPage />;
 };
 
 export default page;
