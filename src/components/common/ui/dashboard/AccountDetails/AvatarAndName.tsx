@@ -25,7 +25,7 @@ export const AvatarAndName = async () => {
           <p>Joined {formattedDate}</p>
         </div>
       </div>
-      <ExperienceBar />
+      {/* <ExperienceBar /> */}
     </div>
   );
 };
