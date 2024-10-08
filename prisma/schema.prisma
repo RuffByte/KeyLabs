@@ -48,35 +48,38 @@ model User {
 
 //super duper mega scalable :) (im lying)
 model UserStats {
-  id          String @id @default(cuid())
-  userId      String
-  mode        String // 'time' or 'characters'
-  category    String // e.g., '15s', '30s', '60s' for time, '30c', '50c', '100c' for characters
-  avgLpm      Float  @default(0.0)
-  avgAccuracy Float  @default(0.0)
-  totalGames  Int    @default(0)
-  totalTime   Float  @default(0.0)
-  user        User   @relation(fields: [userId], references: [id])
+  id              String     @id @default(cuid())
+  userId          String
+  mode            String
+  category        String
+  avgLpm          Float      @default(0.0)
+  avgAccuracy     Float      @default(0.0)
+  totalGames      Int        @default(0)
+  totalTime       Float      @default(0.0)
+  bestGameEntryId String?
+  bestGameEntry   GameEntry? @relation(fields: [bestGameEntryId], references: [id])
+  user            User       @relation(fields: [userId], references: [id])
 
-  @@unique([userId, mode, category]) // Ensures unique stats per user, mode, and category
+  @@unique([userId, mode, category])
 }
 
 model GameEntry {
-  id          String   @id @default(cuid())
+  id          String      @id @default(cuid())
   userId      String
-  mode        String // 'time' or 'characters'
+  mode        String
   language    String
-  wpm         Float // Changed to Float
-  rawWpm      Float // Changed to Float
-  lpm         Float // Changed to Float
-  rawLpm      Float // Changed to Float
+  wpm         Float
+  rawWpm      Float
+  lpm         Float
+  rawLpm      Float
   totalChar   Int
   totalClicks Int
   totalTime   Float
   accuracy    Float
-  createdAt   DateTime @default(now())
+  createdAt   DateTime    @default(now())
   targetSize  Int
-  user        User     @relation(fields: [userId], references: [id])
+  user        User        @relation(fields: [userId], references: [id])
+  UserStats   UserStats[]
 
   @@index([lpm, userId])
 }
