@@ -1,10 +1,9 @@
 import React from 'react';
 import { UserRoundPen } from 'lucide-react';
 
-import { ExperienceBar } from './ExperienceBar';
 import { useUserContext } from './UserContext';
 
-export const AvatarAndName = async () => {
+export const AvatarAndName = () => {
   const { user } = useUserContext();
 
   // Format the date as "Joined 18 Feb 2022"

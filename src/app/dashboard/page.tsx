@@ -1,7 +1,9 @@
+'use server';
+
 import React from 'react';
 import { redirect } from 'next/navigation';
 
-import AccountPage from '@/components/common/ui/dashboard/AccountDetails/AccountPage';
+import AccountPage from '@/components/common/ui/dashboard/DashBoard';
 import { getUser } from '@/lib/lucia';
 
 const Page = async () => {
