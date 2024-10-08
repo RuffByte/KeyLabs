@@ -26,7 +26,7 @@ const ModeStatBox = ({
 
   return (
     <motion.div
-      className="grid h-32 grid-rows-3 place-items-center rounded-lg border border-secondary/70 p-2 text-center transition-all duration-300"
+      className="grid h-32 grid-rows-3 place-items-center rounded-lg p-2 text-center transition-all duration-300"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
