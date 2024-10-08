@@ -10,14 +10,38 @@ import { AccountDetails } from './AccountDetails/AccountDetails';
 import { UserProvider } from './AccountDetails/UserContext';
 import { ModeStats } from './ModeStats/ModeStats';
 
+//i'll export this later gl refactoring all that.
+interface BestGame {
+  lpm: number;
+  rawLpm: number;
+  accuracy: number;
+  createdAt: string;
+  language: string;
+  totalChar: number;
+  totalClicks: number;
+}
+
+interface BestScore {
+  mode: string;
+  category: string;
+  avgLpm: number;
+  avgAccuracy: number;
+  bestGame: BestGame | null;
+}
+
 interface AccountPageProps {
   user: SafeUser;
   userStats: UserStats[];
+  bestScores: BestScore[];
 }
 
-const DashBoard: React.FC<AccountPageProps> = ({ user, userStats }) => {
+const DashBoard: React.FC<AccountPageProps> = ({
+  user,
+  userStats,
+  bestScores,
+}) => {
   return (
-    <UserProvider user={user} userStats={userStats}>
+    <UserProvider user={user} userStats={userStats} bestScores={bestScores}>
       <NavigationBar />
       <div className="flex h-full flex-col items-center justify-center gap-2">
         <AccountDetails />

@@ -1,7 +1,6 @@
 // src/app/api/data/user.ts
 import { NextResponse } from 'next/server';
 
-import { getUser } from '@/lib/lucia';
 import { prisma } from '@/lib/prisma';
 
 export async function GET(request: Request) {

@@ -3,37 +3,44 @@ import React from 'react';
 import { useUserContext } from '../AccountDetails/UserContext';
 import ModeStatBox from './ModeStatBox';
 
-//this shit.... is so ass....
 export const ModeStats = () => {
-  const { userStats } = useUserContext();
+  const { bestScores } = useUserContext();
 
   const characterModes = ['30c', '50c', '100c'];
   const timeModes = ['15s', '30s', '60s'];
 
-  const findStats = (mode: string, category: string) => {
-    return userStats?.find(
-      (stat: any) => stat.mode === mode && stat.category === category
+  // Helper function to find the best score for a given mode and category
+  const findBestScore = (mode: string, category: string) => {
+    return bestScores?.find(
+      (score) => score.mode === mode && score.category === category
     );
   };
 
   return (
     <div className="grid w-full grid-cols-2 gap-4">
+      {/* Character modes: 30c, 50c, 100c */}
       <div className="grid grid-cols-3 gap-4">
         {characterModes.map((category) => {
-          const stats = findStats('characters', category);
+          const bestScore = findBestScore('characters', category);
           return (
             <ModeStatBox
               key={category}
               title={`${category} characters`}
-              lpm={stats?.avgLpm}
-              accuracy={stats?.avgAccuracy}
-              additionalStats={{
-                duration: '30 seconds',
-                lpm: 122,
-                raw: 122,
-                accuracy: 99,
-                date: '26 Oct 2023',
-              }}
+              lpm={bestScore?.bestGame?.lpm}
+              accuracy={bestScore?.bestGame?.accuracy}
+              additionalStats={
+                bestScore?.bestGame
+                  ? {
+                      duration: `${bestScore?.bestGame?.totalChar} characters`,
+                      lpm: bestScore?.bestGame?.lpm || 0,
+                      raw: bestScore?.bestGame?.rawLpm || 0,
+                      accuracy: bestScore?.bestGame?.accuracy || 0,
+                      date: new Date(
+                        bestScore?.bestGame?.createdAt
+                      ).toLocaleDateString(),
+                    }
+                  : undefined
+              }
             />
           );
         })}
@@ -42,20 +49,26 @@ export const ModeStats = () => {
       {/* Time modes: 15s, 30s, 60s */}
       <div className="grid grid-cols-3 gap-4">
         {timeModes.map((category) => {
-          const stats = findStats('time', category);
+          const bestScore = findBestScore('time', category);
           return (
             <ModeStatBox
               key={category}
               title={`${category} seconds`}
-              lpm={stats?.avgLpm}
-              accuracy={stats?.avgAccuracy}
-              additionalStats={{
-                duration: stats?.totalTime,
-                lpm: stats.lpm,
-                raw: 122,
-                accuracy: 99,
-                date: '26 Oct 2023',
-              }}
+              lpm={bestScore?.bestGame?.lpm}
+              accuracy={bestScore?.bestGame?.accuracy}
+              additionalStats={
+                bestScore?.bestGame
+                  ? {
+                      duration: `${category} seconds`,
+                      lpm: bestScore?.bestGame?.lpm || 0,
+                      raw: bestScore?.bestGame?.rawLpm || 0,
+                      accuracy: bestScore?.bestGame?.accuracy || 0,
+                      date: new Date(
+                        bestScore?.bestGame?.createdAt
+                      ).toLocaleDateString(),
+                    }
+                  : undefined
+              }
             />
           );
         })}

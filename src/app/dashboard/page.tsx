@@ -17,9 +17,14 @@ const Page = async () => {
     `${process.env.NEXT_PUBLIC_URL}/api/data/user?name=${userCheck.name}`
   );
 
+  const bestResponse = await fetch(
+    `${process.env.NEXT_PUBLIC_URL}/api/data/userBest?name=${userCheck.name}`
+  );
+
+  const bestScores = await bestResponse.json();
   const { user, stats } = await response.json();
 
-  return <AccountPage user={user} userStats={stats} />;
+  return <AccountPage user={user} userStats={stats} bestScores={bestScores} />;
 };
 
 export default Page;

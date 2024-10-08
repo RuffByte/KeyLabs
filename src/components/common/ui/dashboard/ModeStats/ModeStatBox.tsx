@@ -22,6 +22,8 @@ const ModeStatBox = ({
 }: ModeStatBoxProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
+  const hasStats = lpm !== undefined && accuracy !== undefined;
+
   return (
     <motion.div
       className="grid h-32 grid-rows-3 place-items-center rounded-lg border border-secondary/70 p-2 text-center transition-all duration-300"
@@ -39,8 +41,14 @@ const ModeStatBox = ({
             transition={{ duration: 0.2 }}
           >
             <h3 className="text-lg font-bold">{title}</h3>
-            <p>LPM: {lpm?.toFixed(2)}</p>
-            <p>Accuracy: {accuracy?.toFixed(2)}%</p>
+            {hasStats ? (
+              <>
+                <p>LPM: {lpm?.toFixed(2)}</p>
+                <p>Accuracy: {accuracy?.toFixed(2)}%</p>
+              </>
+            ) : (
+              <p>No information</p>
+            )}
           </motion.div>
         ) : (
           <motion.div
@@ -51,11 +59,17 @@ const ModeStatBox = ({
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            <p>{additionalStats?.duration}</p>
-            <p>{additionalStats?.lpm} LPM</p>
-            <p>{additionalStats?.raw} Raw</p>
-            <p>{additionalStats?.accuracy}% Acc</p>
-            <p>{additionalStats?.date}</p>
+            {additionalStats ? (
+              <>
+                <p>{additionalStats?.duration}</p>
+                <p>{additionalStats?.lpm} LPM</p>
+                <p>{additionalStats?.raw} Raw</p>
+                <p>{additionalStats?.accuracy}% Acc</p>
+                <p>{additionalStats?.date}</p>
+              </>
+            ) : (
+              <p>No additional information</p>
+            )}
           </motion.div>
         )}
       </AnimatePresence>
