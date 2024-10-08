@@ -17,7 +17,7 @@ export const ModeStats = () => {
   };
 
   return (
-    <div className="grid w-full grid-cols-2 gap-4 *:rounded-lg *:border *:border-secondary/70">
+    <div className="grid w-full grid-cols-2 gap-4 text-foreground *:rounded-lg *:border *:border-secondary/70">
       {/* Character modes: 30c, 50c, 100c */}
       <div className="grid grid-cols-3 gap-4">
         {characterModes.map((category) => {

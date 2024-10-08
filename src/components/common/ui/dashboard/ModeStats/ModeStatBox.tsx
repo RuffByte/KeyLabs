@@ -62,9 +62,9 @@ const ModeStatBox = ({
             {additionalStats ? (
               <>
                 <p>{additionalStats?.duration}</p>
-                <p>{additionalStats?.lpm} LPM</p>
-                <p>{additionalStats?.raw} Raw</p>
-                <p>{additionalStats?.accuracy}% Acc</p>
+                <p>{additionalStats?.lpm} lpm</p>
+                <p>{additionalStats?.raw} raw lpm</p>
+                <p>{additionalStats?.accuracy}% acc</p>
                 <p>{additionalStats?.date}</p>
               </>
             ) : (
