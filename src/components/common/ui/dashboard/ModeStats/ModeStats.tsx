@@ -22,6 +22,7 @@ export const ModeStats = () => {
       <div className="flex justify-around gap-4">
         {characterModes.map((characterMode) => {
           const bestScore = findBestScore('characters', characterMode);
+
           return (
             <ModeStatBox
               key={characterMode}
