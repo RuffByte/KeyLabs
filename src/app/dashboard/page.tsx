@@ -4,7 +4,7 @@ import React from 'react';
 import { redirect } from 'next/navigation';
 
 import AccountPage from '@/components/common/ui/dashboard/DashBoard';
-import { getUser } from '@/lib/lucia';
+import { getUser } from '@/lib/antAuth/sessions';
 
 const Page = async () => {
   //check for login its called userCheck cause user got taken below so sad

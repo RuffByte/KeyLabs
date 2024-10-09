@@ -7,8 +7,12 @@ import { generateCodeVerifier } from 'oslo/oauth2';
 import { Argon2id } from 'oslo/password';
 import { z } from 'zod';
 
+import {
+  deleteSessionTokenCookie,
+  setSessionTokenCookie,
+} from '@/lib/antAuth/cookies';
+import { createSession, generateSessionToken } from '@/lib/antAuth/sessions';
 import { googleOAuthClient } from '@/lib/googleOauth';
-import { lucia } from '@/lib/lucia';
 import { prisma } from '@/lib/prisma';
 import { signInSchema, signUpSchema } from '@/schemas/zod/schemas';
 
@@ -46,13 +50,9 @@ export const signUp = async (values: z.infer<typeof signUpSchema>) => {
       },
     });
 
-    const session = await lucia.createSession(user.id, {});
-    const sessionCookie = await lucia.createSessionCookie(session.id);
-    cookies().set(
-      sessionCookie.name,
-      sessionCookie.value,
-      sessionCookie.attributes
-    );
+    const sessionToken = generateSessionToken();
+    const sessionCookie = await createSession(sessionToken, user.id);
+    setSessionTokenCookie(sessionToken, sessionCookie.expiresAt);
     return { success: true };
   } catch (error) {
     return { error: 'Something went wrong', success: false };
@@ -77,23 +77,14 @@ export const signIn = async (values: z.infer<typeof signInSchema>) => {
     return { success: false, error: 'Invalid Credentials!' };
   }
 
-  const session = await lucia.createSession(user.id, {});
-  const sessionCookie = await lucia.createSessionCookie(session.id);
-  cookies().set(
-    sessionCookie.name,
-    sessionCookie.value,
-    sessionCookie.attributes
-  );
+  const sessionToken = generateSessionToken();
+  const sessionCookie = await createSession(sessionToken, user.id);
+  setSessionTokenCookie(sessionToken, sessionCookie.expiresAt);
   return { success: true };
 };
 
 export const logOut = async () => {
-  const sessionCookie = await lucia.createBlankSessionCookie();
-  cookies().set(
-    sessionCookie.name,
-    sessionCookie.value,
-    sessionCookie.attributes
-  );
+  deleteSessionTokenCookie();
   return redirect('/login');
 };
 

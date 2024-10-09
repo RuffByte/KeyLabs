@@ -2,8 +2,9 @@ import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
 import { NextRequest } from 'next/server';
 
+import { setSessionTokenCookie } from '@/lib/antAuth/cookies';
+import { createSession, generateSessionToken } from '@/lib/antAuth/sessions';
 import { googleOAuthClient } from '@/lib/googleOauth';
-import { lucia } from '@/lib/lucia';
 import { prisma } from '@/lib/prisma';
 
 export async function GET(req: NextRequest) {
@@ -71,13 +72,9 @@ export async function GET(req: NextRequest) {
     userId = user.id;
   }
 
-  const session = await lucia.createSession(userId, {});
-  const sessionCookie = await lucia.createSessionCookie(session.id);
-  cookies().set(
-    sessionCookie.name,
-    sessionCookie.value,
-    sessionCookie.attributes
-  );
+  const sessionToken = generateSessionToken();
+  const sessionCookie = await createSession(sessionToken, userId);
+  setSessionTokenCookie(sessionToken, sessionCookie.expiresAt);
 
   return redirect('/dashboard');
 }
