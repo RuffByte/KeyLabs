@@ -17,7 +17,7 @@ export const ModeStats = () => {
   };
 
   return (
-    <div className="grid w-full grid-cols-2 gap-4 text-foreground *:rounded-lg *:border *:border-secondary/70">
+    <div className="flex flex-col gap-8 text-foreground *:rounded-lg *:border *:border-secondary/70">
       {/* Character modes: 30c, 50c, 100c */}
       <div className="grid grid-cols-3 gap-4">
         {characterModes.map((category) => {
@@ -47,7 +47,7 @@ export const ModeStats = () => {
       </div>
 
       {/* Time modes: 15s, 30s, 60s */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="flex">
         {timeModes.map((category) => {
           const bestScore = findBestScore('time', category);
           return (

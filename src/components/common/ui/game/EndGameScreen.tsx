@@ -83,11 +83,8 @@ export const EndGameScreen = ({ gameData }: EndGameScreenProps) => {
         <Button onClick={() => handleRouteChange('leaderboard')}>
           <Crown />
         </Button>
-        <Button onClick={() => toast.warning('Not implemented...')}>
+        <Button onClick={() => handleResetGame()}>
           <RotateCcw />
-        </Button>
-        <Button>
-          <ArrowRight onClick={() => handleResetGame()} />
         </Button>
       </div>
     </div>

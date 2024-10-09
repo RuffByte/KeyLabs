@@ -80,22 +80,24 @@ export const ClientLeaderboardPage = () => {
           </div>
         </div>
 
-        <div className="flex w-[800px] flex-col gap-2 even:*:bg-secondary/30">
-          <ScoreRowLabel />
-          {data ? (
-            <>
-              {data.map((item, i) => (
-                <ScoreRow key={i} {...item} score={item} />
-              ))}
-              {Array.from({ length: 10 - data.length }).map((_, i) => (
-                <ScoreRowEmpty key={i} />
-              ))}
-            </>
-          ) : (
-            Array.from({ length: 10 }).map((_, i) => (
-              <ScoreRowSkeleton key={i} />
-            ))
-          )}
+        <ScoreRowLabel />
+        <div className="flex h-[600px] w-[800px] flex-col gap-2 overflow-y-scroll">
+          <div className="even:*:bg-secondary/30">
+            {data ? (
+              <>
+                {data.map((item, i) => (
+                  <ScoreRow key={i} {...item} score={item} index={i + 1} />
+                ))}
+                {Array.from({ length: 10 - data.length }).map((_, i) => (
+                  <ScoreRowEmpty key={i} />
+                ))}
+              </>
+            ) : (
+              Array.from({ length: 10 }).map((_, i) => (
+                <ScoreRowSkeleton key={i} />
+              ))
+            )}
+          </div>
         </div>
       </div>
     </>
@@ -114,7 +116,13 @@ const ScoreRowLabel = () => {
   );
 };
 
-const ScoreRow = ({ score }: { score: LeaderboardEntry }) => {
+const ScoreRow = ({
+  score,
+  index,
+}: {
+  score: LeaderboardEntry;
+  index: number;
+}) => {
   const date = new Date(score.createdAt);
   const datetext =
     date.getHours().toString().padStart(2, '0') +
@@ -122,7 +130,8 @@ const ScoreRow = ({ score }: { score: LeaderboardEntry }) => {
     date.getMinutes().toString().padStart(2, '0');
   return (
     <>
-      <div className="grid h-9 grid-cols-[1fr_80px_80px_80px_120px] items-center justify-end whitespace-nowrap rounded-lg px-2 *:w-min">
+      <div className="grid h-9 grid-cols-[20px_1fr_80px_80px_80px_120px] items-center justify-end whitespace-nowrap rounded-lg px-2 *:w-min">
+        <p>{index}</p>
         <p className="justify-self-start">{score.user?.name}</p>
         <p className="justify-self-end">{score.accuracy.toFixed(2)}</p>
         <p className="justify-self-end">{score.lpm.toFixed(2)}</p>
@@ -139,7 +148,8 @@ const ScoreRow = ({ score }: { score: LeaderboardEntry }) => {
 
 const ScoreRowSkeleton = () => {
   return (
-    <div className="grid h-9 grid-cols-[1fr_80px_80px_80px_120px] items-center justify-end whitespace-nowrap rounded-lg px-2 *:w-min">
+    <div className="grid h-9 grid-cols-[20px_1fr_80px_80px_80px_120px] items-center justify-end whitespace-nowrap rounded-lg px-2 *:w-min">
+      <div className="h-4 min-w-[20px] animate-pulse justify-self-start rounded-xl bg-black/20" />
       <div className="h-4 min-w-[40px] animate-pulse justify-self-start rounded-xl bg-black/20" />
       <div className="h-4 min-w-[40px] animate-pulse justify-self-end rounded-xl bg-black/20" />
       <div className="h-4 min-w-[40px] animate-pulse justify-self-end rounded-xl bg-black/20" />

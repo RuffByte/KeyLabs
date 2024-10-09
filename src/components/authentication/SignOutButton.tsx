@@ -11,7 +11,7 @@ type Props = {
 export const SignOutButton = ({ children }: Props) => {
   return (
     <button
-      className="rounded-full bg-white px-4 py-2"
+      className="w-full rounded-md bg-foreground px-4 py-2 text-background"
       onClick={() => {
         logOut();
       }}
