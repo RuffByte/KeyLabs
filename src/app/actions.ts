@@ -23,7 +23,7 @@ export async function submitGameData(gameData: GameData) {
       userId: user.id,
       mode: gameData.mode,
       language: gameData.language,
-      totalChar: gameData.totalChar,
+      totalChar: gameData.totalHit, //total char is buggy ig swapped to total hit
       totalClicks: gameData.totalClick,
       totalTime: gameData.totalTime,
       accuracy: gameData.accuracy,
@@ -46,9 +46,7 @@ export async function submitGameData(gameData: GameData) {
 
   // Determine the category (time or characters)
   const category =
-    gameData.mode === 'time'
-      ? `${gameData.totalTime}`
-      : `${gameData.totalChar}`;
+    gameData.mode === 'time' ? `${gameData.totalTime}` : `${gameData.totalHit}`;
 
   // Get current user stats
   const currentStats = await prisma.userStats.findUnique({
