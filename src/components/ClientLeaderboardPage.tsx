@@ -23,6 +23,7 @@ export const ClientLeaderboardPage = () => {
 
   const { data } = useLeaderboardScore(currentMode, currentSubMode);
 
+  console.log(data);
   useEffect(() => {
     queryClient.resetQueries({
       queryKey: [QUERY_KEY.STATIC_LEADERBOARD],

@@ -6,8 +6,8 @@ import ModeStatBox from './ModeStatBox';
 export const ModeStats = () => {
   const { bestScores } = useUserContext();
 
-  const characterModes = ['30c', '50c', '100c'];
-  const timeModes = ['15s', '30s', '60s'];
+  const characterModes = ['30', '50', '100'];
+  const timeModes = ['15', '30', '60'];
 
   // Helper function to find the best score for a given mode and category
   const findBestScore = (mode: string, category: string) => {

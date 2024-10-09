@@ -47,8 +47,8 @@ export async function submitGameData(gameData: GameData) {
   // Determine the category (time or characters)
   const category =
     gameData.mode === 'time'
-      ? `${gameData.totalTime}s`
-      : `${gameData.totalChar}c`;
+      ? `${gameData.totalTime}`
+      : `${gameData.totalChar}`;
 
   // Get current user stats
   const currentStats = await prisma.userStats.findUnique({

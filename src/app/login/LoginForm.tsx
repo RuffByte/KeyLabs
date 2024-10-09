@@ -32,7 +32,7 @@ const LoginForm = () => {
   // Handle form submission
   async function onSubmit(values: z.infer<typeof signInSchema>) {
     const res = await signIn(values);
-    console.log(res);
+
     if (res.success) {
       toast.success('Login successful');
       router.push('/dashboard');
