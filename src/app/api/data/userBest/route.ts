@@ -24,11 +24,10 @@ export async function GET(request: Request) {
   const bestScores = await prisma.userStats.findMany({
     where: { userId: user.id },
     include: {
-      bestGameEntry: true, // Include the related GameEntry for best score
+      bestGameEntry: true,
     },
   });
 
-  // Map through user stats to extract best scores with related game entry details
   const bestScoresFormatted = bestScores.map((stat) => ({
     mode: stat.mode,
     category: stat.category,
