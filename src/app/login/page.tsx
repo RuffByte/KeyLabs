@@ -2,7 +2,7 @@ import React from 'react';
 import { redirect } from 'next/navigation';
 
 import { NavigationBar } from '@/components/common/ui/navigation/navbar';
-import { getUser } from '@/lib/lucia';
+import { getUser } from '@/lib/antAuth/sessions';
 import LoginForm from './LoginForm';
 import SignUpForm from './SignUpForm';
 
