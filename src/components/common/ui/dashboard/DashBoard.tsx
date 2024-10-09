@@ -43,10 +43,13 @@ const DashBoard: React.FC<AccountPageProps> = ({
   return (
     <UserProvider user={user} userStats={userStats} bestScores={bestScores}>
       <NavigationBar />
-      <div className="flex h-full items-center justify-center gap-2">
-        <div className="flex w-[900px] gap-8">
-          <AccountDetails />
-          <ModeStats />
+      <div className="flex h-full items-center justify-center gap-2 text-foreground">
+        <div className="flex size-min flex-col gap-4">
+          <div className="flex h-min gap-4">
+            <AccountDetails />
+            <ModeStats />
+          </div>
+          <SignOutButton>Sign out</SignOutButton>
         </div>
       </div>
     </UserProvider>

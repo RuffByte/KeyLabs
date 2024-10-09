@@ -5,6 +5,7 @@ import { GameEntry } from '@prisma/client';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { useLeaderboardScore } from '@/app/hooks/query/useLeaderboard';
+import { dateToHHMMSS } from '@/lib/utils/date';
 import { QUERY_KEY } from '@/lib/utils/queryKeys';
 import Button from './common/Button';
 import { Select, SelectContent, SelectItem } from './common/Select';
@@ -21,7 +22,7 @@ export const ClientLeaderboardPage = () => {
   const [currentMode, setCurrentMode] = useState('characters');
   const [currentSubMode, setCurrentSubMode] = useState(30);
 
-  const { data, isLoading } = useLeaderboardScore(currentMode, currentSubMode);
+  const { data } = useLeaderboardScore(currentMode, currentSubMode);
 
   console.log(data);
   useEffect(() => {
@@ -84,9 +85,9 @@ export const ClientLeaderboardPage = () => {
         <ScoreRowLabel />
         <div className="no-scrollbar flex h-[550px] w-[800px] flex-col gap-2 overflow-y-scroll">
           <div className="even:*:bg-secondary/30">
-            {!isLoading ? (
+            {data ? (
               <>
-                {data?.map((item, i) => (
+                {data.map((item, i) => (
                   <ScoreRow key={i} {...item} score={item} index={i + 1} />
                 ))}
                 {Array.from({ length: 15 - data?.length! }).map((_, i) => (
@@ -126,10 +127,6 @@ const ScoreRow = ({
   index: number;
 }) => {
   const date = new Date(score.createdAt);
-  const datetext =
-    date.getHours().toString().padStart(2, '0') +
-    ':' +
-    date.getMinutes().toString().padStart(2, '0');
   return (
     <>
       <div className="grid h-9 grid-cols-[20px_1fr_80px_80px_80px_120px] items-center justify-end gap-2 whitespace-nowrap rounded-lg px-2 *:w-min">
@@ -140,7 +137,7 @@ const ScoreRow = ({
         <p className="justify-self-end">{score.wpm.toFixed(2)}</p>
         <div className="flex flex-col items-end justify-between justify-self-end *:text-xs">
           <p>{date.toLocaleDateString()}</p>
-          <p className="font-bold">{datetext}</p>
+          <p className="font-bold">{dateToHHMMSS(date)}</p>
         </div>
         {/* Replace with actual date */}
       </div>

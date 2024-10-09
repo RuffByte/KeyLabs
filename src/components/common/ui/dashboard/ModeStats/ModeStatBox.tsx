@@ -1,32 +1,24 @@
 import React, { useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 
-interface ModeStatBoxProps {
-  title: string;
-  lpm?: number;
-  accuracy?: number;
-  additionalStats?: {
-    duration: string;
-    lpm: number;
-    raw: number;
-    accuracy: number;
-    date: string;
-  };
+import { dateToHHMMSS } from '@/lib/utils/date';
+import { BestGame } from '../AccountDetails/UserContext';
+
+interface ModeStatBoxProps extends Partial<BestGame> {
+  label: string;
 }
 
-const ModeStatBox = ({
-  title,
-  lpm,
-  accuracy,
-  additionalStats,
-}: ModeStatBoxProps) => {
+const ModeStatBox = ({ label, ...bestScore }: ModeStatBoxProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
-  const hasStats = lpm !== undefined && accuracy !== undefined;
+  const hasStats =
+    bestScore.lpm !== undefined && bestScore.accuracy !== undefined;
+
+  const date = new Date(bestScore?.createdAt || '');
 
   return (
     <motion.div
-      className="grid h-32 grid-rows-3 place-items-center rounded-lg p-2 text-center transition-all duration-300"
+      className="flex h-32 w-[160px] flex-col place-items-center justify-center rounded-lg p-2 text-center transition-all duration-300"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -34,17 +26,17 @@ const ModeStatBox = ({
         {!isHovered ? (
           <motion.div
             key="best-stats"
-            className="row-span-3"
+            className="flex flex-col"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            <h3 className="text-lg font-bold">{title}</h3>
+            <h3 className="text-lg font-bold">{label}</h3>
             {hasStats ? (
               <>
-                <p>LPM: {lpm?.toFixed(2)}</p>
-                <p>Accuracy: {accuracy?.toFixed(2)}%</p>
+                <p>LPM: {bestScore.lpm?.toFixed(2)}</p>
+                <p>Accuracy: {bestScore.accuracy?.toFixed(2)}%</p>
               </>
             ) : (
               <p>No information</p>
@@ -53,19 +45,20 @@ const ModeStatBox = ({
         ) : (
           <motion.div
             key="detailed-stats"
-            className="row-span-3"
+            className="flex flex-col items-center"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
-            {additionalStats ? (
+            {hasStats ? (
               <>
-                <p>{additionalStats?.duration}</p>
-                <p>{additionalStats?.lpm} lpm</p>
-                <p>{additionalStats?.raw} raw lpm</p>
-                <p>{additionalStats?.accuracy}% acc</p>
-                <p>{additionalStats?.date}</p>
+                <strong>{label}</strong>
+                <p>
+                  LPM: {bestScore?.lpm} /{bestScore?.rawLpm}
+                </p>
+                <p>Accuracy: {bestScore?.accuracy}% </p>
+                <p>{date.toLocaleDateString()}</p>
               </>
             ) : (
               <p>No additional information</p>
