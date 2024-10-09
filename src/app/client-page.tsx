@@ -312,7 +312,7 @@ const ClientGamePage = ({ user }: { user: User }) => {
   const { screen } = useScreen();
   const {
     setMode,
-    endGame,
+  endGame,
     targetSize,
     wordIndex,
     hasStart,

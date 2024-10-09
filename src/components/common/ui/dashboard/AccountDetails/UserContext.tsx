@@ -4,7 +4,7 @@ import { UserStats } from '@prisma/client';
 import { SafeUser } from '@/app/types/safeUser';
 
 // Define the structure for BestGame and BestScore
-interface BestGame {
+export interface BestGame {
   lpm: number;
   rawLpm: number;
   accuracy: number;
@@ -14,7 +14,7 @@ interface BestGame {
   totalClicks: number;
 }
 
-interface BestScore {
+export interface BestScore {
   mode: string;
   category: string;
   avgLpm: number;
@@ -22,7 +22,7 @@ interface BestScore {
   bestGame: BestGame | null;
 }
 
-interface UserContextType {
+export interface UserContextType {
   user: SafeUser | null;
   userStats: UserStats[] | null;
   bestScores: BestScore[] | null;

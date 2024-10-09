@@ -5,6 +5,7 @@ import { GameEntry } from '@prisma/client';
 import { useQueryClient } from '@tanstack/react-query';
 
 import { useLeaderboardScore } from '@/app/hooks/query/useLeaderboard';
+import { dateToHHMMSS } from '@/lib/utils/date';
 import { QUERY_KEY } from '@/lib/utils/queryKeys';
 import Button from './common/Button';
 import { Select, SelectContent, SelectItem } from './common/Select';
@@ -46,7 +47,7 @@ export const ClientLeaderboardPage = () => {
   return (
     <>
       <NavigationBar />
-      <div className="absolute left-1/2 z-[49] mt-32 w-min -translate-x-1/2 rounded-xl border bg-background px-9 py-4 pb-16 text-foreground">
+      <div className="absolute left-1/2 z-[49] mt-32 w-min -translate-x-1/2 rounded-xl border bg-background px-9 py-8 text-foreground">
         <div className="flex w-full justify-between whitespace-nowrap text-4xl">
           <p className="w-min">Leaderboards</p>
           <p className="w-min">English 5k</p>
@@ -59,7 +60,7 @@ export const ClientLeaderboardPage = () => {
                 <SelectItem value="time" />
               </SelectContent>
             </Select>
-            <div className="flex w-min gap-2 *:grow">
+            <div className="flex w-min gap-2 *:w-20 *:grow">
               {currentMode === 'time' && (
                 <>
                   <Button onClick={() => handleSubModeChange(15)}>15s</Button>
@@ -81,22 +82,24 @@ export const ClientLeaderboardPage = () => {
           </div>
         </div>
 
-        <div className="flex w-[800px] flex-col gap-2 even:*:bg-secondary/30">
-          <ScoreRowLabel />
-          {data ? (
-            <>
-              {data.map((item, i) => (
-                <ScoreRow key={i} {...item} score={item} />
-              ))}
-              {Array.from({ length: 10 - data.length }).map((_, i) => (
-                <ScoreRowEmpty key={i} />
-              ))}
-            </>
-          ) : (
-            Array.from({ length: 10 }).map((_, i) => (
-              <ScoreRowSkeleton key={i} />
-            ))
-          )}
+        <ScoreRowLabel />
+        <div className="no-scrollbar flex h-[550px] w-[800px] flex-col gap-2 overflow-y-scroll">
+          <div className="even:*:bg-secondary/30">
+            {data ? (
+              <>
+                {data.map((item, i) => (
+                  <ScoreRow key={i} {...item} score={item} index={i + 1} />
+                ))}
+                {Array.from({ length: 15 - data?.length! }).map((_, i) => (
+                  <ScoreRowEmpty key={i} />
+                ))}
+              </>
+            ) : (
+              Array.from({ length: 15 }).map((_, i) => (
+                <ScoreRowSkeleton key={i} />
+              ))
+            )}
+          </div>
         </div>
       </div>
     </>
@@ -105,7 +108,8 @@ export const ClientLeaderboardPage = () => {
 
 const ScoreRowLabel = () => {
   return (
-    <div className="grid grid-cols-[1fr_80px_80px_80px_120px] justify-end px-2 *:w-min">
+    <div className="grid grid-cols-[20px_1fr_80px_80px_80px_120px] justify-end gap-2 px-2 *:w-min">
+      <p className="justify-self-start">#</p>
       <p className="justify-self-start">name</p>
       <p className="justify-self-end">accuracy</p>
       <p className="justify-self-end">lpm</p>
@@ -115,22 +119,25 @@ const ScoreRowLabel = () => {
   );
 };
 
-const ScoreRow = ({ score }: { score: LeaderboardEntry }) => {
+const ScoreRow = ({
+  score,
+  index,
+}: {
+  score: LeaderboardEntry;
+  index: number;
+}) => {
   const date = new Date(score.createdAt);
-  const datetext =
-    date.getHours().toString().padStart(2, '0') +
-    ':' +
-    date.getMinutes().toString().padStart(2, '0');
   return (
     <>
-      <div className="grid h-9 grid-cols-[1fr_80px_80px_80px_120px] items-center justify-end whitespace-nowrap rounded-lg px-2 *:w-min">
+      <div className="grid h-9 grid-cols-[20px_1fr_80px_80px_80px_120px] items-center justify-end gap-2 whitespace-nowrap rounded-lg px-2 *:w-min">
+        <p>{index}</p>
         <p className="justify-self-start">{score.user?.name}</p>
         <p className="justify-self-end">{score.accuracy.toFixed(2)}</p>
         <p className="justify-self-end">{score.lpm.toFixed(2)}</p>
         <p className="justify-self-end">{score.wpm.toFixed(2)}</p>
         <div className="flex flex-col items-end justify-between justify-self-end *:text-xs">
-          <p className="font-bold">{datetext}</p>
           <p>{date.toLocaleDateString()}</p>
+          <p className="font-bold">{dateToHHMMSS(date)}</p>
         </div>
         {/* Replace with actual date */}
       </div>
@@ -140,7 +147,8 @@ const ScoreRow = ({ score }: { score: LeaderboardEntry }) => {
 
 const ScoreRowSkeleton = () => {
   return (
-    <div className="grid h-9 grid-cols-[1fr_80px_80px_80px_120px] items-center justify-end whitespace-nowrap rounded-lg px-2 *:w-min">
+    <div className="grid h-9 grid-cols-[20px_1fr_80px_80px_80px_120px] items-center justify-end gap-2 whitespace-nowrap rounded-lg px-2 *:w-min">
+      <div className="h-4 min-w-[20px] animate-pulse justify-self-start rounded-xl bg-black/20" />
       <div className="h-4 min-w-[40px] animate-pulse justify-self-start rounded-xl bg-black/20" />
       <div className="h-4 min-w-[40px] animate-pulse justify-self-end rounded-xl bg-black/20" />
       <div className="h-4 min-w-[40px] animate-pulse justify-self-end rounded-xl bg-black/20" />

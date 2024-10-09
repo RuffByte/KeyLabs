@@ -4,7 +4,6 @@ import React from 'react';
 import { UserStats } from '@prisma/client';
 
 import { SafeUser } from '@/app/types/safeUser';
-import SignOutButton from '@/components/authentication/SignOutButton';
 import { NavigationBar } from '../navigation/navbar';
 import { AccountDetails } from './AccountDetails/AccountDetails';
 import { UserProvider } from './AccountDetails/UserContext';
@@ -43,10 +42,13 @@ const DashBoard: React.FC<AccountPageProps> = ({
   return (
     <UserProvider user={user} userStats={userStats} bestScores={bestScores}>
       <NavigationBar />
-      <div className="flex h-full flex-col items-center justify-center gap-2">
-        <AccountDetails />
-        <ModeStats />
-        <SignOutButton>Sign Out</SignOutButton>
+      <div className="flex h-full items-center justify-center gap-2 text-foreground">
+        <div className="flex size-min w-[1000px] flex-col gap-4">
+          <div className="flex h-min gap-4">
+            <AccountDetails />
+            <ModeStats />
+          </div>
+        </div>
       </div>
     </UserProvider>
   );

@@ -90,7 +90,7 @@ const Transition = ({ children }: TransitionProps) => {
       <div className="pointer-events-none fixed inset-0 z-[9999] overflow-hidden">
         {isTransitioning && (
           <motion.div
-            className="absolute inset-0 size-full bg-slate-800"
+            className="absolute inset-0 size-full bg-foreground"
             initial="initial"
             animate="animate"
             transition={{ ease: 'easeOut', duration: 0.2, delay: 0.3 }}
@@ -100,7 +100,7 @@ const Transition = ({ children }: TransitionProps) => {
         )}
         {!isTransitioning && (
           <motion.div
-            className="fixed inset-0 size-full bg-slate-800"
+            className="fixed inset-0 size-full bg-foreground"
             initial="initial"
             animate="animate"
             transition={{ ease: 'easeOut', duration: 0.2 }}

@@ -44,3 +44,13 @@ html {
     0px 0px 11.52px #0005,
     0px 0px 5.76px #0005;
 }
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  width: 0px;
+  display: none;
+  background: transparent;
+}

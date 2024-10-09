@@ -44,9 +44,11 @@ export const NavigationBar = ({ ...props }: NavigationBarProp) => {
           <Button onClick={() => handleRouteChange('leaderboard')}>
             <Crown size={20} />
           </Button>
-          <Button onClick={() => toast.warning('Not implemented...')}>
-            <Info size={20} />
-          </Button>
+          <a href="https://github.com/RuffByte/KeyLabs">
+            <Button>
+              <Info size={20} />
+            </Button>
+          </a>
           <Button onClick={() => toast.warning('Not implemented...')}>
             <Settings size={20} />
           </Button>

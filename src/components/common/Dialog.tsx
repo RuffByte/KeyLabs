@@ -63,16 +63,42 @@ const Modal = () => {
   );
 };
 
+const dialogVariants = {
+  initial: {
+    scale: 0.8,
+    opacity: 0,
+    clipPath: 'inset(50% 0 round 16px)',
+  },
+  enter: {
+    scale: 1,
+    opacity: 1,
+    clipPath: 'inset(0% 0)',
+    transition: {
+      ease: 'easeInOut',
+      duration: 0.1,
+      clipPath: {
+        delay: 0.1,
+      },
+    },
+  },
+  exit: {
+    opacity: 0,
+    scale: 0.95,
+    clipPath: 'inset(50% 0)',
+  },
+};
+
 export const DialogContent = ({ children }: { children: React.ReactNode }) => {
   const { open } = useDialog();
   return (
     <AnimatePresence mode="wait">
       {open && (
         <motion.div
-          initial={{ scale: 0.8, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0.95, opacity: 0 }}
-          transition={{ ease: 'easeInOut', duration: 0.1 }}
+          key="dialog"
+          initial="initial"
+          animate="enter"
+          exit="exit"
+          variants={dialogVariants}
           className="absolute left-1/2 top-1/2 z-[1000] rounded-lg bg-background [translate:-50%_-50%]"
         >
           {children}
