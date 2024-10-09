@@ -23,6 +23,7 @@ export const ClientLeaderboardPage = () => {
 
   const { data } = useLeaderboardScore(currentMode, currentSubMode);
 
+  console.log(data);
   useEffect(() => {
     queryClient.resetQueries({
       queryKey: [QUERY_KEY.STATIC_LEADERBOARD],
@@ -115,6 +116,11 @@ const ScoreRowLabel = () => {
 };
 
 const ScoreRow = ({ score }: { score: LeaderboardEntry }) => {
+  const date = new Date(score.createdAt);
+  const datetext =
+    date.getHours().toString().padStart(2, '0') +
+    ':' +
+    date.getMinutes().toString().padStart(2, '0');
   return (
     <>
       <div className="grid h-9 grid-cols-[1fr_80px_80px_80px_120px] items-center justify-end whitespace-nowrap rounded-lg px-2 *:w-min">
@@ -122,9 +128,10 @@ const ScoreRow = ({ score }: { score: LeaderboardEntry }) => {
         <p className="justify-self-end">{score.accuracy.toFixed(2)}</p>
         <p className="justify-self-end">{score.lpm.toFixed(2)}</p>
         <p className="justify-self-end">{score.wpm.toFixed(2)}</p>
-        <p className="justify-self-end">
-          {new Date(score.createdAt).toLocaleDateString()}
-        </p>
+        <div className="flex flex-col items-end justify-between justify-self-end *:text-xs">
+          <p className="font-bold">{datetext}</p>
+          <p>{date.toLocaleDateString()}</p>
+        </div>
         {/* Replace with actual date */}
       </div>
     </>

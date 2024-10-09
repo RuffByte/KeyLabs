@@ -26,7 +26,7 @@ const ModeStatBox = ({
 
   return (
     <motion.div
-      className="grid h-32 grid-rows-3 place-items-center rounded-lg border border-secondary/70 p-2 text-center transition-all duration-300"
+      className="grid h-32 grid-rows-3 place-items-center rounded-lg p-2 text-center transition-all duration-300"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -62,9 +62,9 @@ const ModeStatBox = ({
             {additionalStats ? (
               <>
                 <p>{additionalStats?.duration}</p>
-                <p>{additionalStats?.lpm} LPM</p>
-                <p>{additionalStats?.raw} Raw</p>
-                <p>{additionalStats?.accuracy}% Acc</p>
+                <p>{additionalStats?.lpm} lpm</p>
+                <p>{additionalStats?.raw} raw lpm</p>
+                <p>{additionalStats?.accuracy}% acc</p>
                 <p>{additionalStats?.date}</p>
               </>
             ) : (

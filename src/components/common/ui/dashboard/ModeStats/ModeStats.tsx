@@ -6,8 +6,8 @@ import ModeStatBox from './ModeStatBox';
 export const ModeStats = () => {
   const { bestScores } = useUserContext();
 
-  const characterModes = ['30c', '50c', '100c'];
-  const timeModes = ['15s', '30s', '60s'];
+  const characterModes = ['30', '50', '100'];
+  const timeModes = ['15', '30', '60'];
 
   // Helper function to find the best score for a given mode and category
   const findBestScore = (mode: string, category: string) => {
@@ -17,8 +17,7 @@ export const ModeStats = () => {
   };
 
   return (
-    <div className="grid w-full grid-cols-2 gap-4">
-      {/* Character modes: 30c, 50c, 100c */}
+    <div className="grid w-full grid-cols-2 gap-4 text-foreground *:rounded-lg *:border *:border-secondary/70">
       <div className="grid grid-cols-3 gap-4">
         {characterModes.map((category) => {
           const bestScore = findBestScore('characters', category);
