@@ -1,13 +1,12 @@
 import { cookies } from 'next/headers';
 import { sha256 } from '@oslojs/crypto/sha2';
 import {
-  encodeBase32,
   encodeBase32LowerCaseNoPadding,
   encodeHexLowerCase,
 } from '@oslojs/encoding';
 import type { Session, User } from '@prisma/client';
 
-import { prisma } from './prisma';
+import { prisma } from '../prisma';
 
 //generates session token
 export function generateSessionToken(): string {
@@ -82,14 +81,3 @@ export async function invalidateSession(sessionId: string): Promise<void> {
 export type SessionValidationResult =
   | { session: Session; user: User }
   | { session: null; user: null };
-
-  function handleRequest(request: HTTPRequest, response: HTTPResponse): void {
-    if (request.method !== "GET") {
-      const origin = request.headers.get("Origin");
-      // You can also compare it against the Host or X-Forwarded-Host header.
-      if (origin === null || origin !== "https://example.com") {
-        response.setStatusCode(403);
-        return;
-      }
-    }
-  
