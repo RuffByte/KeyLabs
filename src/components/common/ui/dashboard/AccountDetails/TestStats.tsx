@@ -14,13 +14,13 @@ export const TestStats = () => {
   //"responsive design hahaha"
   // t: "bruh wtf is this :skull:"
   return (
-    <div className="flex flex-col items-center gap-4 text-foreground">
+    <div className="flex w-[300px] items-center gap-4 text-foreground">
       <div className="flex w-full flex-col">
-        <p>Total Games Played</p>
+        <p>Games Played</p>
         <p className="text-2xl">{user?.totalGames}</p>
       </div>
       <div className="flex w-full flex-col">
-        <p>Total Time Spent Playing</p>
+        <p>Playtime</p>
         <p className="text-2xl">
           {user ? formatTime(user.totalTime) : 'Loading...'}
         </p>
