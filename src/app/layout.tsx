@@ -59,15 +59,13 @@ export const metadata: Metadata = {
     title: 'KeyLabs',
     description: 'A website where you click and aim letters',
     card: 'summary_large_image',
-    images:
-      'https://keylabs-786232600197.australia-southeast1.run.app/og/og-twitter.png',
+    images: 'https://keylabs.app/og/og-twitter.png',
   },
   openGraph: {
     title: 'KeyLabs',
     description: 'A website where you click and aim letters',
-    url: 'https://keylabs-786232600197.australia-southeast1.run.app',
-    images:
-      'https://keylabs-786232600197.australia-southeast1.run.app/og/og-image.png',
+    url: 'https://keylabs.app',
+    images: 'https://keylabs.app/og/og-image.png',
     siteName: 'KeyLabs',
   },
 };
