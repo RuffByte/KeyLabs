@@ -1,6 +1,8 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { PrefetchKind } from 'next/dist/client/components/router-reducer/router-reducer-types';
+import { useRouter } from 'next/navigation';
 import { useQueryClient } from '@tanstack/react-query';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Globe } from 'lucide-react';
@@ -312,7 +314,7 @@ const ClientGamePage = ({ user }: { user: User }) => {
   const { screen } = useScreen();
   const {
     setMode,
-  endGame,
+    endGame,
     targetSize,
     wordIndex,
     hasStart,
@@ -328,6 +330,12 @@ const ClientGamePage = ({ user }: { user: User }) => {
   const [isRestarting, setRestarting] = useState(false);
   const queryClient = useQueryClient();
   const [endGameData, setEndGameData] = useState<GameData | null>(null); // Add state for end game data
+
+  const router = useRouter();
+
+  useEffect(() => {
+    router.prefetch('/leaderboard', { kind: PrefetchKind.FULL });
+  }, [router]);
 
   // * inital fetching
   const { data } = useGenerateWords(config.language);

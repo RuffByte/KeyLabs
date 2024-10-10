@@ -11,7 +11,11 @@ export const fetchLeaderboard = async (
   currentSubMode: number
 ) => {
   const response = await fetch(
-    `/api/data/leaderboard?mode=${currentMode}&subMode=${currentSubMode}`
+    `/api/data/leaderboard?mode=${currentMode}&subMode=${currentSubMode}`,
+    {
+      cache: 'force-cache',
+      next: { tags: [`leaderboard`] },
+    }
   );
   const data: LeaderboardEntry[] = await response.json();
   console.log(data);

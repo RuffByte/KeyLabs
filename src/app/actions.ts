@@ -1,5 +1,7 @@
 'use server';
 
+import { revalidateTag } from 'next/cache';
+
 import { prisma } from '@/lib/prisma';
 import { GameData } from './types/gameData';
 
@@ -110,5 +112,6 @@ export async function submitGameData(gameData: GameData) {
     },
   });
 
+  revalidateTag('leaderboard');
   console.log('Score submitted successfully.');
 }
