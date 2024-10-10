@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { GameEntry } from '@prisma/client';
 import { useQueryClient } from '@tanstack/react-query';
+import { motion } from 'framer-motion';
 
 import { useLeaderboardScore } from '@/app/hooks/query/useLeaderboard';
 import { dateToHHMMSS } from '@/lib/utils/date';
@@ -129,7 +130,7 @@ const ScoreRow = ({
   const date = new Date(score.createdAt);
   return (
     <>
-      <div className="grid h-9 grid-cols-[20px_1fr_80px_80px_80px_120px] items-center justify-end gap-2 whitespace-nowrap rounded-lg px-2 *:w-min">
+      <motion.div className="grid h-9 grid-cols-[20px_1fr_80px_80px_80px_120px] items-center justify-end gap-2 whitespace-nowrap rounded-lg px-2 *:w-min">
         <p>{index}</p>
         <p className="justify-self-start">{score.user?.name}</p>
         <p className="justify-self-end">{score.accuracy.toFixed(2)}</p>
@@ -140,20 +141,27 @@ const ScoreRow = ({
           <p className="font-bold">{dateToHHMMSS(date)}</p>
         </div>
         {/* Replace with actual date */}
-      </div>
+      </motion.div>
     </>
   );
 };
 
 const ScoreRowSkeleton = () => {
   return (
-    <div className="grid h-9 grid-cols-[20px_1fr_80px_80px_80px_120px] items-center justify-end gap-2 whitespace-nowrap rounded-lg px-2 *:w-min">
-      <div className="h-4 min-w-[20px] animate-pulse justify-self-start rounded-xl bg-black/20" />
-      <div className="h-4 min-w-[40px] animate-pulse justify-self-start rounded-xl bg-black/20" />
-      <div className="h-4 min-w-[40px] animate-pulse justify-self-end rounded-xl bg-black/20" />
-      <div className="h-4 min-w-[40px] animate-pulse justify-self-end rounded-xl bg-black/20" />
-      <div className="h-4 min-w-[40px] animate-pulse justify-self-end rounded-xl bg-black/20" />
-      <div className="h-4 min-w-[80px] animate-pulse justify-self-end rounded-xl bg-black/20" />
+    <div className="rounded-lg">
+      <motion.div
+        className="grid h-9 grid-cols-[20px_1fr_80px_80px_80px_120px] items-center justify-end gap-2 whitespace-nowrap px-2 *:w-min"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="h-4 min-w-[20px] animate-pulse justify-self-start rounded-xl bg-black/20" />
+        <div className="h-4 min-w-[40px] animate-pulse justify-self-start rounded-xl bg-black/20" />
+        <div className="h-4 min-w-[40px] animate-pulse justify-self-end rounded-xl bg-black/20" />
+        <div className="h-4 min-w-[40px] animate-pulse justify-self-end rounded-xl bg-black/20" />
+        <div className="h-4 min-w-[40px] animate-pulse justify-self-end rounded-xl bg-black/20" />
+        <div className="h-4 min-w-[80px] animate-pulse justify-self-end rounded-xl bg-black/20" />
+      </motion.div>
     </div>
   );
 };
