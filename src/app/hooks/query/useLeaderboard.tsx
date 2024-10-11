@@ -10,6 +10,7 @@ export const useLeaderboardScore = (
   const query = useQuery({
     queryKey: [QUERY_KEY.STATIC_LEADERBOARD],
     queryFn: () => fetchLeaderboard(currentMode, currentSubMode),
+    staleTime: 60 * 2
   });
 
   return query;
