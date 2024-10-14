@@ -1,1 +1,47 @@
-["default", "dark_mono", "dark_retro", "catcopy", "mute"]
+[
+  {
+    "name": "default",
+    "preview": {
+      "background": "hsl(0, 0%, 96%)",
+      "secondary": "hsl(0, 0%, 31%)",
+      "foreground": "hsl(0, 0%, 12%)",
+      "tertiary": "hsl(0, 0%, 88%)"
+    }
+  },
+  {
+    "name": "dark_mono",
+    "preview": {
+      "background": "hsl(309 19% 7%)",
+      "secondary": "hsl(0 0% 80%)",
+      "foreground": "hsl(0 0% 86%)",
+      "tertiary": "hsl(0 0% 77%)"
+    }
+  },
+  {
+    "name": "dark_retro",
+    "preview": {
+      "background": "hsl(318 45% 6%)",
+      "secondary": "hsl(68 100% 88%)",
+      "foreground": "hsl(68 100% 53%)",
+      "tertiary": "hsl(0 0% 71%)"
+    }
+  },
+  {
+    "name": "catcopy",
+    "preview": {
+      "background": "hsl(233 18% 18%)",
+      "secondary": "hsl(274 71% 77%)",
+      "foreground": "hsl(317 76% 84%)",
+      "tertiary": "hsl(0 0% 0%)"
+    }
+  },
+  {
+    "name": "mute",
+    "preview": {
+      "background": "hsl(220 4% 13%)",
+      "secondary": "hsl(50 100% 96%)",
+      "foreground": "hsl(50 100% 96%)",
+      "tertiary": "hsl(0 0% 100%)"
+    }
+  }
+]
