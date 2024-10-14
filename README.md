@@ -42,14 +42,20 @@ Originally KeyLabs was developed during the Terrible Ideas Hackathon, where we m
 </div>
 
 <div align="center">
-    <!-- Lucia Auth -->
-    <img src="https://img.shields.io/badge/Lucia_Auth-8A2BE2?style=for-the-badge&logo=Lucia&logoColor=white"/>
-    <!-- Lucia Auth -->
+    <!-- Cron -->
+    <img src="https://img.shields.io/badge/Cron-FFFFFF?&style=for-the-badge">
+     <!-- Cron -->
+    <img src="https://img.shields.io/badge/Resend-FFFFFF?&style=for-the-badge">
+    <!-- AntAuth -->
+    <img src="https://img.shields.io/badge/Ant_Auth-8A2BE2?style=for-the-badge"/>
+    <!-- Argon2id -->
     <img src="https://img.shields.io/badge/Argon2-6A0BE2?style=for-the-badge"/>
     <!-- Oslo -->
     <img src="https://img.shields.io/badge/Oslo-000?style=for-the-badge"/>
     <!-- Google Auth -->
     <img src="https://img.shields.io/badge/Google_OAuth-fff?style=for-the-badge&logo=google&logoColor=black"/>
+      <!-- redis -->
+    <img src="https://img.shields.io/badge/redis-%23DD0031.svg?&style=for-the-badge&logo=redis&logoColor=white">
 </div>
 
 <div align="center">
@@ -59,9 +65,11 @@ Originally KeyLabs was developed during the Terrible Ideas Hackathon, where we m
     <img src="https://img.shields.io/badge/GitHub_Actions-2088FF?style=for-the-badge&logo=github-actions&logoColor=white">
     <!-- google cloud -->
     <img src="https://img.shields.io/badge/Google_Cloud-4285F4?style=for-the-badge&logo=google-cloud&logoColor=white">
+    <!-- pork bun -->
+    <img src="https://img.shields.io/badge/Pork_Bun-EF7878?style=for-the-badge&logo=porkbun&logoColor=white">
+  
      
 </div>
-
 <div align="center">
     <!-- PNPM -->
     <img src="https://img.shields.io/badge/pnpm-CB3837?style=for-the-badge&logo=npm&logoColor=white"/>
